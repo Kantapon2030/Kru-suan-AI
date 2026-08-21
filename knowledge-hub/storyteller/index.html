@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ศาลาปราชญ์เกษตรกร - ครูสวน AI</title>
+  <link rel="icon" type="image/png" href="/images/logo.png" />
+  <link rel="apple-touch-icon" href="/images/logo.png" />
+  <!-- Google Fonts: Noto Sans Thai & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'cream-bg': '#FFF8E7',
+            'nature-surface': '#f0fded',
+            'primary-dark': '#005313',
+            'primary-green': '#006e1c',
+            'primary-light': '#4caf50',
+            'earth-brown': '#75584d',
+            'earth-light': '#8D6E63',
+            'dark-charcoal': '#141e14',
+            'warm-gray': '#3f4a3c',
+            'card-border': '#becab9',
+          },
+          fontFamily: {
+            thai: ['Noto Sans Thai', 'sans-serif'],
+          },
+          boxShadow: {
+            'tactile': '0 8px 24px rgba(20, 30, 20, 0.08), 0 2px 6px rgba(20, 30, 20, 0.04)',
+            'tactile-hover': '0 12px 32px rgba(0, 110, 28, 0.16), 0 4px 10px rgba(0, 110, 28, 0.08)',
+            'golden': '0 8px 30px rgba(234, 179, 8, 0.25)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Noto Sans Thai', sans-serif;
+      background-color: #FFF8E7;
+      color: #141e14;
+    }
+    .topic-card.selected {
+      border-color: #006e1c !important;
+      background: #ebf7e7 !important;
+      box-shadow: 0 8px 24px rgba(0, 110, 28, 0.18);
+      transform: translateY(-2px);
+    }
+    .animate-bounce-slow {
+      animation: bounce 2.5s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-primary-light selection:text-white">
+
+  <!-- Top Navigation & Return Link -->
+  <header class="w-full bg-white/90 backdrop-blur-md border-b border-card-border/40 sticky top-0 z-40 px-4 py-3 sm:px-8">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="/images/logo.png" alt="ครูสวน AI Logo" class="w-12 h-12 rounded-2xl object-cover shadow-md shrink-0 border border-primary-green/20" />
+        <div>
+          <h1 class="text-xl sm:text-2xl font-extrabold text-primary-green tracking-tight leading-tight">ศาลาปราชญ์เกษตรกร</h1>
+          <p class="text-xs sm:text-sm font-semibold text-earth-brown">ครูสวน AI • คลังภูมิปัญญาเพื่อคนรุ่นหลัง</p>
+        </div>
+      </div>
+      <a href="/" class="flex items-center gap-1.5 px-4 py-2 bg-nature-surface text-primary-green font-bold text-sm rounded-full border border-primary-green/30 hover:bg-primary-green hover:text-white transition-all shadow-sm">
+        <span class="material-symbols-outlined text-lg">home</span>
+        <span class="hidden sm:inline">กลับแอปหลัก</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero & Welcome Section -->
+  <main class="flex-1 max-w-4xl mx-auto w-full px-4 py-6 sm:py-10 flex flex-col gap-8">
+    
+    <!-- Hero Banner Card -->
+    <div class="bg-gradient-to-r from-emerald-800 via-green-800 to-emerald-900 rounded-3xl p-6 sm:p-10 text-white shadow-tactile relative overflow-hidden">
+      <div class="absolute -right-8 -bottom-8 opacity-15 pointer-events-none text-9xl">🌿</div>
+      <div class="relative z-10 space-y-3">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-yellow-300 text-xs sm:text-sm font-bold">
+          <span>✨</span><span>ยินดีต้อนรับปราชญ์เกษตรกรทุกท่าน</span>
+        </div>
+        <h2 class="text-2xl sm:text-4xl font-extrabold leading-snug">
+          เล่าเรื่องสวน ถ่ายทอดวิชา<br>
+          <span class="text-yellow-300">เป็นมรดกภูมิปัญญาให้ลูกหลาน</span>
+        </h2>
+        <p class="text-emerald-100 text-base sm:text-lg font-medium max-w-2xl leading-relaxed">
+          ไม่ต้องพิมพ์ เพียงกดปุ่มแล้วนั่งคุยด้วยเสียงกับครูสวน AI เหมือนคุยกับหลานที่มาขอคำชี้แนะ ทุกเคล็ดลับของท่านจะถูกรวบรวมเป็นคัมภีร์ความรู้เพื่อช่วยเหลือเกษตรกรรุ่นใหม่
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 1: Farmer Identification -->
+    <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-tactile border border-card-border/50 space-y-6">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+        <div class="flex items-center gap-3">
+          <span class="w-9 h-9 rounded-full bg-primary-green text-white font-extrabold flex items-center justify-center text-lg">1</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-dark-charcoal">ข้อมูลปราชญ์ผู้เล่าเรื่อง</h3>
+        </div>
+        <span class="text-xs sm:text-sm font-medium text-warm-gray bg-nature-surface px-3 py-1 rounded-full">บันทึกประวัติเพื่อยกย่อง</span>
+      </div>
+
+      <!-- Quick Returning Farmer Selector -->
+      <div class="space-y-2">
+        <label class="text-sm font-bold text-warm-gray">💡 เลือกลุง/ป้าที่เคยมาเล่า (กดเลือกได้ทันที):</label>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="returning-farmers-list">
+          <button type="button" onclick="selectFarmerQuick('นายสมชาย ดีพร้อม', 'ลุงสมชาย', '0891234567', 'สุราษฎร์ธานี', 'ทุเรียน', 25)" class="farmer-quick-btn p-3 rounded-2xl border-2 border-card-border/60 hover:border-primary-green text-left flex items-center gap-3 transition-all hover:bg-nature-surface group">
+            <span class="text-3xl group-hover:scale-110 transition-transform">👴</span>
+            <div class="min-w-0">
+              <div class="font-bold text-dark-charcoal text-sm sm:text-base truncate">ลุงสมชาย</div>
+              <div class="text-xs text-warm-gray truncate">สุราษฎร์ธานี (25 ปี)</div>
+            </div>
+          </button>
+          <button type="button" onclick="selectFarmerQuick('นางประไพ สวนงาม', 'ป้าศรี', '0876543210', 'นครศรีธรรมราช', 'มังคุด', 20)" class="farmer-quick-btn p-3 rounded-2xl border-2 border-card-border/60 hover:border-primary-green text-left flex items-center gap-3 transition-all hover:bg-nature-surface group">
+            <span class="text-3xl group-hover:scale-110 transition-transform">👵</span>
+            <div class="min-w-0">
+              <div class="font-bold text-dark-charcoal text-sm sm:text-base truncate">ป้าศรี</div>
+              <div class="text-xs text-warm-gray truncate">นครศรีฯ (20 ปี)</div>
+            </div>
+          </button>
+          <button type="button" onclick="resetFarmerForm()" class="p-3 rounded-2xl border-2 border-dashed border-card-border hover:border-primary-green text-center flex flex-col items-center justify-center text-warm-gray hover:text-primary-green transition-all hover:bg-nature-surface">
+            <span class="material-symbols-outlined text-2xl">person_add</span>
+            <span class="text-xs font-bold mt-1">กรอกชื่อใหม่</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Farmer Inputs Form -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+        <div>
+          <label class="block text-sm font-bold text-dark-charcoal mb-1">ชื่อที่ให้เรียก (เช่น ลุงสมชาย / ป้าศรี / น้าดำ) *</label>
+          <input type="text" id="input-farmer-name" value="ลุงสมชาย" placeholder="เช่น ลุงสมชาย" class="w-full text-lg px-4 py-3 rounded-2xl border-2 border-card-border/80 focus:border-primary-green focus:ring-2 focus:ring-primary-green/20 outline-none font-medium bg-gray-50/50">
+        </div>
+        <div>
+          <label class="block text-sm font-bold text-dark-charcoal mb-1">เบอร์โทรศัพท์ (สำหรับจำประวัติ)</label>
+          <input type="tel" id="input-farmer-phone" value="0891234567" placeholder="เช่น 0891234567" class="w-full text-lg px-4 py-3 rounded-2xl border-2 border-card-border/80 focus:border-primary-green focus:ring-2 focus:ring-primary-green/20 outline-none font-medium bg-gray-50/50">
+        </div>
+        <div>
+          <label class="block text-sm font-bold text-dark-charcoal mb-1">จังหวัดที่ทำสวน</label>
+          <select id="input-farmer-province" class="w-full text-lg px-4 py-3 rounded-2xl border-2 border-card-border/80 focus:border-primary-green focus:ring-2 focus:ring-primary-green/20 outline-none font-medium bg-gray-50/50">
+            <option value="สุราษฎร์ธานี" selected>สุราษฎร์ธานี</option>
+            <option value="ชุมพร">ชุมพร</option>
+            <option value="นครศรีธรรมราช">นครศรีธรรมราช</option>
+            <option value="ระนอง">ระนอง</option>
+            <option value="พังงา">พังงา</option>
+            <option value="กระบี่">กระบี่</option>
+            <option value="ตรัง">ตรัง</option>
+            <option value="พัทลุง">พัทลุง</option>
+            <option value="สงขลา">สงขลา</option>
+            <option value="ยะลา">ยะลา</option>
+            <option value="นราธิวาส">นราธิวาส</option>
+            <option value="ปัตตานี">ปัตตานี</option>
+            <option value="เชียงใหม่">เชียงใหม่</option>
+            <option value="จันทบุรี">จันทบุรี</option>
+            <option value="อื่นๆ">จังหวัดอื่นๆ</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-bold text-dark-charcoal mb-1">พืชหลักที่อยากเล่า</label>
+          <select id="input-farmer-crop" class="w-full text-lg px-4 py-3 rounded-2xl border-2 border-card-border/80 focus:border-primary-green focus:ring-2 focus:ring-primary-green/20 outline-none font-medium bg-gray-50/50">
+            <option value="ทุเรียน" selected>ทุเรียน (หมอนทอง, ชะนี, ก้านยาว)</option>
+            <option value="ปาล์มน้ำมัน">ปาล์มน้ำมัน</option>
+            <option value="ยางพารา">ยางพารา</option>
+            <option value="มังคุด">มังคุด</option>
+            <option value="เงาะ">เงาะ</option>
+            <option value="ลองกอง">ลองกอง</option>
+            <option value="ส้มโอ">ส้มโอทับทิมสยาม</option>
+            <option value="มะพร้าวน้ำหอม">มะพร้าว</option>
+            <option value="พืชผักสวนครัว">พืชผักสวนครัว / เกษตรผสมผสาน</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 2: Story Topic Selection -->
+    <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-tactile border border-card-border/50 space-y-6">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+        <div class="flex items-center gap-3">
+          <span class="w-9 h-9 rounded-full bg-primary-green text-white font-extrabold flex items-center justify-center text-lg">2</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-dark-charcoal">เลือกหัวข้อที่อยากแชร์วันนี้</h3>
+        </div>
+        <span class="text-xs sm:text-sm font-semibold text-primary-green">แตะเลือก 1 หัวข้อ</span>
+      </div>
+
+      <!-- Topics Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="topics-container">
+        <!-- Topic 1 -->
+        <div onclick="selectTopic('fertilizer_soil')" id="theme-card-fertilizer_soil" class="topic-card selected p-5 rounded-3xl border-2 border-card-border/60 hover:border-primary-green cursor-pointer transition-all flex items-start gap-4">
+          <div class="text-3xl p-3 bg-white rounded-2xl shadow-sm">🌱</div>
+          <div class="flex-1">
+            <h4 class="text-lg font-bold text-dark-charcoal">เคล็ดลับดินดี & ปุ๋ยหมัก 30 ปี</h4>
+            <p class="text-sm text-warm-gray mt-1 leading-relaxed">สูตรผสมปุ๋ยอินทรีย์ การปรับปรุงดินให้อุดมสมบูรณ์ และบำรุงรากพืชให้แข็งแรง</p>
+          </div>
+        </div>
+
+        <!-- Topic 2 -->
+        <div onclick="selectTopic('pest_natural')" id="theme-card-pest_natural" class="topic-card p-5 rounded-3xl border-2 border-card-border/60 hover:border-primary-green cursor-pointer transition-all flex items-start gap-4">
+          <div class="text-3xl p-3 bg-white rounded-2xl shadow-sm">🐛</div>
+          <div class="flex-1">
+            <h4 class="text-lg font-bold text-dark-charcoal">ปราบโรคพืช & แมลงฉบับโบราณ</h4>
+            <p class="text-sm text-warm-gray mt-1 leading-relaxed">ภูมิปัญญาใช้น้ำหมักสมุนไพรไล่แมลง และเทคนิคตรวจโรคพืชก่อนลุกลาม</p>
+          </div>
+        </div>
+
+        <!-- Topic 3 -->
+        <div onclick="selectTopic('water_drought')" id="theme-card-water_drought" class="topic-card p-5 rounded-3xl border-2 border-card-border/60 hover:border-primary-green cursor-pointer transition-all flex items-start gap-4">
+          <div class="text-3xl p-3 bg-white rounded-2xl shadow-sm">💧</div>
+          <div class="flex-1">
+            <h4 class="text-lg font-bold text-dark-charcoal">การจัดการน้ำ & สู้ภัยแล้ง</h4>
+            <p class="text-sm text-warm-gray mt-1 leading-relaxed">การวางระบบน้ำ เทคนิคกักเก็บความชื้น และการรับมือฝนทิ้งช่วง</p>
+          </div>
+        </div>
+
+        <!-- Topic 4 -->
+        <div onclick="selectTopic('pruning_yield')" id="theme-card-pruning_yield" class="topic-card p-5 rounded-3xl border-2 border-card-border/60 hover:border-primary-green cursor-pointer transition-all flex items-start gap-4">
+          <div class="text-3xl p-3 bg-white rounded-2xl shadow-sm">✂️</div>
+          <div class="flex-1">
+            <h4 class="text-lg font-bold text-dark-charcoal">เทคนิคตัดแต่งกิ่ง & เร่งผลดก</h4>
+            <p class="text-sm text-warm-gray mt-1 leading-relaxed">การแต่งทรงพุ่มรับแดด การไว้ผลให้ลูกโตสวย และการดูแลผลผลิตให้ได้ราคาดี</p>
+          </div>
+        </div>
+
+        <!-- Topic 5: Freestyle -->
+        <div onclick="selectTopic('freestyle')" id="theme-card-freestyle" class="topic-card p-5 rounded-3xl border-2 border-card-border/60 hover:border-primary-green cursor-pointer transition-all flex items-start gap-4 sm:col-span-2">
+          <div class="text-3xl p-3 bg-white rounded-2xl shadow-sm">📖</div>
+          <div class="flex-1">
+            <h4 class="text-lg font-bold text-dark-charcoal">เล่าประสบการณ์อิสระ (เรื่องที่ภูมิใจที่สุด)</h4>
+            <p class="text-sm text-warm-gray mt-1 leading-relaxed">เล่าวิถีชาวสวน เคล็ดลับเฉพาะตัวที่สั่งสมมา หรือบทเรียนชีวิตการเกษตรที่อยากบอกคนรุ่นหลัง</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 3: Big 1-Click Launch Button -->
+    <div class="flex flex-col items-center gap-4 py-4">
+      <button id="btn-start-story" onclick="startStorytellingSession()" class="w-full max-w-lg py-5 px-8 bg-gradient-to-r from-primary-green via-emerald-600 to-green-700 hover:from-primary-dark hover:to-emerald-800 text-white rounded-3xl text-xl sm:text-2xl font-extrabold shadow-tactile-hover hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3 cursor-pointer group">
+        <span class="text-3xl group-hover:animate-bounce-slow">🎙️</span>
+        <span>เริ่มเล่าเรื่องกับครูสวนเลย</span>
+        <span class="material-symbols-outlined text-3xl">arrow_forward</span>
+      </button>
+      <p class="text-sm font-semibold text-warm-gray text-center flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-primary-green text-lg">mic</span>
+        <span>ใช้เสียงพูดคุยได้ทันที ไม่ต้องพิมพ์ตัวหนังสือ</span>
+      </p>
+    </div>
+
+  </main>
+
+  <!-- Senior Footer -->
+  <footer class="mt-auto bg-white border-t border-card-border/40 py-6 text-center text-xs text-warm-gray">
+    <div class="max-w-4xl mx-auto px-4 space-y-1">
+      <p class="font-bold text-dark-charcoal">🌱 ศาลาปราชญ์เกษตรกร • ครูสวน AI (Knowledge Acquisition Platform)</p>
+      <p>ระบบบันทึกเสียงและถอดบทเรียนภูมิปัญญาพื้นบ้าน เพื่อการเกษตรที่ยั่งยืน</p>
+    </div>
+  </footer>
+
+  <script>
+    let selectedThemeId = 'fertilizer_soil';
+
+    function selectTopic(themeId) {
+      selectedThemeId = themeId;
+      document.querySelectorAll('.topic-card').forEach(el => el.classList.remove('selected'));
+      const activeCard = document.getElementById(`theme-card-${themeId}`);
+      if (activeCard) activeCard.classList.add('selected');
+    }
+
+    function selectFarmerQuick(fullName, displayName, phone, province, crop, years) {
+      document.getElementById('input-farmer-name').value = displayName;
+      document.getElementById('input-farmer-phone').value = phone;
+      document.getElementById('input-farmer-province').value = province;
+      document.getElementById('input-farmer-crop').value = crop;
+    }
+
+    function resetFarmerForm() {
+      document.getElementById('input-farmer-name').value = '';
+      document.getElementById('input-farmer-phone').value = '';
+      document.getElementById('input-farmer-name').focus();
+    }
+
+    async function startStorytellingSession() {
+      const farmerName = document.getElementById('input-farmer-name').value.trim() || 'เกษตรกรผู้มีประสบการณ์';
+      const phone = document.getElementById('input-farmer-phone').value.trim();
+      const province = document.getElementById('input-farmer-province').value;
+      const crop = document.getElementById('input-farmer-crop').value;
+
+      const btn = document.getElementById('btn-start-story');
+      btn.disabled = true;
+      btn.innerHTML = `
+        <div class="w-6 h-6 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
+        <span>กำลังเตรียมห้องเล่าเรื่อง...</span>
+      `;
+
+      try {
+        const res = await fetch('/api/storyteller/start', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            farmerName,
+            phone,
+            province,
+            crop,
+            topicTheme: selectedThemeId,
+            experience: 20
+          })
+        });
+
+        const result = await res.json();
+        if (result.success && result.data) {
+          // Save session info in sessionStorage
+          sessionStorage.setItem('storyteller_session', JSON.stringify(result.data));
+          window.location.href = `/storyteller/live.html?interviewId=${result.data.interviewId}`;
+        } else {
+          alert(`เกิดข้อผิดพลาด: ${result.error || 'ไม่สามารถเปิดห้องเล่าเรื่องได้'}`);
+          btn.disabled = false;
+          btn.innerHTML = `<span>🎙️ เริ่มเล่าเรื่องกับครูสวนเลย</span>`;
+        }
+      } catch (err) {
+        console.error('Failed to start storyteller session:', err);
+        alert('เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์ กรุณาลองใหม่อีกครั้งครับ');
+        btn.disabled = false;
+        btn.innerHTML = `<span>🎙️ เริ่มเล่าเรื่องกับครูสวนเลย</span>`;
+      }
+    }
+  </script>
+</body>
+</html>

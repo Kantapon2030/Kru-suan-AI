@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>คัมภีร์ภูมิปัญญาปราชญ์เกษตรกร - ครูสวน AI</title>
+  <link rel="icon" type="image/png" href="/images/logo.png" />
+  <link rel="apple-touch-icon" href="/images/logo.png" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'cream-bg': '#FFF8E7',
+            'nature-surface': '#f0fded',
+            'primary-dark': '#005313',
+            'primary-green': '#006e1c',
+            'primary-light': '#4caf50',
+            'earth-brown': '#75584d',
+            'earth-light': '#8D6E63',
+            'dark-charcoal': '#141e14',
+            'warm-gray': '#3f4a3c',
+            'gold-accent': '#d4af37',
+            'card-border': '#becab9',
+          },
+          fontFamily: {
+            thai: ['Noto Sans Thai', 'sans-serif'],
+          },
+          boxShadow: {
+            'certificate': '0 12px 40px rgba(0, 110, 28, 0.12), 0 4px 12px rgba(212, 175, 55, 0.15)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Noto Sans Thai', sans-serif;
+      background-color: #FFF8E7;
+      color: #141e14;
+    }
+    @media print {
+      body {
+        background-color: #ffffff;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .certificate-box {
+        box-shadow: none !important;
+        border: 2px solid #006e1c !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-primary-light selection:text-white">
+
+  <!-- Header Bar -->
+  <header class="w-full bg-white/90 backdrop-blur-md border-b border-card-border/40 px-4 py-3 sm:px-8 flex items-center justify-between sticky top-0 z-40 no-print">
+    <div class="flex items-center gap-3">
+      <img src="/images/logo.png" alt="ครูสวน AI Logo" class="w-10 h-10 rounded-2xl object-cover shadow-md shrink-0 border border-primary-green/20" />
+      <div>
+        <h1 class="text-lg sm:text-xl font-extrabold text-primary-green">คัมภีร์ภูมิปัญญาปราชญ์เกษตรกร</h1>
+        <p class="text-xs sm:text-sm font-semibold text-earth-brown">บันทึกองค์ความรู้สำเร็จเรียบร้อยแล้ว</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="window.print()" class="flex items-center gap-1 px-3.5 py-1.5 bg-gray-100 hover:bg-gray-200 text-dark-charcoal font-bold text-xs sm:text-sm rounded-full transition-all">
+        <span class="material-symbols-outlined text-lg">print</span>
+        <span class="hidden sm:inline">พิมพ์ใบประกาศ</span>
+      </button>
+      <a href="/storyteller/index.html" class="flex items-center gap-1 px-4 py-1.5 bg-primary-green text-white font-bold text-xs sm:text-sm rounded-full hover:bg-primary-dark transition-all shadow-sm">
+        <span class="material-symbols-outlined text-lg">auto_stories</span>
+        <span>เล่าเรื่องอื่นต่อ</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-4xl mx-auto w-full px-4 py-6 sm:py-10 flex flex-col gap-6">
+    
+    <!-- Wisdom Certificate Card (Printable) -->
+    <div class="certificate-box bg-white rounded-3xl p-6 sm:p-12 shadow-certificate border-4 border-emerald-700/80 relative overflow-hidden text-center space-y-6">
+      
+      <!-- Decorative Ornaments -->
+      <div class="absolute top-4 left-4 text-emerald-800 text-2xl select-none">❖</div>
+      <div class="absolute top-4 right-4 text-emerald-800 text-2xl select-none">❖</div>
+      <div class="absolute bottom-4 left-4 text-emerald-800 text-2xl select-none">❖</div>
+      <div class="absolute bottom-4 right-4 text-emerald-800 text-2xl select-none">❖</div>
+
+      <!-- Seal & Badge -->
+      <div class="flex justify-center">
+        <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-yellow-400 via-amber-500 to-yellow-600 flex items-center justify-center text-4xl sm:text-5xl shadow-lg border-4 border-white">
+          🌾
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <div class="inline-block px-4 py-1 rounded-full bg-nature-surface text-primary-green font-bold text-sm border border-primary-green/30">
+          มรดกทางปัญญาการเกษตรไทย
+        </div>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-dark-charcoal tracking-tight">
+          ใบประกาศเกียรติคุณปราชญ์เกษตรกร
+        </h2>
+        <p class="text-sm sm:text-base text-earth-brown font-semibold">
+          ขอขอบพระคุณและยกย่องการถ่ายทอดภูมิปัญญาอันทรงคุณค่า
+        </p>
+      </div>
+
+      <!-- Farmer Name & Details -->
+      <div class="bg-nature-surface/60 rounded-2xl p-6 border border-emerald-200/60 max-w-xl mx-auto space-y-2">
+        <div class="text-xs sm:text-sm font-bold text-primary-green uppercase tracking-wider">ปราชญ์ผู้ถ่ายทอดวิชา</div>
+        <h3 id="summary-farmer-name" class="text-2xl sm:text-3xl font-extrabold text-primary-dark">
+          คุณลุงสมชาย ดีพร้อม
+        </h3>
+        <p id="summary-farmer-meta" class="text-sm sm:text-base text-dark-charcoal font-medium">
+          ปราชญ์ชาวสวนทุเรียน จ.สุราษฎร์ธานี • ประสบการณ์ 25 ปี
+        </p>
+      </div>
+
+      <!-- Wisdom Summary Statement -->
+      <div class="max-w-2xl mx-auto space-y-3 text-left">
+        <div class="flex items-center gap-2 text-base sm:text-lg font-bold text-dark-charcoal">
+          <span class="material-symbols-outlined text-primary-green">menu_book</span>
+          <span>สาระสำคัญและเคล็ดลับที่ถ่ายทอดในครั้งนี้:</span>
+        </div>
+        <div id="summary-topics-list" class="space-y-3">
+          <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex items-start gap-3">
+            <span class="text-2xl">🌱</span>
+            <div>
+              <h4 class="font-bold text-dark-charcoal text-base">การปรับปรุงโครงสร้างดินและการใช้ปุ๋ยอินทรีย์</h4>
+              <p class="text-sm text-warm-gray mt-0.5">แบ่งปันสูตรน้ำหมักและเทคนิคการใส่ปุ๋ยคอกรอบทรงพุ่มเพื่อป้องกันรากเน่า</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Signature / Date Footer -->
+      <div class="pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm text-warm-gray gap-4">
+        <div class="text-left">
+          <div><strong class="text-dark-charcoal">บันทึกเมื่อ:</strong> <span id="summary-date">19 สิงหาคม 2026</span></div>
+          <div><strong class="text-dark-charcoal">ระยะเวลาสนทนา:</strong> <span id="summary-duration">12 นาที 30 วินาที</span></div>
+        </div>
+        <div class="flex items-center gap-2 bg-emerald-50 px-4 py-2 rounded-2xl border border-emerald-200">
+          <span class="text-2xl">🌱</span>
+          <div class="text-left">
+            <div class="font-bold text-primary-green">โครงการ ครูสวน AI</div>
+            <div class="text-[11px] text-earth-brown">ศูนย์คลังภูมิปัญญาเพื่อเกษตรกรไทย</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Impact & Recognition Banner -->
+    <div class="bg-gradient-to-r from-emerald-800 to-green-900 rounded-3xl p-6 text-white shadow-md flex items-center gap-4 no-print">
+      <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center text-3xl flex-shrink-0">
+        🤝
+      </div>
+      <div>
+        <h4 class="text-lg font-bold text-yellow-300">เรื่องเล่าของท่านจะถูกส่งต่อไปช่วยเพื่อนเกษตรกร</h4>
+        <p class="text-sm text-emerald-100 mt-0.5 leading-relaxed">
+          ทีมงานได้นำข้อมูลนี้เข้าสู่กระบวนการสกัดองค์ความรู้ (Knowledge Hub) เพื่อนำไปตอบคำถามและให้คำแนะนำแก่เกษตรกรรุ่นใหม่ในแอปครูสวน AI เรียบร้อยแล้ว
+        </p>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 py-4 no-print">
+      <a href="/storyteller/index.html" class="w-full sm:w-auto px-8 py-4 bg-primary-green hover:bg-primary-dark text-white text-lg font-bold rounded-2xl shadow-md transition-all text-center flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined">add_comment</span>
+        <span>เล่าเรื่องหัวข้ออื่นต่อ</span>
+      </a>
+      <a href="/" class="w-full sm:w-auto px-8 py-4 bg-white hover:bg-gray-50 text-dark-charcoal border-2 border-card-border/80 text-lg font-bold rounded-2xl shadow-sm transition-all text-center flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined">home</span>
+        <span>กลับสู่แอปหลักครูสวน AI</span>
+      </a>
+    </div>
+
+  </main>
+
+  <script>
+    function parseQueryParam(key) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(key);
+    }
+
+    async function loadSummary() {
+      const interviewId = parseQueryParam('interviewId');
+      if (!interviewId) return;
+
+      try {
+        const res = await fetch(`/api/storyteller/${interviewId}/summary`);
+        const result = await res.json();
+
+        if (result.success && result.data) {
+          const d = result.data;
+          
+          // Populate Farmer details
+          document.getElementById('summary-farmer-name').textContent = d.farmer?.fullName || d.farmer?.displayName || 'ปราชญ์เกษตรกร';
+          document.getElementById('summary-farmer-meta').textContent = `ปราชญ์ชาวสวน${d.crop || 'การเกษตร'} จ.${d.farmer?.province || 'ภาคใต้'} • ประสบการณ์ ${d.farmer?.yearsExperience || 20} ปี`;
+
+          // Date & Duration
+          const dateStr = d.endedAt ? new Date(d.endedAt).toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' }) : 'วันนี้';
+          document.getElementById('summary-date').textContent = dateStr;
+
+          const mins = Math.floor(d.durationSec / 60);
+          const secs = d.durationSec % 60;
+          document.getElementById('summary-duration').textContent = mins > 0 ? `${mins} นาที ${secs} วินาที` : `${secs} วินาที`;
+
+          // Render Covered Topics / Insights
+          const list = document.getElementById('summary-topics-list');
+          if (d.coveredTopics && d.coveredTopics.length > 0) {
+            list.innerHTML = d.coveredTopics.map(t => `
+              <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex items-start gap-3">
+                <span class="text-2xl">🌱</span>
+                <div>
+                  <h4 class="font-bold text-dark-charcoal text-base">${t.topic}</h4>
+                  <p class="text-sm text-warm-gray mt-0.5">${t.summary || 'ร่วมแลกเปลี่ยนความรู้ในประเด็นนี้'}</p>
+                </div>
+              </div>
+            `).join('');
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load summary:', err);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', loadSummary);
+  </script>
+</body>
+</html>

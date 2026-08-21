@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Farm Detail - Kru Suan AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#dfecdc",
+                        "on-secondary-container": "#2e7238",
+                        "surface-bright": "#f0fded",
+                        "inverse-primary": "#78dc77",
+                        "tertiary": "#75584d",
+                        "secondary-container": "#abf4ac",
+                        "outline": "#6f7a6b",
+                        "tertiary-container": "#b69488",
+                        "surface-tint": "#006e1c",
+                        "on-primary-fixed": "#002204",
+                        "secondary-fixed": "#abf4ac",
+                        "tertiary-fixed-dim": "#e4beb2",
+                        "background": "#f0fded",
+                        "primary": "#006e1c",
+                        "primary-fixed": "#94f990",
+                        "on-primary-fixed-variant": "#005313",
+                        "inverse-on-surface": "#e8f4e4",
+                        "primary-fixed-dim": "#78dc77",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#e5f1e1",
+                        "surface-container-low": "#ebf7e7",
+                        "on-surface-variant": "#3f4a3c",
+                        "on-primary-container": "#003c0b",
+                        "secondary": "#286b33",
+                        "outline-variant": "#becab9",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#d1dece",
+                        "primary-container": "#4caf50",
+                        "on-background": "#141e14",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#002107",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#90d792",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#d9e6d6",
+                        "tertiary-fixed": "#ffdbce",
+                        "on-tertiary-container": "#452d25",
+                        "on-tertiary-fixed-variant": "#5b4137",
+                        "surface": "#f0fded",
+                        "surface-variant": "#d9e6d6",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#07521d",
+                        "error": "#ba1a1a",
+                        "on-surface": "#141e14",
+                        "on-tertiary-fixed": "#2b160f",
+                        "inverse-surface": "#283328"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "sm": "12px",
+                        "container-margin": "20px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "base": "8px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Noto Sans Thai"],
+                        "headline-md": ["Noto Sans Thai"],
+                        "headline-xl-mobile": ["Noto Sans Thai"],
+                        "headline-xl": ["Noto Sans Thai"],
+                        "label-sm": ["Noto Sans Thai"],
+                        "headline-lg": ["Noto Sans Thai"],
+                        "label-lg": ["Noto Sans Thai"],
+                        "body-lg": ["Noto Sans Thai"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-xl-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "headline-xl": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Custom Timeline Styles */
+        .timeline-line {
+            position: absolute;
+            left: 23px; /* Center of the 48px icon/circle */
+            top: 48px;
+            bottom: 0;
+            width: 2px;
+            background-image: linear-gradient(to bottom, #8D6E63 50%, transparent 50%);
+            background-size: 2px 8px;
+            background-repeat: repeat-y;
+            z-index: 0;
+        }
+        .timeline-item:last-child .timeline-line {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex antialiased">
+<!-- Desktop Side Navigation -->
+<nav class="hidden md:flex flex-col h-full p-4 gap-2 bg-surface-container-low dark:bg-surface-container-lowest shadow-sm fixed left-0 top-0 w-[280px] z-40">
+<!-- Brand Header -->
+<div class="flex items-center gap-4 px-4 py-6 mb-4">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center overflow-hidden shrink-0">
+<img alt="Kru Suan AI Logo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpWop2_QuI9KGwjHGxKO3ljYXA5lL1AkHuG5b9ETZlyJNUoei-XHjFsF3qY7vBEKOLbyVGUPBTSzsbzTHKCgmljRhYzi-IFs63P5io5_i1ZyF_aim65lBpmpL-hpVyRaIG5hZGTkYqym_X8JVYD9iw87yS_oB686a9hrO3aFVRDS1YVbo8b4lIAxRGOm49eCzJn_z30GB2h98Eje3LZ1qR1sAV22W-tuRrSL9EPdVllONKblCK9dwSvw"/>
+</div>
+<div>
+<h1 class="text-headline-lg font-headline-lg text-primary dark:text-primary-fixed font-black tracking-tight">Kru Suan AI</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Your AI Farming Guide</p>
+</div>
+</div>
+<!-- CTA -->
+<button class="w-full py-3 mb-6 bg-primary text-on-primary rounded-xl font-label-lg flex items-center justify-center gap-2 hover:bg-on-primary-fixed-variant transition-colors shadow-sm">
+<span class="material-symbols-outlined">add</span>
+            Add New Plot
+        </button>
+<!-- Main Nav Links -->
+<div class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-xl transition-all duration-200 hover:scale-[1.02] hover:bg-surface-container-high transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-body-md">Home</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container dark:bg-on-primary-fixed-variant text-on-primary-container dark:text-primary-fixed rounded-xl transition-all duration-200 scale-95 transition-all" href="#">
+<span class="material-symbols-outlined fill" data-icon="potted_plant">potted_plant</span>
+<span class="font-body-md font-bold">My Farms</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-xl transition-all duration-200 hover:scale-[1.02] hover:bg-surface-container-high transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="font-body-md">Tasks</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-xl transition-all duration-200 hover:scale-[1.02] hover:bg-surface-container-high transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-body-md">AI Chat</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-xl transition-all duration-200 hover:scale-[1.02] hover:bg-surface-container-high transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="font-body-md">Market</span>
+</a>
+</div>
+<!-- Footer Nav Links -->
+<div class="mt-auto space-y-2 pt-4 border-t border-outline-variant/30">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-body-md">Support</span>
+</a>
+</div>
+</nav>
+<!-- Mobile Bottom Navigation (Hidden on this specific task as requested, but structured for context if needed, suppressing for focused detail view) -->
+<!-- Suppressed for focused journey -->
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-[280px] w-full max-w-4xl mx-auto px-container-margin py-lg pb-32">
+<!-- Mobile Top App Bar -->
+<header class="md:hidden flex justify-between items-center w-full py-4 mb-4">
+<button class="p-2 rounded-full hover:bg-surface-container-high text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h2 class="text-headline-md-mobile font-headline-md font-bold text-primary">Farm Detail</h2>
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC76_xbioUwgJBEMqb_V7-jr4pvZ1gzKxtIGk3YAA9xQ_1-muw_toxVPAnIq3I4-xSaDo6Rzl9XQFqq1UEVPMvW9cPsz-ennNHofic9XAsF_EtzwZQx7bHYsL9Pd4-9kyD7z70xSzdZqn4r-jAPOqna3QBUuNB-ZusOtFisGEfRli1VzDiuu-IAT8PXJdC2oRpBQ2MfKV0dwoxh-3a5HrdI12LZHbKmidT3uQxzaQs3zlmQExTHCJZDOA"/>
+</div>
+</header>
+<!-- Desktop Header Title -->
+<div class="hidden md:flex items-center gap-4 mb-lg">
+<button class="p-2 rounded-full hover:bg-surface-container-high text-on-surface-variant transition-colors bg-white shadow-sm">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h2 class="text-headline-xl font-headline-xl text-on-background">Farm Detail</h2>
+</div>
+<!-- Hero Card (Farm Card) -->
+<div class="bg-white rounded-3xl shadow-[0px_4px_12px_rgba(47,58,47,0.08)] overflow-hidden mb-8 transition-transform duration-300 hover:shadow-lg">
+<!-- Hero Image -->
+<div class="relative h-64 w-full bg-surface-container-low">
+<div class="absolute inset-0 bg-cover bg-center w-full h-full" data-alt="A lush, vibrant illustration of a healthy tomato garden in full sunlight, modern digital illustration style, highly detailed leaves and bright red tomatoes, warm and optimistic lighting, nurturing agricultural setting, highly detailed, expressive colors." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB7a1OimTwTUKHkWjioE7bPwsC-XJCLU2-9dvync_5LZ4KOAWnA-vfIjaRVfiI2i7IZ81U55kjTfFGVyfLBrD1pDSkciuLhsN-IeWHaW0ZNSS_BqTLKuKtVdTWm0rtyB2_cJIOv8Bv9VeaVo4whAeXTmq_sQXWqrZ8xiELsNOZbafyFiv5T4bVjTvYboZvaRxbXD-wVMDMUT2aKoGvL5Pfmasj_Rl-_IvST3PPq9DbvPRzvWR0VjxMaOw')"></div>
+<!-- Overlay Gradient -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+<!-- Content over Image -->
+<div class="absolute bottom-0 left-0 right-0 p-lg text-white">
+<div class="flex justify-between items-end">
+<div>
+<span class="inline-block px-3 py-1 bg-primary/80 backdrop-blur-sm text-white rounded-full text-label-sm font-label-sm mb-2 shadow-sm">เจริญเติบโต (Growth)</span>
+<h1 class="text-headline-xl-mobile md:text-headline-xl font-headline-xl font-bold mb-1 shadow-sm">มะเขือเทศ #01</h1>
+<p class="text-body-md opacity-90">Planted 45 days ago</p>
+</div>
+<button class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/30 transition-colors border border-white/30">
+<span class="material-symbols-outlined text-white">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Progress Section -->
+<div class="p-lg bg-white">
+<div class="flex justify-between items-center mb-3">
+<span class="text-label-lg font-label-lg text-on-surface-variant">Overall Progress</span>
+<span class="text-headline-md font-headline-md text-primary">72%</span>
+</div>
+<!-- Pill-shaped Progress Bar -->
+<div class="w-full h-4 bg-surface-container-high rounded-full overflow-hidden shadow-inner">
+<div class="h-full bg-primary rounded-full transition-all duration-1000 ease-out" style="width: 72%;"></div>
+</div>
+</div>
+</div>
+<!-- Vertical Timeline Section -->
+<h3 class="text-headline-md font-headline-md text-on-background mb-6 px-2">Crop Journey</h3>
+<div class="bg-white rounded-3xl p-lg md:p-8 shadow-[0px_4px_12px_rgba(47,58,47,0.08)] relative">
+<!-- Timeline Item 1: เตรียมดิน (Completed) -->
+<div class="timeline-item relative flex gap-6 pb-8">
+<div class="timeline-line"></div>
+<div class="relative z-10 w-12 h-12 rounded-full bg-primary flex items-center justify-center shrink-0 shadow-sm border-4 border-white">
+<span class="material-symbols-outlined text-white font-bold">check</span>
+</div>
+<div class="flex-1 pt-2">
+<h4 class="text-headline-md font-headline-md text-primary mb-1">เตรียมดิน</h4>
+<p class="text-body-md text-on-surface-variant">Soil preparation completed. pH levels optimized.</p>
+</div>
+</div>
+<!-- Timeline Item 2: เพาะกล้า (Completed) -->
+<div class="timeline-item relative flex gap-6 pb-8">
+<div class="timeline-line"></div>
+<div class="relative z-10 w-12 h-12 rounded-full bg-primary flex items-center justify-center shrink-0 shadow-sm border-4 border-white">
+<span class="material-symbols-outlined text-white font-bold">check</span>
+</div>
+<div class="flex-1 pt-2">
+<h4 class="text-headline-md font-headline-md text-primary mb-1">เพาะกล้า</h4>
+<p class="text-body-md text-on-surface-variant">Seedlings sprouted successfully in nursery.</p>
+</div>
+</div>
+<!-- Timeline Item 3: ลงปลูก (Completed) -->
+<div class="timeline-item relative flex gap-6 pb-8">
+<div class="timeline-line"></div>
+<div class="relative z-10 w-12 h-12 rounded-full bg-primary flex items-center justify-center shrink-0 shadow-sm border-4 border-white">
+<span class="material-symbols-outlined text-white font-bold">check</span>
+</div>
+<div class="flex-1 pt-2">
+<h4 class="text-headline-md font-headline-md text-primary mb-1">ลงปลูก</h4>
+<p class="text-body-md text-on-surface-variant">Transplanted to main plot with optimal spacing.</p>
+</div>
+</div>
+<!-- Timeline Item 4: ดูแล (Active) -->
+<div class="timeline-item relative flex gap-6 pb-8">
+<div class="timeline-line"></div>
+<!-- Active Indicator with pulsing effect -->
+<div class="relative z-10 w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center shrink-0 shadow-md border-4 border-white ring-4 ring-primary/20">
+<span class="material-symbols-outlined text-on-secondary-container fill">eco</span>
+<!-- Pulse animation dot -->
+<span class="absolute top-0 right-0 w-3 h-3 bg-primary rounded-full animate-ping"></span>
+<span class="absolute top-0 right-0 w-3 h-3 bg-primary rounded-full"></span>
+</div>
+<div class="flex-1 pt-2 bg-surface-bright rounded-2xl p-4 -mt-2 border border-primary/20 shadow-sm">
+<div class="flex justify-between items-center mb-2">
+<h4 class="text-headline-md font-headline-md text-on-background">ดูแล (วันนี้)</h4>
+<span class="px-2 py-1 bg-primary text-white text-xs rounded-lg font-bold">ACTIVE</span>
+</div>
+<p class="text-body-md text-on-surface-variant mb-4">Focus on watering schedules and monitoring for common pests. AI suggests adding organic fertilizer tomorrow.</p>
+<!-- Embedded mini task -->
+<div class="flex items-center justify-between p-3 bg-white rounded-xl border border-surface-container-high hover:shadow-md transition-shadow cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded border-2 border-outline flex items-center justify-center group-hover:border-primary transition-colors"></div>
+<span class="text-body-md font-body-md text-on-surface">Water Plot A</span>
+</div>
+<span class="text-label-sm text-outline">10:00 AM</span>
+</div>
+</div>
+</div>
+<!-- Timeline Item 5: ออกดอก (Locked) -->
+<div class="timeline-item relative flex gap-6 pb-8 opacity-60">
+<div class="timeline-line"></div>
+<div class="relative z-10 w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0 border-4 border-white">
+<span class="material-symbols-outlined text-outline">lock</span>
+</div>
+<div class="flex-1 pt-2">
+<h4 class="text-headline-md font-headline-md text-outline mb-1">ออกดอก</h4>
+<p class="text-body-md text-outline-variant">Flowering stage. Expected in ~14 days.</p>
+</div>
+</div>
+<!-- Timeline Item 6: เก็บเกี่ยว (Locked) -->
+<div class="timeline-item relative flex gap-6 pb-8 opacity-60">
+<div class="timeline-line"></div>
+<div class="relative z-10 w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0 border-4 border-white">
+<span class="material-symbols-outlined text-outline">lock</span>
+</div>
+<div class="flex-1 pt-2">
+<h4 class="text-headline-md font-headline-md text-outline mb-1">เก็บเกี่ยว</h4>
+<p class="text-body-md text-outline-variant">Harvesting stage.</p>
+</div>
+</div>
+<!-- Timeline Item 7: จำหน่าย (Locked) -->
+<div class="timeline-item relative flex gap-6 opacity-60">
+<div class="relative z-10 w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0 border-4 border-white">
+<span class="material-symbols-outlined text-outline">lock</span>
+</div>
+<div class="flex-1 pt-2">
+<h4 class="text-headline-md font-headline-md text-outline mb-1">จำหน่าย</h4>
+<p class="text-body-md text-outline-variant">Market and sales.</p>
+</div>
+</div>
+</div>
+</main>
+</body></html>

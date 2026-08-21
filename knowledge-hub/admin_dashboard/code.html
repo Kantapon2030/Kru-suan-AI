@@ -1,0 +1,444 @@
+<!DOCTYPE html><html lang="th"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>ครูสวน AI - Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#e8f4e4",
+                        "surface-container-highest": "#d9e6d6",
+                        "outline-variant": "#becab9",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "background": "#f0fded",
+                        "on-tertiary-fixed": "#2b160f",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#452d25",
+                        "primary": "#006e1c",
+                        "inverse-primary": "#78dc77",
+                        "surface-container-high": "#dfecdc",
+                        "surface-tint": "#006e1c",
+                        "tertiary-container": "#b69488",
+                        "error-container": "#ffdad6",
+                        "secondary": "#286b33",
+                        "on-secondary-fixed": "#002107",
+                        "secondary-fixed-dim": "#90d792",
+                        "surface-dim": "#d1dece",
+                        "surface-container-low": "#ebf7e7",
+                        "secondary-fixed": "#abf4ac",
+                        "on-secondary-container": "#2e7238",
+                        "on-background": "#141e14",
+                        "primary-container": "#4caf50",
+                        "primary-fixed-dim": "#78dc77",
+                        "error": "#ba1a1a",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#002204",
+                        "surface": "#f0fded",
+                        "on-secondary-fixed-variant": "#07521d",
+                        "on-primary-container": "#003c0b",
+                        "on-surface": "#141e14",
+                        "inverse-surface": "#283328",
+                        "secondary-container": "#abf4ac",
+                        "tertiary": "#75584d",
+                        "surface-bright": "#f0fded",
+                        "on-tertiary-fixed-variant": "#5b4137",
+                        "tertiary-fixed-dim": "#e4beb2",
+                        "primary-fixed": "#94f990",
+                        "surface-container": "#e5f1e1",
+                        "tertiary-fixed": "#ffdbce",
+                        "on-surface-variant": "#3f4a3c",
+                        "surface-variant": "#d9e6d6",
+                        "outline": "#6f7a6b",
+                        "on-primary-fixed-variant": "#005313",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "2xl": "1.5rem"
+                    },
+                    "spacing": {
+                        "lg": "40px",
+                        "margin-desktop": "48px",
+                        "xl": "64px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "base": "8px",
+                        "sm": "12px",
+                        "margin-mobile": "16px",
+                        "md": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "headline-md": ["Be Vietnam Pro"],
+                        "headline-sm": ["Be Vietnam Pro"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["28px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "headline-sm": ["22px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["30px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .ambient-shadow {
+            box-shadow: 0 4px 20px rgba(0, 110, 28, 0.06);
+        }
+        .ambient-shadow-hover:hover {
+            box-shadow: 0 8px 30px rgba(0, 110, 28, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+<a href="/" title="กลับสู่แอปครูสวน AI (เกษตรกร)" style="position:fixed;left:12px;bottom:12px;z-index:9999;display:flex;align-items:center;gap:6px;background:#006e1c;color:#fff;padding:8px 14px;border-radius:999px;font-family:'Noto Sans Thai',sans-serif;font-size:12px;font-weight:700;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.25);">
+<span style="font-size:14px;">🌱</span><span>กลับสู่ครูสวน AI</span>
+</a>
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-base bg-surface/80 backdrop-blur-md shadow-sm md:w-[calc(100%-256px)] md:ml-[256px]">
+<span class="md:hidden text-headline-sm font-headline-sm font-bold text-primary cursor-pointer" onclick="window.location.href='/admin_dashboard/code.html'">ครูสวน AI</span>
+<span class="hidden md:block text-headline-sm font-headline-sm font-bold text-on-background">ภาพรวมระบบ</span>
+<div class="flex items-center gap-md">
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant" title="การแจ้งเตือน" type="button">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-label-md" title="Admin User">A</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-screen fixed left-0 top-0 p-md overflow-y-auto w-64 bg-surface-container-low border-r border-outline-variant/30 z-40">
+<div class="flex items-center gap-sm mb-lg mt-2 cursor-pointer" onclick="window.location.href='/admin_dashboard/code.html'">
+<div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+<div>
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary leading-none">ครูสวน AI</h1>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Admin Console</span>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-sm bg-primary-container text-on-primary-container rounded-xl px-md py-sm font-bold scale-[0.98] transition-all" href="/admin_dashboard/code.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-container-high rounded-xl px-md py-sm hover:translate-x-1 transition-transform duration-200" href="/interviewer_dashboard/code.html">
+<span class="material-symbols-outlined">call</span>
+<span class="text-label-md font-label-md">Live Calls</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-container-high rounded-xl px-md py-sm hover:translate-x-1 transition-transform duration-200" href="/create_interview/code.html">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="text-label-md font-label-md">New Interview</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-container-high rounded-xl px-md py-sm hover:translate-x-1 transition-transform duration-200" href="/knowledge_review/code.html">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-label-md font-label-md">Knowledge Review</span>
+</a>
+</nav>
+<div class="mt-auto pt-lg border-t border-outline-variant/30 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-label-md">A</div>
+<div>
+<p class="text-label-md font-label-md text-on-surface">Admin User</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Reviewer</p>
+</div>
+</div>
+</aside>
+
+<!-- BottomNavBar (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-safe py-2 md:hidden bg-surface shadow-[0_-4px_20px_rgba(20,30,20,0.06)] rounded-t-2xl border-t border-outline-variant/10">
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 scale-95 transition-transform duration-200" href="/admin_dashboard/code.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-label-sm font-label-sm mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high rounded-full transition-colors" href="/interviewer_dashboard/code.html">
+<span class="material-symbols-outlined">call</span>
+<span class="text-label-sm font-label-sm mt-1">Live Calls</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high rounded-full transition-colors" href="/create_interview/code.html">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="text-label-sm font-label-sm mt-1">New</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high rounded-full transition-colors" href="/knowledge_review/code.html">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-label-sm font-label-sm mt-1">Review</span>
+</a>
+</nav>
+
+<!-- Main Content Area -->
+<main class="pt-[88px] pb-[88px] md:pb-lg md:pl-[256px] min-h-screen px-margin-mobile md:px-margin-desktop transition-all duration-300">
+<div class="max-w-7xl mx-auto space-y-lg">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="text-headline-md font-headline-md text-on-background mb-1">ภาพรวมระบบ (Overview)</h2>
+<p class="text-body-md font-body-md text-on-surface-variant">ข้อมูลสถานะปัจจุบันของระบบจัดเก็บความรู้การเกษตร</p>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-lowest px-4 py-2 rounded-full ambient-shadow text-label-md font-label-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span id="update-timestamp">อัปเดตล่าสุด: วันนี้</span>
+</div>
+</div>
+<!-- Stats Bento Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Stat Card 1 -->
+<div onclick="window.location.href='/interviewer_dashboard/code.html'" class="bg-surface-container-lowest rounded-2xl p-md ambient-shadow ambient-shadow-hover transition-all duration-300 flex flex-col justify-between h-full border border-outline-variant/10 cursor-pointer">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 rounded-xl bg-primary-container/30 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">call</span>
+</div>
+<span class="text-primary bg-primary/10 px-2 py-1 rounded-md text-label-sm font-label-sm">+12%</span>
+</div>
+<div>
+<h3 id="stat-live-calls" class="text-headline-lg font-headline-lg text-on-background">124</h3>
+<p class="text-label-md font-label-md text-on-surface-variant">Live Calls</p>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-surface-container-lowest rounded-2xl p-md ambient-shadow ambient-shadow-hover transition-all duration-300 flex flex-col justify-between h-full border border-outline-variant/10">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 rounded-xl bg-tertiary-container/30 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[24px]">database</span>
+</div>
+<span class="text-on-surface-variant bg-surface-container px-2 py-1 rounded-md text-label-sm font-label-sm">+5</span>
+</div>
+<div>
+<h3 id="stat-sources" class="text-headline-lg font-headline-lg text-on-background">86</h3>
+<p class="text-label-md font-label-md text-on-surface-variant">Sources</p>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div onclick="window.location.href='/knowledge_review/code.html'" class="bg-surface-container-lowest rounded-2xl p-md ambient-shadow ambient-shadow-hover transition-all duration-300 flex flex-col justify-between h-full border border-outline-variant/10 relative overflow-hidden cursor-pointer">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-secondary-container/50 rounded-full blur-xl"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/50 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[24px]">menu_book</span>
+</div>
+</div>
+<div class="relative z-10">
+<h3 id="stat-articles" class="text-headline-lg font-headline-lg text-on-background">1,245</h3>
+<p class="text-label-md font-label-md text-on-surface-variant">Knowledge Articles</p>
+</div>
+</div>
+<!-- Stat Card 4 (Actionable) -->
+<div onclick="window.location.href='/knowledge_review/code.html'" class="bg-error-container/40 rounded-2xl p-md ambient-shadow ambient-shadow-hover transition-all duration-300 flex flex-col justify-between h-full border border-error/20 cursor-pointer">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 rounded-xl bg-error text-on-error flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">pending_actions</span>
+</div>
+<span class="flex h-3 w-3 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-error opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-error"></span>
+</span>
+</div>
+<div>
+<h3 id="stat-waiting-review" class="text-headline-lg font-headline-lg text-on-error-container">42</h3>
+<p class="text-label-md font-label-md text-on-error-container/80">Waiting Review</p>
+</div>
+</div>
+</div>
+<!-- Main View: Knowledge Pipeline -->
+<section class="bg-surface-container-lowest rounded-2xl p-md md:p-lg ambient-shadow border border-outline-variant/10">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-headline-sm font-headline-sm text-on-background">Knowledge Pipeline</h3>
+<button onclick="window.location.href='/knowledge_review/code.html'" class="text-primary hover:text-primary-fixed-dim transition-colors text-label-md font-label-md flex items-center gap-1 cursor-pointer">
+                        View Details <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+<!-- Pipeline Visualization -->
+<div class="relative py-8">
+<div class="hidden md:block absolute top-1/2 left-[10%] right-[10%] h-1.5 bg-surface-container -translate-y-1/2 rounded-full z-0"></div>
+<div class="hidden md:block absolute top-1/2 left-[10%] w-[60%] h-1.5 bg-primary/30 -translate-y-1/2 rounded-full z-0"></div>
+<div class="flex flex-col md:flex-row justify-between items-center relative z-10 gap-6 md:gap-2">
+<!-- Step 1 -->
+<div class="flex flex-col items-center gap-3 w-full md:w-auto">
+<div class="w-16 h-16 rounded-full bg-surface-container-lowest border-4 border-surface-container flex items-center justify-center text-on-surface-variant shadow-sm z-10 relative">
+<span class="material-symbols-outlined text-[28px]">database</span>
+</div>
+<div class="text-center">
+<p class="text-label-md font-label-md text-on-background">Sources</p>
+<p id="pipe-sources" class="text-label-sm font-label-sm text-on-surface-variant">86 Active</p>
+</div>
+<div class="md:hidden h-8 w-1 bg-surface-container rounded-full mt-2"></div>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center gap-3 w-full md:w-auto">
+<div class="w-16 h-16 rounded-full bg-surface-container-lowest border-4 border-primary-container flex items-center justify-center text-primary shadow-sm z-10 relative">
+<span class="material-symbols-outlined text-[28px]">cloud_download</span>
+</div>
+<div class="text-center">
+<p class="text-label-md font-label-md text-on-background">Imported</p>
+<p id="pipe-imported" class="text-label-sm font-label-sm text-on-surface-variant">Today: 12</p>
+</div>
+<div class="md:hidden h-8 w-1 bg-surface-container rounded-full mt-2"></div>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center gap-3 w-full md:w-auto">
+<div class="w-16 h-16 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md z-10 relative shadow-[0_0_20px_rgba(76,175,80,0.4)] animate-[pulse_3s_ease-in-out_infinite]">
+<span class="material-symbols-outlined text-[28px]">memory</span>
+</div>
+<div class="text-center">
+<p class="text-label-md font-label-md text-primary font-bold">AI Processing</p>
+<p id="pipe-processing" class="text-label-sm font-label-sm text-on-surface-variant">Extracting wisdom...</p>
+</div>
+<div class="md:hidden h-8 w-1 bg-primary/30 rounded-full mt-2"></div>
+</div>
+<!-- Step 4 -->
+<div onclick="window.location.href='/knowledge_review/code.html'" class="flex flex-col items-center gap-3 w-full md:w-auto cursor-pointer">
+<div class="w-16 h-16 rounded-full bg-error-container border-4 border-error/20 flex items-center justify-center text-on-error-container shadow-sm z-10 relative">
+<span class="material-symbols-outlined text-[28px]">fact_check</span>
+<div id="pipe-review-badge" class="absolute -top-1 -right-1 bg-error text-on-error text-[10px] font-bold px-1.5 py-0.5 rounded-full">42</div>
+</div>
+<div class="text-center">
+<p class="text-label-md font-label-md text-on-error-container">Review</p>
+<p class="text-label-sm font-label-sm text-error/80 font-bold">Action Required</p>
+</div>
+<div class="md:hidden h-8 w-1 bg-surface-container rounded-full mt-2"></div>
+</div>
+<!-- Step 5 -->
+<div onclick="window.location.href='/knowledge_review/code.html'" class="flex flex-col items-center gap-3 w-full md:w-auto cursor-pointer">
+<div class="w-16 h-16 rounded-full bg-surface-container-lowest border-4 border-surface-container flex items-center justify-center text-outline shadow-sm z-10 relative">
+<span class="material-symbols-outlined text-[28px]">menu_book</span>
+</div>
+<div class="text-center">
+<p class="text-label-md font-label-md text-on-surface-variant">Knowledge Base</p>
+<p id="pipe-kb" class="text-label-sm font-label-sm text-on-surface-variant">Ready to use</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Section: Grid for Activity & Quick Actions -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Recent Activity / Action Panel -->
+<div class="lg:col-span-2 bg-surface-container-lowest rounded-2xl p-md ambient-shadow border border-outline-variant/10 flex flex-col justify-center relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none"></div>
+<div class="flex items-start gap-4 relative z-10">
+<div class="w-14 h-14 rounded-2xl bg-error/10 flex items-center justify-center text-error flex-shrink-0">
+<span class="material-symbols-outlined text-[32px]">warning_amber</span>
+</div>
+<div class="flex-grow">
+<h3 class="text-headline-sm font-headline-sm text-on-background mb-1">รายการรอดำเนินการ</h3>
+<p class="text-body-md font-body-md text-on-surface-variant mb-4">มีองค์ความรู้ใหม่ที่สกัดโดย AI <span id="action-waiting-count" class="font-bold text-on-background">ต้องตรวจสอบ 42 รายการ</span> ก่อนเผยแพร่เข้าสู่ระบบฐานข้อมูลหลัก</p>
+<div class="flex flex-wrap gap-3">
+<button onclick="window.location.href='/knowledge_review/code.html'" class="bg-primary hover:bg-primary-fixed-variant text-on-primary rounded-full px-6 py-3 text-label-md font-label-md flex items-center gap-2 transition-all ambient-shadow hover:-translate-y-0.5 cursor-pointer">
+                                    เริ่มตรวจสอบ
+                                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+<button onclick="window.location.href='/knowledge_review/code.html?status=all'" class="bg-transparent border-2 border-outline-variant hover:border-primary hover:text-primary text-on-surface-variant rounded-full px-6 py-3 text-label-md font-label-md transition-all cursor-pointer">
+                                    ดูรายการทั้งหมด
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Tips / System Health -->
+<div class="bg-surface-container-low rounded-2xl p-md ambient-shadow border border-outline-variant/10">
+<h3 class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider mb-4">System Status</h3>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-label-sm font-label-sm mb-1">
+<span class="text-on-background">AI Processing Queue</span>
+<span class="text-primary font-bold">Normal</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[30%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-label-sm font-label-sm mb-1">
+<span class="text-on-background">Storage Capacity</span>
+<span class="text-on-surface-variant">45%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary rounded-full w-[45%]"></div>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant/20">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</div>
+<div>
+<p class="text-label-md font-label-md text-on-background">System Healthy</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">All services operational.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+    async function loadAdminStats() {
+        try {
+            const [statsRes, pipeRes] = await Promise.all([
+                fetch('/api/admin/stats'),
+                fetch('/api/admin/pipeline')
+            ]);
+
+            if (statsRes.ok) {
+                const sData = await statsRes.json();
+                if (sData.success && sData.data) {
+                    const d = sData.data;
+                    document.getElementById('stat-live-calls').textContent = d.liveCalls;
+                    document.getElementById('stat-sources').textContent = d.sources;
+                    document.getElementById('stat-articles').textContent = d.knowledgeArticles;
+                    document.getElementById('stat-waiting-review').textContent = d.waitingReview;
+                    document.getElementById('action-waiting-count').textContent = `ต้องตรวจสอบ ${d.waitingReview} รายการ`;
+                    document.getElementById('pipe-review-badge').textContent = d.waitingReview;
+                }
+            }
+
+            if (pipeRes.ok) {
+                const pData = await pipeRes.json();
+                if (pData.success && pData.data) {
+                    const p = pData.data;
+                    document.getElementById('pipe-sources').textContent = `${p.sources} Active`;
+                    document.getElementById('pipe-imported').textContent = `Today: ${p.importedToday}`;
+                    document.getElementById('pipe-kb').textContent = `${p.knowledgeBase} Ready`;
+                }
+            }
+
+            const now = new Date();
+            document.getElementById('update-timestamp').textContent = `อัปเดตล่าสุด: วันนี้, ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')} น.`;
+        } catch (e) {
+            console.warn('Error loading admin stats:', e);
+        }
+    }
+
+    document.querySelectorAll('.rounded-full.z-10').forEach(node => {
+        node.addEventListener('mouseenter', () => {
+            node.style.transform = 'scale(1.1)';
+            node.style.transition = 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        });
+        node.addEventListener('mouseleave', () => {
+            node.style.transform = 'scale(1)';
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', loadAdminStats);
+</script>
+</body></html>

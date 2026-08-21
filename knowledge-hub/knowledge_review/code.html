@@ -1,0 +1,652 @@
+<!DOCTYPE html><html lang="th"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Knowledge Review - ครูสวน AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "inverse-on-surface": "#e8f4e4",
+                            "surface-container-highest": "#d9e6d6",
+                            "outline-variant": "#becab9",
+                            "on-primary": "#ffffff",
+                            "surface-container-lowest": "#ffffff",
+                            "background": "#f0fded",
+                            "on-tertiary-fixed": "#2b160f",
+                            "on-error-container": "#93000a",
+                            "on-secondary": "#ffffff",
+                            "on-tertiary-container": "#452d25",
+                            "primary": "#006e1c",
+                            "inverse-primary": "#78dc77",
+                            "surface-container-high": "#dfecdc",
+                            "surface-tint": "#006e1c",
+                            "tertiary-container": "#b69488",
+                            "error-container": "#ffdad6",
+                            "secondary": "#286b33",
+                            "on-secondary-fixed": "#002107",
+                            "secondary-fixed-dim": "#90d792",
+                            "surface-dim": "#d1dece",
+                            "surface-container-low": "#ebf7e7",
+                            "secondary-fixed": "#abf4ac",
+                            "on-secondary-container": "#2e7238",
+                            "on-background": "#141e14",
+                            "primary-container": "#4caf50",
+                            "primary-fixed-dim": "#78dc77",
+                            "error": "#ba1a1a",
+                            "on-tertiary": "#ffffff",
+                            "on-primary-fixed": "#002204",
+                            "surface": "#f0fded",
+                            "on-secondary-fixed-variant": "#07521d",
+                            "on-primary-container": "#003c0b",
+                            "on-surface": "#141e14",
+                            "inverse-surface": "#283328",
+                            "secondary-container": "#abf4ac",
+                            "tertiary": "#75584d",
+                            "surface-bright": "#f0fded",
+                            "on-tertiary-fixed-variant": "#5b4137",
+                            "tertiary-fixed-dim": "#e4beb2",
+                            "primary-fixed": "#94f990",
+                            "surface-container": "#e5f1e1",
+                            "tertiary-fixed": "#ffdbce",
+                            "on-surface-variant": "#3f4a3c",
+                            "surface-variant": "#d9e6d6",
+                            "outline": "#6f7a6b",
+                            "on-primary-fixed-variant": "#005313",
+                            "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                    },
+                    "spacing": {
+                            "lg": "40px",
+                            "margin-desktop": "48px",
+                            "xl": "64px",
+                            "gutter": "24px",
+                            "xs": "4px",
+                            "base": "8px",
+                            "sm": "12px",
+                            "margin-mobile": "16px",
+                            "md": "24px"
+                    },
+                    "fontFamily": {
+                            "body-lg": [
+                                    "Be Vietnam Pro"
+                            ],
+                            "headline-lg": [
+                                    "Be Vietnam Pro"
+                            ],
+                            "headline-md": [
+                                    "Be Vietnam Pro"
+                            ],
+                            "headline-sm": [
+                                    "Be Vietnam Pro"
+                            ],
+                            "label-sm": [
+                                    "Be Vietnam Pro"
+                            ],
+                            "headline-lg-mobile": [
+                                    "Be Vietnam Pro"
+                            ],
+                            "body-md": [
+                                    "Be Vietnam Pro"
+                            ],
+                            "label-md": [
+                                    "Be Vietnam Pro"
+                            ]
+                    },
+                    "fontSize": {
+                            "body-lg": [
+                                    "18px",
+                                    {
+                                            "lineHeight": "1.6",
+                                            "fontWeight": "400"
+                                    }
+                            ],
+                            "headline-lg": [
+                                    "40px",
+                                    {
+                                            "lineHeight": "1.2",
+                                            "letterSpacing": "-0.02em",
+                                            "fontWeight": "700"
+                                    }
+                            ],
+                            "headline-md": [
+                                    "28px",
+                                    {
+                                            "lineHeight": "1.3",
+                                            "fontWeight": "600"
+                                    }
+                            ],
+                            "headline-sm": [
+                                    "22px",
+                                    {
+                                            "lineHeight": "1.4",
+                                            "fontWeight": "600"
+                                    }
+                            ],
+                            "label-sm": [
+                                    "12px",
+                                    {
+                                            "lineHeight": "1.2",
+                                            "fontWeight": "600"
+                                    }
+                            ],
+                            "headline-lg-mobile": [
+                                    "30px",
+                                    {
+                                            "lineHeight": "1.2",
+                                            "fontWeight": "700"
+                                    }
+                            ],
+                            "body-md": [
+                                    "16px",
+                                    {
+                                            "lineHeight": "1.6",
+                                            "fontWeight": "400"
+                                    }
+                            ],
+                            "label-md": [
+                                    "14px",
+                                    {
+                                            "lineHeight": "1.2",
+                                            "letterSpacing": "0.01em",
+                                            "fontWeight": "500"
+                                    }
+                            ]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #f0fded; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="text-on-background font-body-md h-screen flex overflow-hidden">
+<a href="/" title="กลับสู่แอปครูสวน AI (เกษตรกร)" style="position:fixed;left:12px;bottom:12px;z-index:9999;display:flex;align-items:center;gap:6px;background:#006e1c;color:#fff;padding:8px 14px;border-radius:999px;font-family:'Noto Sans Thai',sans-serif;font-size:12px;font-weight:700;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.25);">
+<span style="font-size:14px;">🌱</span><span>กลับสู่ครูสวน AI</span>
+</a>
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-base bg-surface/80 backdrop-blur-md shadow-sm md:w-[calc(100%-256px)] md:ml-[256px]">
+<span class="md:hidden text-headline-sm font-headline-sm font-bold text-primary cursor-pointer" onclick="window.location.href='/admin_dashboard/code.html'">ครูสวน AI</span>
+<span class="hidden md:block text-headline-sm font-headline-sm font-bold text-on-background">ตรวจทานองค์ความรู้</span>
+<div class="flex items-center gap-md">
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant" title="การแจ้งเตือน" type="button">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-label-md" title="Admin User">A</div>
+</div>
+</header>
+<!-- Side NavBar (Desktop) -->
+<nav class="hidden md:flex flex-col h-screen fixed left-0 top-0 p-md overflow-y-auto bg-surface-container-low border-r border-outline-variant/30 w-64 z-40">
+<div class="flex items-center gap-sm mb-lg mt-2 cursor-pointer" onclick="window.location.href='/admin_dashboard/code.html'">
+<div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+<div>
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary leading-none">ครูสวน AI</h1>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Admin Console</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-container-high rounded-xl px-md py-sm hover:translate-x-1 transition-transform duration-200" href="/admin_dashboard/code.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-container-high rounded-xl px-md py-sm hover:translate-x-1 transition-transform duration-200" href="/interviewer_dashboard/code.html">
+<span class="material-symbols-outlined">call</span>
+<span class="text-label-md font-label-md">Live Calls</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-container-high rounded-xl px-md py-sm hover:translate-x-1 transition-transform duration-200" href="/create_interview/code.html">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="text-label-md font-label-md">New Interview</span>
+</a>
+<a class="flex items-center gap-sm bg-primary-container text-on-primary-container rounded-xl px-md py-sm font-bold scale-[0.98] transition-all" href="/knowledge_review/code.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+<span class="text-label-md font-label-md">Knowledge Review</span>
+</a>
+</div>
+<div class="mt-auto pt-lg border-t border-outline-variant/30 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-label-md">A</div>
+<div>
+<p class="text-label-md font-label-md text-on-surface">Admin User</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Reviewer</p>
+</div>
+</div>
+</nav>
+
+<!-- BottomNavBar (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-safe py-2 md:hidden bg-surface shadow-[0_-4px_20px_rgba(20,30,20,0.06)] rounded-t-2xl border-t border-outline-variant/10">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high rounded-full transition-colors" href="/admin_dashboard/code.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-sm font-label-sm mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high rounded-full transition-colors" href="/interviewer_dashboard/code.html">
+<span class="material-symbols-outlined">call</span>
+<span class="text-label-sm font-label-sm mt-1">Live Calls</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high rounded-full transition-colors" href="/create_interview/code.html">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="text-label-sm font-label-sm mt-1">New</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 scale-95 transition-transform duration-200" href="/knowledge_review/code.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+<span class="text-label-sm font-label-sm mt-1">Review</span>
+</a>
+</nav>
+
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 pt-[88px] pb-[88px] md:pt-[88px] md:pb-8 px-margin-mobile md:px-margin-desktop overflow-y-auto h-full flex flex-col xl:flex-row gap-gutter">
+<!-- Left Column: List -->
+<section class="w-full xl:w-1/3 flex flex-col gap-4">
+<div class="flex justify-between items-center mb-2">
+<h2 class="text-headline-md font-headline-md text-on-surface">Review Queue</h2>
+<span id="queue-count-badge" class="bg-surface-container-high text-on-surface-variant text-label-sm font-label-sm px-3 py-1 rounded-full">3 Items</span>
+</div>
+<!-- Search/Filter -->
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input id="search-input" oninput="handleSearch(this.value)" class="w-full bg-surface-container-lowest border border-outline-variant/50 rounded-xl py-3 pl-10 pr-4 text-body-md font-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Search knowledge..." type="text">
+</div>
+<!-- List Items -->
+<div id="queue-items-container" class="flex flex-col gap-3 mt-2 overflow-y-auto max-h-[calc(100vh-200px)] pr-2">
+<!-- Dynamic review items rendered here -->
+</div>
+</section>
+
+<!-- Right Column: Detail View (Bento Grid Style) -->
+<section id="detail-panel" class="w-full xl:w-2/3 flex flex-col gap-gutter">
+<!-- Header Card -->
+<div class="bg-surface-container-lowest rounded-[24px] p-md shadow-[0_4px_20px_rgba(0,110,28,0.06)] flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="text-2xl">🧠</span>
+<h2 id="detail-title" class="text-headline-sm font-headline-sm text-on-surface">การกักน้ำเปิดตาดอกทุเรียนภาคใต้</h2>
+</div>
+<div id="detail-tags-container" class="flex flex-wrap gap-2">
+<span id="detail-crop-pill" class="bg-[#81C784] text-[#003c0b] text-label-sm font-label-sm px-3 py-1 rounded-[8px] flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[14px]" data-icon="eco">eco</span> ทุเรียน
+</span>
+<span id="detail-region-pill" class="bg-[#8D6E63] text-white text-label-sm font-label-sm px-3 py-1 rounded-[8px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="location_on">location_on</span> ภาคใต้
+</span>
+<span id="detail-condition-pill" class="bg-surface-container text-on-surface text-label-sm font-label-sm px-3 py-1 rounded-[8px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="thermostat">thermostat</span> ช่วงฝนตกชุก
+</span>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex gap-3 w-full md:w-auto mt-2 md:mt-0">
+<button onclick="handleEditModal()" class="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-full border-2 border-primary text-primary hover:bg-primary/5 transition-colors text-label-md font-label-md cursor-pointer">
+<span class="material-symbols-outlined" data-icon="edit">edit</span> Edit
+</button>
+<button onclick="handleReject()" class="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-full border-2 border-error text-error hover:bg-error/5 transition-colors text-label-md font-label-md cursor-pointer">
+<span class="material-symbols-outlined" data-icon="close">close</span> Reject
+</button>
+<button onclick="handleApprove()" class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors text-label-md font-label-md font-bold shadow-sm hover:shadow-md hover:-translate-y-0.5 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="check">check</span> Approve
+</button>
+</div>
+</div>
+
+<!-- Question Card -->
+<div class="bg-surface-container-lowest rounded-[24px] p-md shadow-[0_4px_20px_rgba(0,110,28,0.06)]">
+<h3 class="text-body-lg font-body-lg font-semibold text-on-surface mb-2 flex items-center gap-2 border-b border-outline-variant/20 pb-2">
+<span class="material-symbols-outlined text-primary" data-icon="help_outline">help_outline</span>
+    คำถามที่เกษตรกรถาม (Question)
+</h3>
+<p id="detail-question" class="text-body-lg text-primary font-medium">ทุเรียนภาคใต้คุมน้ำเปิดตาดอกยากเพราะฝนตกบ่อย มีเทคนิคอย่างไร</p>
+</div>
+
+<!-- Content Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Extracted Knowledge Text -->
+<div class="col-span-1 md:col-span-2 bg-surface-container-lowest rounded-[24px] p-md shadow-[0_4px_20px_rgba(0,110,28,0.06)]">
+<h3 class="text-body-lg font-body-lg font-semibold text-on-surface mb-4 flex items-center gap-2 border-b border-outline-variant/20 pb-2">
+<span class="material-symbols-outlined text-primary" data-icon="subject">subject</span>
+    Extracted Content (คำตอบ/องค์ความรู้)
+</h3>
+<div class="prose prose-sm max-w-none text-body-md font-body-md text-on-surface-variant leading-relaxed">
+<p id="detail-content">ต้องกวาดโคนใต้ทรงพุ่มให้เตียนเพื่อระบายความชื้นผิวดินออกเร็วที่สุด กักน้ำให้ดินแห้ง 7-10 วันจนใบสลดแล้วโชยน้ำเบาๆ เพื่อกระตุ้นตาดอก หากฝนตกหนักให้ฉีดพ่นปุ๋ยทางใบสูตรสะสมตาดอก (0-42-56 หรือ 0-52-34) เพื่อคุมไนโตรเจนไม่ให้แตกใบอ่อนแทนดอก</p>
+</div>
+</div>
+
+<!-- Traceability Sidebar -->
+<div class="col-span-1 flex flex-col gap-gutter">
+<!-- Confidence Score -->
+<div class="bg-surface-container-lowest rounded-[24px] p-md shadow-[0_4px_20px_rgba(0,110,28,0.06)]">
+<h3 class="text-label-md font-label-md text-on-surface-variant mb-2">AI Confidence</h3>
+<div class="flex items-end gap-2 mb-2">
+<span id="detail-confidence-text" class="text-headline-lg font-headline-lg text-primary">88%</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full bg-primary/15 rounded-full h-2.5 mb-1 overflow-hidden">
+<div id="detail-confidence-bar" class="bg-primary h-2.5 rounded-full" style="width: 88%"></div>
+</div>
+<p class="text-[10px] text-on-surface-variant">Based on semantic matching with verified sources.</p>
+</div>
+
+<!-- Source Traceability -->
+<div class="bg-surface-container-lowest rounded-[24px] p-md shadow-[0_4px_20px_rgba(0,110,28,0.06)] flex-1">
+<h3 class="text-body-md font-body-md font-semibold text-on-surface mb-3 flex items-center gap-2 border-b border-outline-variant/20 pb-2">
+<span class="material-symbols-outlined text-secondary" data-icon="route">route</span>
+    Source Traceability
+</h3>
+<div class="flex items-start gap-3 mt-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center shrink-0">
+    🎙️
+</div>
+<div>
+<p id="detail-interview-num" class="text-label-md font-label-md text-on-surface font-semibold">Interview #001</p>
+<p id="detail-farmer-name" class="text-label-sm font-label-sm text-on-surface-variant">ลุงสมชาย (สุราษฎร์ธานี)</p>
+<a id="btn-view-transcript" href="javascript:void(0)" onclick="openTranscriptModal()" class="inline-flex items-center gap-1 mt-2 text-primary hover:text-primary-container transition-colors text-label-sm font-label-sm font-medium">
+<span class="material-symbols-outlined text-[14px]" data-icon="description">description</span>
+    เปิด Transcript
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+
+<!-- Transcript Modal -->
+<div id="transcript-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div class="bg-surface-container-lowest rounded-3xl p-6 max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl">
+    <div class="flex justify-between items-center pb-4 border-b border-outline-variant/20 mb-4">
+      <h3 class="text-headline-sm font-bold text-on-surface flex items-center gap-2">
+        <span>🎙️ บทสนทนาต้นฉบับ</span>
+      </h3>
+      <button onclick="closeTranscriptModal()" class="p-2 rounded-full hover:bg-surface-container text-on-surface-variant">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div id="modal-transcript-body" class="flex-1 overflow-y-auto space-y-4 pr-2 text-body-md text-on-surface-variant leading-relaxed">
+      กำลังโหลดบทสนทนา...
+    </div>
+  </div>
+</div>
+
+<!-- Edit Candidate Modal -->
+<div id="edit-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+  <div class="bg-surface-container-lowest rounded-3xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col gap-4">
+    <div class="flex justify-between items-center pb-2 border-b border-outline-variant/20">
+      <h3 class="text-headline-sm font-bold text-on-surface">แก้ไของค์ความรู้</h3>
+      <button onclick="closeEditModal()" class="p-2 rounded-full hover:bg-surface-container text-on-surface-variant">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="flex flex-col gap-3">
+      <div>
+        <label class="text-label-md font-semibold text-on-surface">หัวข้อ (Title)</label>
+        <input id="edit-input-title" class="w-full mt-1 border border-outline-variant rounded-xl p-3 text-body-md" type="text">
+      </div>
+      <div>
+        <label class="text-label-md font-semibold text-on-surface">คำถาม (Question)</label>
+        <input id="edit-input-question" class="w-full mt-1 border border-outline-variant rounded-xl p-3 text-body-md" type="text">
+      </div>
+      <div>
+        <label class="text-label-md font-semibold text-on-surface">คำตอบ (Answer / Knowledge)</label>
+        <textarea id="edit-input-answer" rows="5" class="w-full mt-1 border border-outline-variant rounded-xl p-3 text-body-md"></textarea>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-label-md font-semibold text-on-surface">พืช (Crop)</label>
+          <input id="edit-input-crop" class="w-full mt-1 border border-outline-variant rounded-xl p-3 text-body-md" type="text">
+        </div>
+        <div>
+          <label class="text-label-md font-semibold text-on-surface">ภูมิภาค (Region)</label>
+          <input id="edit-input-region" class="w-full mt-1 border border-outline-variant rounded-xl p-3 text-body-md" type="text">
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-end gap-3 pt-2">
+      <button onclick="closeEditModal()" class="px-6 py-2 rounded-full border border-outline-variant text-on-surface-variant font-label-md">ยกเลิก</button>
+      <button onclick="submitEdit()" class="px-6 py-2 rounded-full bg-primary text-white font-label-md font-bold">บันทึกการแก้ไข</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentCandidateId = null;
+  let currentCandidateData = null;
+  let queueItems = [];
+  let searchTimeout = null;
+
+  async function loadReviewQueue(search = '') {
+    try {
+      const url = search ? `/api/review/queue?search=${encodeURIComponent(search)}` : '/api/review/queue';
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (data.success && data.data) {
+        queueItems = data.data.items || [];
+        document.getElementById('queue-count-badge').textContent = `${data.data.total || queueItems.length} Items`;
+        renderQueueList(queueItems);
+
+        if (queueItems.length > 0) {
+          if (!currentCandidateId || !queueItems.find(q => q.id === currentCandidateId)) {
+            selectCandidate(queueItems[0].id);
+          }
+        } else {
+          document.getElementById('detail-title').textContent = 'ไม่มีรายการรอตรวจสอบ';
+          document.getElementById('detail-content').textContent = 'คลังความรู้ได้รับการตรวจสอบครบถ้วนแล้ว';
+          document.getElementById('detail-question').textContent = '-';
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to load review queue:', e);
+    }
+  }
+
+  function renderQueueList(items) {
+    const container = document.getElementById('queue-items-container');
+    if (!container) return;
+
+    if (items.length === 0) {
+      container.innerHTML = `<div class="text-on-surface-variant text-center py-8">ไม่มีรายการในคิว</div>`;
+      return;
+    }
+
+    container.innerHTML = items.map((item) => {
+      const isSelected = item.id === currentCandidateId;
+      const isPending = item.status === 'pending_review';
+      const statusLabel = isPending ? 'รอตรวจสอบ' : (item.status === 'approved' ? 'อนุมัติแล้ว' : 'ปฏิเสธแล้ว');
+
+      return `
+      <div onclick="selectCandidate('${item.id}')" class="bg-surface-container-lowest rounded-xl p-4 shadow-[0_4px_20px_rgba(0,110,28,0.06)] border ${isSelected ? 'border-primary/40 translate-y-[-2px]' : 'border-outline-variant/20 hover:bg-surface-container-low'} cursor-pointer relative overflow-hidden transition-all">
+        ${isSelected ? '<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>' : ''}
+        <div class="flex justify-between items-start mb-2">
+          <span class="bg-[#FFF8E7] text-tertiary text-label-sm font-label-sm px-2 py-0.5 rounded-md border border-outline-variant/30 flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full ${isPending ? 'bg-tertiary-container' : 'bg-primary'}"></span>
+            ${statusLabel}
+          </span>
+          <span class="text-primary text-label-sm font-label-sm font-bold flex items-center gap-1">
+            ${item.confidencePercent}% <span class="material-symbols-outlined text-[14px]">verified</span>
+          </span>
+        </div>
+        <h3 class="text-body-lg font-body-lg font-semibold text-on-surface line-clamp-2 mb-1">${item.title}</h3>
+        <p class="text-label-md font-label-md text-on-surface-variant flex items-center gap-1">
+          <span class="material-symbols-outlined text-[16px]">person</span>
+          ${item.farmerName}
+        </p>
+      </div>`;
+    }).join('');
+  }
+
+  async function selectCandidate(id) {
+    currentCandidateId = id;
+    renderQueueList(queueItems);
+
+    try {
+      const res = await fetch(`/api/knowledge/${id}`);
+      const data = await res.json();
+      if (data.success && data.data) {
+        currentCandidateData = data.data;
+        displayCandidateDetails(data.data);
+      }
+    } catch (e) {
+      console.warn('Failed to load candidate details:', e);
+    }
+  }
+
+  function displayCandidateDetails(item) {
+    document.getElementById('detail-title').textContent = item.title;
+    document.getElementById('detail-question').textContent = item.question || '-';
+    document.getElementById('detail-content').textContent = item.answer || item.extractedContent || '-';
+
+    document.getElementById('detail-crop-pill').innerHTML = `<span class="material-symbols-outlined text-[14px]">eco</span> ${item.crop || 'พืช'}`;
+    document.getElementById('detail-region-pill').innerHTML = `<span class="material-symbols-outlined text-[14px]">location_on</span> ${item.region || 'ทั่วไป'}`;
+    document.getElementById('detail-condition-pill').innerHTML = `<span class="material-symbols-outlined text-[14px]">thermostat</span> ${item.condition || 'ปกติ'}`;
+
+    const confPct = Math.round((item.confidence || 0.8) * 100);
+    document.getElementById('detail-confidence-text').textContent = `${confPct}%`;
+    document.getElementById('detail-confidence-bar').style.width = `${confPct}%`;
+
+    const trace = item.traceability || {};
+    document.getElementById('detail-interview-num').textContent = trace.interviewNumber || 'Interview #001';
+    document.getElementById('detail-farmer-name').textContent = `${trace.farmerName || 'เกษตรกร'} (${trace.farmerRole || 'เกษตรกร'})`;
+  }
+
+  function handleSearch(val) {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      loadReviewQueue(val.trim());
+    }, 300);
+  }
+
+  async function handleApprove() {
+    if (!currentCandidateId) return;
+    try {
+      const res = await fetch(`/api/knowledge/${currentCandidateId}/approve`, { method: 'POST' });
+      const data = await res.json();
+      if (data.success) {
+        alert('✅ อนุมัติองค์ความรู้เรียบร้อยแล้ว');
+        loadReviewQueue();
+      }
+    } catch (e) {
+      alert('เกิดข้อผิดพลาด: ' + e.message);
+    }
+  }
+
+  async function handleReject() {
+    if (!currentCandidateId) return;
+    const reason = prompt('กรุณาระบุเหตุผลในการปฏิเสธ (Reject Reason):', 'เนื้อหายังไม่สมบูรณ์หรือไม่ตรงประเด็น');
+    if (reason === null) return;
+
+    try {
+      const res = await fetch(`/api/knowledge/${currentCandidateId}/reject`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reason })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert('❌ ปฏิเสธองค์ความรู้เรียบร้อยแล้ว');
+        loadReviewQueue();
+      }
+    } catch (e) {
+      alert('เกิดข้อผิดพลาด: ' + e.message);
+    }
+  }
+
+  function handleEditModal() {
+    if (!currentCandidateData) return;
+    document.getElementById('edit-input-title').value = currentCandidateData.title || '';
+    document.getElementById('edit-input-question').value = currentCandidateData.question || '';
+    document.getElementById('edit-input-answer').value = currentCandidateData.answer || '';
+    document.getElementById('edit-input-crop').value = currentCandidateData.crop || '';
+    document.getElementById('edit-input-region').value = currentCandidateData.region || '';
+    document.getElementById('edit-modal').classList.remove('hidden');
+  }
+
+  function closeEditModal() {
+    document.getElementById('edit-modal').classList.add('hidden');
+  }
+
+  async function submitEdit() {
+    if (!currentCandidateId) return;
+    const title = document.getElementById('edit-input-title').value.trim();
+    const question = document.getElementById('edit-input-question').value.trim();
+    const answer = document.getElementById('edit-input-answer').value.trim();
+    const crop = document.getElementById('edit-input-crop').value.trim();
+    const region = document.getElementById('edit-input-region').value.trim();
+
+    try {
+      const res = await fetch(`/api/knowledge/${currentCandidateId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, question, answer, crop, region })
+      });
+      const data = await res.json();
+      if (data.success) {
+        closeEditModal();
+        selectCandidate(currentCandidateId);
+        loadReviewQueue();
+      }
+    } catch (e) {
+      alert('บันทึกการแก้ไขไม่สำเร็จ: ' + e.message);
+    }
+  }
+
+  async function openTranscriptModal() {
+    if (!currentCandidateData) return;
+    const modal = document.getElementById('transcript-modal');
+    const body = document.getElementById('modal-transcript-body');
+    modal.classList.remove('hidden');
+    body.innerHTML = 'กำลังโหลดบทสนทนา...';
+
+    try {
+      const sourceId = currentCandidateData.sourceId || currentCandidateData.traceability?.interviewId;
+      const res = await fetch(`/api/sources/${currentCandidateData.sourceId || ''}/transcript`);
+      if (res.ok) {
+        const d = await res.json();
+        if (d.data?.segments?.length > 0) {
+          body.innerHTML = d.data.segments.map(s => `
+            <div class="p-3 rounded-xl ${s.speaker === 'ai' ? 'bg-primary-container/20 text-on-surface' : 'bg-surface-container text-on-surface'}">
+              <span class="font-bold text-xs uppercase text-primary">${s.speaker === 'ai' ? '🤖 AI ผู้ช่วย' : '👨‍🌾 เกษตรกร'}:</span>
+              <p class="mt-1">${s.text}</p>
+            </div>
+          `).join('');
+          return;
+        }
+      }
+    } catch {}
+
+    // Fallback display from segments or quote
+    if (currentCandidateData.segments?.length > 0) {
+      body.innerHTML = currentCandidateData.segments.map(s => `
+        <div class="p-3 rounded-xl ${s.speaker === 'ai' ? 'bg-primary-container/20 text-on-surface' : 'bg-surface-container text-on-surface'}">
+          <span class="font-bold text-xs uppercase text-primary">${s.speaker === 'ai' ? '🤖 AI ผู้ช่วย' : '👨‍🌾 เกษตรกร'}:</span>
+          <p class="mt-1">${s.text}</p>
+        </div>
+      `).join('');
+    } else {
+      body.innerHTML = `<div class="p-3 rounded-xl bg-surface-container"><span class="font-bold text-xs text-primary">คำพูดจริง (Quote):</span><p class="mt-1 font-medium italic">"${currentCandidateData.quote || currentCandidateData.answer}"</p></div>`;
+    }
+  }
+
+  function closeTranscriptModal() {
+    document.getElementById('transcript-modal').classList.add('hidden');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadReviewQueue();
+  });
+</script>
+</body></html>

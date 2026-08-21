@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kru Suan AI - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#dfecdc",
+                        "on-secondary-container": "#2e7238",
+                        "surface-bright": "#f0fded",
+                        "inverse-primary": "#78dc77",
+                        "tertiary": "#75584d",
+                        "secondary-container": "#abf4ac",
+                        "outline": "#6f7a6b",
+                        "tertiary-container": "#b69488",
+                        "surface-tint": "#006e1c",
+                        "on-primary-fixed": "#002204",
+                        "secondary-fixed": "#abf4ac",
+                        "tertiary-fixed-dim": "#e4beb2",
+                        "background": "#f0fded",
+                        "primary": "#006e1c",
+                        "primary-fixed": "#94f990",
+                        "on-primary-fixed-variant": "#005313",
+                        "inverse-on-surface": "#e8f4e4",
+                        "primary-fixed-dim": "#78dc77",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#e5f1e1",
+                        "surface-container-low": "#ebf7e7",
+                        "on-surface-variant": "#3f4a3c",
+                        "on-primary-container": "#003c0b",
+                        "secondary": "#286b33",
+                        "outline-variant": "#becab9",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#d1dece",
+                        "primary-container": "#4caf50",
+                        "on-background": "#141e14",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#002107",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#90d792",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#d9e6d6",
+                        "tertiary-fixed": "#ffdbce",
+                        "on-tertiary-container": "#452d25",
+                        "on-tertiary-fixed-variant": "#5b4137",
+                        "surface": "#f0fded",
+                        "surface-variant": "#d9e6d6",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#07521d",
+                        "error": "#ba1a1a",
+                        "on-surface": "#141e14",
+                        "on-tertiary-fixed": "#2b160f",
+                        "inverse-surface": "#283328"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "sm": "12px",
+                        "container-margin": "20px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "base": "8px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Noto Sans Thai", "sans-serif"],
+                        "headline-md": ["Noto Sans Thai", "sans-serif"],
+                        "headline-xl-mobile": ["Noto Sans Thai", "sans-serif"],
+                        "headline-xl": ["Noto Sans Thai", "sans-serif"],
+                        "label-sm": ["Noto Sans Thai", "sans-serif"],
+                        "headline-lg": ["Noto Sans Thai", "sans-serif"],
+                        "label-lg": ["Noto Sans Thai", "sans-serif"],
+                        "body-lg": ["Noto Sans Thai", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-xl-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "headline-xl": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #FFF8E7; /* Level 0 Background */
+        }
+        .card-shadow {
+            box-shadow: 0px 4px 12px rgba(47, 58, 47, 0.08);
+        }
+    </style>
+</head>
+<body class="text-on-background font-body-md text-body-md antialiased overflow-x-hidden min-h-screen flex">
+<!-- SideNavBar (Desktop) -->
+<nav class="hidden md:flex flex-col fixed left-0 top-0 h-full w-[280px] bg-surface-container-low dark:bg-surface-dim shadow-sm z-40 p-4 gap-2">
+<div class="flex items-center gap-4 px-4 py-4 mb-4">
+<img alt="Kru Suan AI Logo" class="w-12 h-12 rounded-full object-cover shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-x6oLZ3pSe3MoRqjVVwlfTMxpEjJyxSe00Btwh5PNOHA1Udi46xiZBEuWBwlVH5FTOhtW_r2cmmtVscPbEq1BK2KbnwQXpNTcegoDeWAr0GvdZ6t2NJmRsupHbbfFfazYq5aeohu4JnTQDlianVACQv0_TSAj--gNpzJxgQSfYreupimgKUcwJLp2TuhRf8pwv3u5cYpAOAoTzVCjg8-FnFW3fQoj2MOMPONT7zXGilnjieN7IZxrlFNPDQPTOmg-ubc"/>
+<div>
+<h1 class="text-headline-lg font-headline-lg text-primary dark:text-primary-fixed font-black tracking-tight">Kru Suan AI</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Your AI Farming Guide</p>
+</div>
+</div>
+<div class="flex-grow flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container dark:bg-on-primary-fixed-variant text-on-primary-container dark:text-primary-fixed rounded-xl transition-all duration-200 hover:scale-[1.02]" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-lg text-label-lg">Home</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-xl transition-all duration-200 hover:scale-[1.02]" href="#">
+<span class="material-symbols-outlined">potted_plant</span>
+<span class="font-label-lg text-label-lg">My Farms</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-xl transition-all duration-200 hover:scale-[1.02]" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-label-lg text-label-lg">Tasks</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-xl transition-all duration-200 hover:scale-[1.02]" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-lg text-label-lg">AI Chat</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-xl transition-all duration-200 hover:scale-[1.02]" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-label-lg text-label-lg">Market</span>
+</a>
+</div>
+<div class="mt-auto flex flex-col gap-2 pt-4 border-t border-outline-variant/30">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-xl transition-all duration-200 hover:scale-[1.02]" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-lg text-label-lg">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-xl transition-all duration-200 hover:scale-[1.02]" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-lg text-label-lg">Support</span>
+</a>
+</div>
+</nav>
+<!-- TopAppBar (Mobile) -->
+<header class="md:hidden flex justify-between items-center w-full px-5 py-4 bg-background dark:bg-background top-0 fixed z-40">
+<div class="flex items-center gap-3">
+<img alt="Kru Suan AI Logo" class="w-10 h-10 rounded-full object-cover shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPEgCi6qkBJzllR_WXwIxAssfBgMKpBdv41KXY9wUg0bb3on-r6SgwNh2Nun363JEc-jJvWkxC_dM0UKFJPgqhbKvd9_8sUJdhpLu5CFijmtRN-fEfdGRXXqNVV5n44Jt6sPRKBaOBv3hGgwPRgR7zUb096jlPq_kMOXpkSpHFTdFbkukZi2zYscPGZp2qmvE8ZCIXhTnObt0742fd1hLpSxNqb2xRZEZXYF0Z3HVqwVp-TTtJlEP3MNrnhf95oN6JvWQ"/>
+<span class="text-headline-md-mobile font-headline-md-mobile font-bold text-primary dark:text-primary-fixed tracking-tight">Kru Suan AI</span>
+</div>
+<div class="flex gap-2">
+<button class="text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high rounded-full p-2 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-high rounded-full p-2 transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-[280px] pt-20 md:pt-8 pb-24 md:pb-8 px-container-margin md:px-xl max-w-5xl mx-auto w-full">
+<!-- Welcome Header -->
+<div class="mb-lg">
+<h2 class="text-headline-xl-mobile md:text-headline-xl font-headline-xl-mobile md:font-headline-xl text-on-background mb-2">สวัสดีครับ 👋 วันนี้เรามาดูแลสวนกันครับ</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant">Here is your daily farming summary.</p>
+</div>
+<!-- Hero: Today's Task Summary -->
+<section class="mb-xl">
+<div class="bg-white rounded-[24px] p-lg card-shadow relative overflow-hidden transition-transform duration-200 hover:scale-[1.01]">
+<!-- Decorative background element -->
+<div class="absolute -right-8 -top-8 w-40 h-40 bg-surface-container-high rounded-full opacity-50 pointer-events-none"></div>
+<div class="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[32px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">assignment_turned_in</span>
+</div>
+<div>
+<h3 class="text-headline-md font-headline-md text-on-background">2 ภารกิจที่ต้องทำ</h3>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">Today's critical tasks for optimal growth.</p>
+</div>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-on-primary font-label-lg text-label-lg px-6 py-3 rounded-full flex items-center gap-2 transition-transform active:scale-95 shadow-sm">
+                        เริ่มทำภารกิจ
+                        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Grid: สวนของฉัน (My Farms) -->
+<section>
+<div class="flex justify-between items-end mb-md">
+<h3 class="text-headline-lg font-headline-lg text-on-background">สวนของฉัน</h3>
+<a class="text-primary hover:text-primary/80 font-label-lg text-label-lg flex items-center gap-1" href="#">
+                    ดูทั้งหมด
+                    <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Farm Card 1: Tomato -->
+<div class="bg-white rounded-xl p-md card-shadow flex flex-col gap-4 transition-transform duration-200 hover:scale-[1.02]">
+<div class="flex gap-4 items-start">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="A highly detailed illustration of a healthy, vibrant tomato plant in a modern agricultural setting. The style is a blend of friendly, organic shapes and clean SaaS design aesthetics. The tomatoes are bright red, and the leaves are a deep, rich green. The lighting is soft and bright, creating an optimistic, nurturing mood suitable for a gamified farming app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt4P987ATLN4L3lrmUgAPqnm0s9IwjKGO-YLWniTuwZirA8dH0w7vGukCgFhZiqFTdGQUX17GkUXB6k2eyUg6Qob0lWHh3LoTDcpaF8Q-hakd8G1dMQgJ_e8G_iKM-kMOjxYsNLMxTASX2azLcXOao8DAo2JP_-UOme34SoJCuVx3n10-VOXRIi5ngyLqLL_ngOfX6gcRjwzKMeOZAkOGgtRsna2iq7OnPsil0BDssgGh1gwFrOyRMQw"/>
+</div>
+<div class="flex-1">
+<h4 class="text-headline-md font-headline-md text-on-background">มะเขือเทศ</h4>
+<p class="text-label-sm font-label-sm text-outline mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">eco</span>
+                                Stage: เจริญเติบโต
+                            </p>
+</div>
+</div>
+<div class="w-full">
+<div class="flex justify-between text-label-sm font-label-sm mb-1">
+<span class="text-on-surface-variant">Progress</span>
+<span class="text-primary font-bold">72%</span>
+</div>
+<div class="w-full h-3 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 72%;"></div>
+</div>
+</div>
+<div class="mt-auto pt-2 flex justify-end">
+<button class="text-primary border border-primary hover:bg-surface-container-low px-4 py-2 rounded-full font-label-lg text-label-lg flex items-center gap-1 transition-colors">
+                            ดูแปลง <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Farm Card 2: Rice -->
+<div class="bg-white rounded-xl p-md card-shadow flex flex-col gap-4 transition-transform duration-200 hover:scale-[1.02]">
+<div class="flex gap-4 items-start">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="A highly detailed illustration of young, lush green rice plants growing in a paddy field. The style is modern, approachable, and optimistic, blending natural elements with clean digital UI aesthetics. The lighting suggests early morning sunshine, evoking a sense of growth and productivity. The colors are dominated by vibrant, primary greens and soft earth tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG_0FemqmtwN14FHaLqMEePXNibwZkMPygCcZeJrZm-C3hQ54GI-z4zXZ1o1xtvZSQJ4VgF9yTEklAGz0ehSulR-78XaJNx-r5OCC7LoagIpUU4e7N50SzPTIQL16UQH8O2B33JefU_lWGXpPnlOaU6aCe7I4HQBEDQgClyUFz8ElN0ScvVN6NtJetuMIwIYNaxSS4oiXmcomSzTGDwSL8MZLUncqccaMFBynzv10sjDYQRiwhERKdaA"/>
+</div>
+<div class="flex-1">
+<h4 class="text-headline-md font-headline-md text-on-background">ข้าว</h4>
+<p class="text-label-sm font-label-sm text-outline mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">water_drop</span>
+                                Stage: ระยะแตกกอ
+                            </p>
+</div>
+</div>
+<div class="w-full">
+<div class="flex justify-between text-label-sm font-label-sm mb-1">
+<span class="text-on-surface-variant">Progress</span>
+<span class="text-primary font-bold">45%</span>
+</div>
+<div class="w-full h-3 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 45%;"></div>
+</div>
+</div>
+<div class="mt-auto pt-2 flex justify-end">
+<button class="text-primary border border-primary hover:bg-surface-container-low px-4 py-2 rounded-full font-label-lg text-label-lg flex items-center gap-1 transition-colors">
+                            ดูแปลง <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Action Button (FAB) -->
+<button class="fixed right-container-margin md:right-xl bottom-24 md:bottom-xl bg-primary hover:bg-primary/90 text-on-primary shadow-lg hover:shadow-xl rounded-[20px] px-5 py-4 flex items-center gap-2 transition-all active:scale-95 z-50">
+<span class="material-symbols-outlined text-[24px]">add</span>
+<span class="font-label-lg text-label-lg whitespace-nowrap">เพิ่มแปลงใหม่</span>
+</button>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-surface dark:bg-surface-dim shadow-[0px_-4px_12px_rgba(47,58,47,0.08)] rounded-t-3xl">
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-2xl px-5 py-2 active:bg-surface-container-high transition-transform duration-150 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-label-sm font-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-2 active:bg-surface-container-high transition-transform duration-150 active:scale-90" href="#">
+<span class="material-symbols-outlined">potted_plant</span>
+<span class="text-label-sm font-label-sm mt-1">Farms</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-2 active:bg-surface-container-high transition-transform duration-150 active:scale-90" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="text-label-sm font-label-sm mt-1">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-2 active:bg-surface-container-high transition-transform duration-150 active:scale-90" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="text-label-sm font-label-sm mt-1">AI Chat</span>
+</a>
+</nav>
+</body></html>

@@ -1,0 +1,152 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  phone        String   @unique
+  passwordHash String
+  role         String   @default("interviewer") // interviewer | curator | expert | admin
+  avatarUrl    String?
+  createdAt    DateTime @default(now())
+
+  interviews    Interview[]
+  reviewedItems KnowledgeCandidate[] @relation("reviewer")
+}
+
+model Farmer {
+  id              String   @id @default(cuid())
+  fullName        String
+  displayName     String? // ชื่อที่ยอมให้เผยแพร่ เช่น "ลุงสมชาย"
+  phone           String?
+  province        String?
+  region          String? // "ภาคใต้" ฯลฯ — ให้ตรงกับที่ระบบ 1 ใช้
+  yearsExperience Int?
+  expertiseNote   String?
+  cropTags        String? // JSON string array ["มะเขือเทศ","พริก"]
+  consentGranted  Boolean  @default(false)
+  consentAudioUrl String? // หลักฐานเสียงยินยอม
+  createdAt       DateTime @default(now())
+
+  interviews      Interview[]
+  totalInterviews Int              @default(0) // นับอัตโนมัติทุกครั้งที่จบสาย
+  lastInterviewAt DateTime?
+  topicLogs       FarmerTopicLog[]
+}
+
+model Source {
+  id            String   @id @default(cuid())
+  type          String // LIVE_CALL | YOUTUBE | FACEBOOK | DOCUMENT
+  title         String
+  status        String   @default("DRAFT")
+  // DRAFT | IMPORTED | PROCESSING | IN_REVIEW | COMPLETED | ERROR  ← 4 สถานะหลักตาม UI Pipeline
+  externalUrl   String?
+  mediaUrl      String? // path/URL ไฟล์เสียงที่บันทึกไว้
+  durationSec   Int?
+  licenseBasis  String? // farmer_consent | owner_permission | official_api | own_content
+  permissionRef String?
+  crop          String?
+  region        String?
+  errorMessage  String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  interview  Interview?
+  segments   TranscriptSegment[]
+  candidates KnowledgeCandidate[]
+}
+
+model Interview {
+  id            String  @id @default(cuid())
+  sourceId      String  @unique
+  source        Source  @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  farmerId      String
+  farmer        Farmer  @relation(fields: [farmerId], references: [id])
+  interviewerId String
+  interviewer   User    @relation(fields: [interviewerId], references: [id])
+
+  vapiCallId String? @unique
+  status     String  @default("created")
+  // created | ringing | in_progress | paused | completed | failed
+
+  startedAt   DateTime?
+  endedAt     DateTime?
+  durationSec Int?
+
+  questionPlan String // JSON: [{topicCode, question, priority}]
+  coverage     String? // JSON: {topicCode: {status, summary}}  ← อัปเดตสดระหว่างสาย
+  recordingUrl String?
+  costUsd      Float?
+}
+
+model TranscriptSegment {
+  id         String   @id @default(cuid())
+  sourceId   String
+  source     Source   @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  seq        Int
+  speaker    String // farmer | ai
+  startMs    Int
+  endMs      Int
+  text       String
+  confidence Float?
+
+  @@index([sourceId, seq])
+}
+
+model KnowledgeCandidate {
+  id       String @id @default(cuid())
+  sourceId String
+  source   Source @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  // ── ฟิลด์นี้ตั้งใจให้ตรงกับ KnowledgeEntry ของระบบ 1 แบบ 1:1 ──
+  title          String // ใช้แสดงบนการ์ดใน Admin เท่านั้น ไม่ส่งไประบบ 1
+  crop           String
+  topic          String
+  subtopic       String?
+  stage          String?
+  region         String?
+  condition      String?
+  question       String
+  answer         String
+  provenanceText String // → จะกลายเป็นฟิลด์ source ของ KnowledgeEntry
+  tags           String // JSON string array
+
+  // ── metadata เฉพาะฝั่งเรา (ไม่ส่งออก) ──
+  quote           String // คำพูดจริงจาก transcript
+  segmentIds      String? // JSON array ของ TranscriptSegment.id
+  confidence      Float
+  riskLevel       String    @default("normal") // normal | chemical | high
+  status          String    @default("pending_review")
+  // pending_review | needs_edit | approved | rejected
+  extractionModel String?
+  exportedAt      DateTime? // เวลาที่ sync ออกไประบบ 1 สำเร็จ (null = ยังไม่ส่ง)
+  exportedEntryId String? // เก็บ id ของ KnowledgeEntry ฝั่งระบบ 1 ไว้กันส่งซ้ำ
+
+  reviewedById String?
+  reviewer     User?     @relation("reviewer", fields: [reviewedById], references: [id])
+  reviewedAt   DateTime?
+  rejectReason String?
+
+  createdAt DateTime @default(now())
+}
+
+model FarmerTopicLog {
+  id           String   @id @default(cuid())
+  farmerId     String
+  farmer       Farmer   @relation(fields: [farmerId], references: [id])
+  interviewId  String
+  crop         String?
+  topic        String
+  subtopic     String?
+  summary      String            // สรุปสั้น ๆ ว่าคุยอะไรไปแล้ว (1-2 ประโยค) ใช้ฉีดกลับเข้า prompt ครั้งหน้า
+  completeness Float    @default(0.5) // 0-1 คุยลึกแค่ไหน (เผื่อกลับมาคุยต่อให้ลึกขึ้นได้)
+  askedAt      DateTime @default(now())
+
+  @@index([farmerId, topic])
+}

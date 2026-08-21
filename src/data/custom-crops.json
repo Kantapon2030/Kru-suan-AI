@@ -1,0 +1,58 @@
+{
+  "Tomato": {
+    "name": "Tomato",
+    "emoji": "🍅",
+    "totalDays": 112,
+    "stages": [
+      {
+        "name": "SEED",
+        "label": "เตรียมดินและเมล็ด/ต้นพันธุ์",
+        "emoji": "🌰",
+        "days": 7,
+        "progress": 10
+      },
+      {
+        "name": "SEEDLING",
+        "label": "เพาะกล้า/พักฟื้นต้นพันธุ์",
+        "emoji": "🌱",
+        "days": 15,
+        "progress": 25
+      },
+      {
+        "name": "PLANTING",
+        "label": "ลงแปลงปลูก",
+        "emoji": "🌿",
+        "days": 10,
+        "progress": 35
+      },
+      {
+        "name": "VEGETATIVE",
+        "label": "เจริญเติบโตทางลำต้นและกิ่งใบ",
+        "emoji": "🌳",
+        "days": 30,
+        "progress": 60
+      },
+      {
+        "name": "FLOWERING",
+        "label": "ออกดอก/แทงช่อ",
+        "emoji": "🌼",
+        "days": 15,
+        "progress": 75
+      },
+      {
+        "name": "FRUIT",
+        "label": "ติดผลและพัฒนาผลผลิต",
+        "emoji": "🍈",
+        "days": 25,
+        "progress": 90
+      },
+      {
+        "name": "HARVEST",
+        "label": "เก็บเกี่ยวผลผลิต",
+        "emoji": "🧺",
+        "days": 10,
+        "progress": 100
+      }
+    ]
+  }
+}

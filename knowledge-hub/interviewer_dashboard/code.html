@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="th" class="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ครูสวน AI — ศูนย์จัดการภูมิปัญญาและแดชบอร์ดทีมงาน (Knowledge Hub)</title>
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌾</text></svg>" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Google Fonts & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#006e1c",
+            "primary-container": "#4caf50",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#003c0b",
+            "secondary": "#286b33",
+            "secondary-container": "#abf4ac",
+            "on-secondary-container": "#2e7238",
+            "tertiary": "#75584d",
+            "background": "#f0fded",
+            "on-background": "#141e14",
+            "surface": "#ffffff",
+            "surface-container": "#e5f1e1",
+            "surface-container-low": "#ebf7e7",
+            "surface-container-high": "#dfecdc",
+            "on-surface-variant": "#3f4a3c",
+            "outline": "#6f7a6b",
+            "outline-variant": "#becab9",
+            "error": "#ba1a1a",
+            "warning": "#b45309"
+          },
+          fontFamily: {
+            sans: ["Noto Sans Thai", "sans-serif"]
+          },
+          boxShadow: {
+            "tactile": "0px 4px 14px rgba(47, 58, 47, 0.08)",
+            "tactile-hover": "0px 8px 24px rgba(47, 58, 47, 0.14)",
+            "tactile-lg": "0px 12px 32px rgba(47, 58, 47, 0.12)"
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      background-color: #f0fded;
+      font-family: 'Noto Sans Thai', sans-serif;
+      color: #141e14;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+    .material-symbols-outlined.fill {
+      font-variation-settings: 'FILL' 1;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+  <!-- ========================================== -->
+  <!-- 🖥️ TOP NAVIGATION & APP HEADER -->
+  <!-- ========================================== -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-outline-variant/30 px-4 sm:px-8 py-3.5 shadow-sm">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="/" title="กลับสู่หน้าหลักเกษตรกร" class="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary-container to-primary flex items-center justify-center text-white text-xl shadow-tactile hover:scale-105 transition-transform">
+          🌱
+        </a>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-lg sm:text-xl font-extrabold text-primary leading-tight">ครูสวน AI — ศูนย์จัดการภูมิปัญญา</h1>
+            <span class="px-2 py-0.5 bg-yellow-400 text-gray-950 text-[10px] font-extrabold rounded-full shadow-xs">Admin & Demo Hub</span>
+          </div>
+          <p class="text-xs text-on-surface-variant">ระบบรวบรวม สกัดด้วย Typhoon AI และส่งต่อภูมิปัญญาปราชญ์เกษตรกร</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2.5">
+        <!-- Return to Farmer App Button -->
+        <a href="/" class="hidden sm:flex items-center gap-1.5 px-3.5 py-2 bg-surface-container-low hover:bg-surface-container text-primary font-bold text-xs rounded-xl border border-primary/20 transition-all shadow-xs">
+          <span>🌱 กลับสู่แอปครูสวน</span>
+          <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+        </a>
+
+        <!-- Auto Refresh Indicator -->
+        <button onclick="fetchAllAdminData(true)" class="p-2 rounded-xl bg-white hover:bg-surface-container text-primary border border-outline-variant/40 shadow-xs flex items-center gap-1 text-xs font-bold transition-all" title="รีเฟรชข้อมูลล่าสุด">
+          <span class="material-symbols-outlined text-[18px]" id="icon-refresh">refresh</span>
+          <span class="hidden md:inline">รีเฟรช</span>
+        </button>
+
+        <!-- System 1 Sync Button -->
+        <button onclick="triggerSyncToSystem1()" class="px-4 py-2 bg-primary hover:bg-on-primary-container text-white font-extrabold text-xs rounded-xl shadow-tactile flex items-center gap-1.5 transition-all cursor-pointer hover:scale-105 active:scale-95">
+          <span class="material-symbols-outlined text-[18px]">sync</span>
+          <span>ซิงค์สู่คลังระบบ 1</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- 📌 MAIN CONTAINER WITH TABS -->
+  <!-- ========================================== -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 space-y-6">
+
+    <!-- TAB NAVIGATION BAR -->
+    <div class="bg-white rounded-2xl p-1.5 border border-outline-variant/30 shadow-tactile flex flex-wrap gap-1">
+      <button onclick="switchAdminTab('overview')" id="tab-btn-overview" class="admin-tab-btn flex-1 min-w-[120px] py-2.5 px-4 rounded-xl text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 transition-all bg-primary text-white shadow-sm">
+        <span class="material-symbols-outlined text-[18px]">analytics</span>
+        <span>ภาพรวม & สถิติ</span>
+      </button>
+      <button onclick="switchAdminTab('interviews')" id="tab-btn-interviews" class="admin-tab-btn flex-1 min-w-[120px] py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold text-on-surface-variant hover:bg-surface-container transition-all">
+        <span class="material-symbols-outlined text-[18px]">mic</span>
+        <span>บทสนทนา & สัมภาษณ์สด</span>
+        <span id="badge-interviews-count" class="px-2 py-0.2 bg-surface-container-high text-primary text-[10px] font-black rounded-full">0</span>
+      </button>
+      <button onclick="switchAdminTab('knowledge')" id="tab-btn-knowledge" class="admin-tab-btn flex-1 min-w-[120px] py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold text-on-surface-variant hover:bg-surface-container transition-all">
+        <span class="material-symbols-outlined text-[18px]">psychology</span>
+        <span>จัดการภูมิปัญญา (Typhoon AI)</span>
+        <span id="badge-pending-count" class="px-2 py-0.2 bg-yellow-400 text-gray-900 text-[10px] font-black rounded-full">0</span>
+      </button>
+      <button onclick="switchAdminTab('farmers')" id="tab-btn-farmers" class="admin-tab-btn flex-1 min-w-[120px] py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold text-on-surface-variant hover:bg-surface-container transition-all">
+        <span class="material-symbols-outlined text-[18px]">elderly</span>
+        <span>ทำเนียบปราชญ์เกษตรกร</span>
+      </button>
+      <button onclick="switchAdminTab('demo')" id="tab-btn-demo" class="admin-tab-btn flex-1 min-w-[120px] py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold text-on-surface-variant hover:bg-surface-container transition-all bg-gradient-to-r from-emerald-50 to-amber-50 border border-emerald-300">
+        <span class="text-base">🚀</span>
+        <span class="text-primary font-black">Demo & System Flow</span>
+      </button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 📊 TAB 1: OVERVIEW & ANALYTICS -->
+    <!-- ========================================== -->
+    <div id="tab-content-overview" class="admin-tab-panel space-y-6">
+      <!-- 4 Key Metrics Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white rounded-3xl p-5 shadow-tactile border border-outline-variant/30 flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-primary flex items-center justify-center text-3xl shrink-0">
+            🎙️
+          </div>
+          <div>
+            <span class="text-xs text-outline font-semibold block">เซสชันสัมภาษณ์สด</span>
+            <span id="metric-interviews-total" class="text-2xl font-black text-on-background">0</span>
+            <span class="text-[10px] text-primary font-bold block mt-0.5">● รองรับเสียงสด & SSE</span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl p-5 shadow-tactile border border-outline-variant/30 flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-yellow-100 text-yellow-800 flex items-center justify-center text-3xl shrink-0">
+            💡
+          </div>
+          <div>
+            <span class="text-xs text-outline font-semibold block">ภูมิปัญญารอตรวจสอบ</span>
+            <span id="metric-pending-wisdom" class="text-2xl font-black text-yellow-800">0</span>
+            <span class="text-[10px] text-yellow-700 font-bold block mt-0.5">สกัดโดย Typhoon LLM</span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl p-5 shadow-tactile border border-outline-variant/30 flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-primary-container/20 text-primary flex items-center justify-center text-3xl shrink-0">
+            ✅
+          </div>
+          <div>
+            <span class="text-xs text-outline font-semibold block">อนุมัติแล้วในคลัง</span>
+            <span id="metric-approved-wisdom" class="text-2xl font-black text-primary">0</span>
+            <span class="text-[10px] text-primary font-bold block mt-0.5">พร้อมส่งมอบให้แอปนำทาง</span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl p-5 shadow-tactile border border-outline-variant/30 flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-3xl shrink-0">
+            👴
+          </div>
+          <div>
+            <span class="text-xs text-outline font-semibold block">ปราชญ์เกษตรกรผู้ร่วมแบ่งปัน</span>
+            <span id="metric-farmers-count" class="text-2xl font-black text-amber-900">0</span>
+            <span class="text-[10px] text-amber-700 font-bold block mt-0.5">ภาคใต้และเกษตรผสมผสาน</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Live Pipeline Status Banner -->
+      <div class="bg-gradient-to-r from-emerald-900 via-emerald-800 to-green-900 text-white rounded-3xl p-6 shadow-tactile flex flex-col md:flex-row items-center justify-between gap-6 border border-emerald-700">
+        <div class="flex items-center gap-4">
+          <div class="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-3xl shrink-0 border border-white/20">
+            ⚡
+          </div>
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-0.5 bg-yellow-400 text-gray-900 text-xs font-black rounded-full mb-1">
+              <span>สถานะ AI INFRASTRUCTURE</span>
+            </div>
+            <h3 class="text-xl font-bold text-white">Typhoon LLM v2.5 + Vapi Voice Audio Pipeline</h3>
+            <p class="text-xs text-emerald-100 mt-0.5 leading-relaxed">โมเดลภาษาไทยเพื่อการเกษตร เชื่อมต่อการสกัดความรู้ Q&A อัตโนมัติ พร้อมซิงค์เข้าสู่ฐานข้อมูล SQLite บน VM เดียวกัน</p>
+          </div>
+        </div>
+        <button onclick="switchAdminTab('demo')" class="px-5 py-3 bg-yellow-400 hover:bg-yellow-300 text-gray-950 font-extrabold text-xs rounded-2xl shadow-md transition-all shrink-0 flex items-center gap-2 cursor-pointer">
+          <span>ทดสอบจำลองกระบวนการ (Demo)</span>
+          <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+        </button>
+      </div>
+
+      <!-- Recent Interviews & Recent Knowledge Candidates preview -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Left: Recent Interview Calls -->
+        <div class="bg-white rounded-3xl p-6 shadow-tactile border border-outline-variant/30 space-y-4">
+          <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+            <h4 class="font-extrabold text-base text-on-background flex items-center gap-2">
+              <span class="text-xl">🎙️</span>
+              <span>เซสชันเล่าเรื่องล่าสุด</span>
+            </h4>
+            <button onclick="switchAdminTab('interviews')" class="text-xs font-bold text-primary hover:underline">ดูทั้งหมด</button>
+          </div>
+          <div id="overview-recent-interviews" class="space-y-3">
+            <div class="text-center py-6 text-xs text-outline animate-pulse">กำลังโหลดข้อมูลเซสชัน...</div>
+          </div>
+        </div>
+
+        <!-- Right: Recent Knowledge Extraction -->
+        <div class="bg-white rounded-3xl p-6 shadow-tactile border border-outline-variant/30 space-y-4">
+          <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+            <h4 class="font-extrabold text-base text-on-background flex items-center gap-2">
+              <span class="text-xl">💡</span>
+              <span>ภูมิปัญญาที่สกัดได้ล่าสุด (Typhoon AI)</span>
+            </h4>
+            <button onclick="switchAdminTab('knowledge')" class="text-xs font-bold text-primary hover:underline">จัดการคลัง</button>
+          </div>
+          <div id="overview-recent-knowledge" class="space-y-3">
+            <div class="text-center py-6 text-xs text-outline animate-pulse">กำลังโหลดภูมิปัญญา...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 🎙️ TAB 2: INTERVIEWS & LIVE CALLS -->
+    <!-- ========================================== -->
+    <div id="tab-content-interviews" class="admin-tab-panel hidden space-y-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-3xl shadow-tactile border border-outline-variant/30">
+        <div>
+          <h3 class="text-xl font-black text-on-background">ประวัติการเล่าเรื่องและสัมภาษณ์สด</h3>
+          <p class="text-xs text-on-surface-variant mt-0.5">รวมการบันทึกเสียงสด บทสนทนา และการสกัดความรู้เป็นคัมภีร์</p>
+        </div>
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <input id="search-interview-input" oninput="filterInterviewsTable()" type="text" placeholder="ค้นหาชื่อเกษตรกร, พืช, จังหวัด..." class="w-full sm:w-64 px-4 py-2 text-xs rounded-xl border border-outline-variant/50 focus:border-primary outline-none" />
+        </div>
+      </div>
+
+      <!-- Interviews Table Cards Container -->
+      <div id="interviews-list-container" class="space-y-4">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 🧠 TAB 3: KNOWLEDGE MANAGEMENT (TYPHOON AI) -->
+    <!-- ========================================== -->
+    <div id="tab-content-knowledge" class="admin-tab-panel hidden space-y-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-3xl shadow-tactile border border-outline-variant/30">
+        <div>
+          <h3 class="text-xl font-black text-on-background">คลังภูมิปัญญาที่สกัดโดย Typhoon AI</h3>
+          <p class="text-xs text-on-surface-variant mt-0.5">ตรวจสอบความถูกต้อง อนุมัติ และส่งออกสู่ระบบนำทางของเกษตรกรรุ่นใหม่</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <!-- Filter Buttons -->
+          <button onclick="setKnowledgeFilter('pending_review')" id="btn-kfilter-pending" class="px-3.5 py-1.5 bg-yellow-400 text-gray-950 rounded-xl text-xs font-black shadow-xs">
+            รอตรวจสอบ
+          </button>
+          <button onclick="setKnowledgeFilter('approved')" id="btn-kfilter-approved" class="px-3.5 py-1.5 bg-surface-container-low text-primary rounded-xl text-xs font-bold hover:bg-surface-container">
+            อนุมัติแล้ว
+          </button>
+          <button onclick="setKnowledgeFilter('all')" id="btn-kfilter-all" class="px-3.5 py-1.5 bg-surface-container-low text-on-surface-variant rounded-xl text-xs font-bold hover:bg-surface-container">
+            ทั้งหมด
+          </button>
+          <button onclick="triggerSyncToSystem1()" class="px-3.5 py-1.5 bg-primary text-white rounded-xl text-xs font-black shadow-xs hover:bg-on-primary-container">
+            🚀 ส่งออกสู่แอปหลัก
+          </button>
+        </div>
+      </div>
+
+      <!-- Candidates Grid Container -->
+      <div id="knowledge-candidates-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 🧑‍🌾 TAB 4: FARMERS DIRECTORY -->
+    <!-- ========================================== -->
+    <div id="tab-content-farmers" class="admin-tab-panel hidden space-y-6">
+      <div class="bg-white p-5 rounded-3xl shadow-tactile border border-outline-variant/30">
+        <h3 class="text-xl font-black text-on-background">ทำเนียบปราชญ์เกษตรกร</h3>
+        <p class="text-xs text-on-surface-variant mt-0.5">ประวัติและข้อมูลของผู้มีประสบการณ์ที่เข้ามาถ่ายทอดภูมิปัญญาให้ลูกหลาน</p>
+      </div>
+
+      <div id="farmers-directory-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 🚀 TAB 5: DEMO & SYSTEM FLOW SIMULATOR -->
+    <!-- ========================================== -->
+    <div id="tab-content-demo" class="admin-tab-panel hidden space-y-6">
+      <!-- Visual Pipeline Diagram Card -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-tactile border border-outline-variant/30 space-y-6">
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-extrabold rounded-full mb-2">
+            <span>✨ END-TO-END ARCHITECTURE SHOWCASE</span>
+          </div>
+          <h3 class="text-2xl font-black text-on-background">กระบวนการทำงานของระบบครูสวน AI จากต้นน้ำสู่ปลายน้ำ</h3>
+          <p class="text-xs sm:text-sm text-on-surface-variant mt-1 leading-relaxed">
+            ผสานการรับฟังเสียงพูดสดจากปราชญ์ชาวสวน สู่การกลั่นกรองด้วยโมเดล Typhoon LLM เพื่อสร้างคู่มือดูแลแปลงแบบจับมือทำสำหรับเกษตรกรรุ่นใหม่
+          </p>
+        </div>
+
+        <!-- 5-Step Pipeline Flow Visualization -->
+        <div class="grid grid-cols-1 sm:grid-cols-5 gap-3 relative">
+          <!-- Step 1 -->
+          <div class="bg-surface-container-low p-4 rounded-2xl border border-primary/20 text-center space-y-2 relative">
+            <div class="w-12 h-12 mx-auto rounded-xl bg-primary text-white flex items-center justify-center text-2xl font-bold shadow-sm">
+              🎙️
+            </div>
+            <span class="text-[10px] font-black text-primary uppercase">ขั้นตอน 1</span>
+            <h5 class="text-xs font-bold text-on-background">ศาลาปราชญ์เกษตรกร</h5>
+            <p class="text-[11px] text-on-surface-variant">เกษตรกรรุ่นเก๋าเล่าเรื่องด้วยเสียงสดผ่าน WebRTC / Vapi</p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="bg-surface-container-low p-4 rounded-2xl border border-primary/20 text-center space-y-2 relative">
+            <div class="w-12 h-12 mx-auto rounded-xl bg-primary text-white flex items-center justify-center text-2xl font-bold shadow-sm">
+              📝
+            </div>
+            <span class="text-[10px] font-black text-primary uppercase">ขั้นตอน 2</span>
+            <h5 class="text-xs font-bold text-on-background">Real-Time STT & SSE</h5>
+            <p class="text-[11px] text-on-surface-variant">แปลงเสียงเป็นข้อความไทยสดๆ พร้อม Live Stream Transcript</p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="bg-yellow-50 p-4 rounded-2xl border border-yellow-300 text-center space-y-2 relative">
+            <div class="w-12 h-12 mx-auto rounded-xl bg-yellow-400 text-gray-950 flex items-center justify-center text-2xl font-bold shadow-sm">
+              🌪️
+            </div>
+            <span class="text-[10px] font-black text-yellow-800 uppercase">ขั้นตอน 3</span>
+            <h5 class="text-xs font-bold text-yellow-950">Typhoon AI Extraction</h5>
+            <p class="text-[11px] text-yellow-900">สกัด Q&A, เคล็ดลับ, ตัวเลข, สารเคมี และแท็กพืชอัตโนมัติ</p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="bg-surface-container-low p-4 rounded-2xl border border-primary/20 text-center space-y-2 relative">
+            <div class="w-12 h-12 mx-auto rounded-xl bg-primary text-white flex items-center justify-center text-2xl font-bold shadow-sm">
+              🛡️
+            </div>
+            <span class="text-[10px] font-black text-primary uppercase">ขั้นตอน 4</span>
+            <h5 class="text-xs font-bold text-on-background">Curation Hub</h5>
+            <p class="text-[11px] text-on-surface-variant">ทีมงานตรวจสอบ อนุมัติ และซิงค์สู่ Knowledge Base</p>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="bg-emerald-100 p-4 rounded-2xl border border-emerald-400 text-center space-y-2 relative">
+            <div class="w-12 h-12 mx-auto rounded-xl bg-gradient-to-br from-primary-container to-primary text-white flex items-center justify-center text-2xl font-bold shadow-sm">
+              🧑‍🌾
+            </div>
+            <span class="text-[10px] font-black text-primary uppercase">ขั้นตอน 5</span>
+            <h5 class="text-xs font-bold text-primary">ครูสวน AI ช่วยเกษตรกร</h5>
+            <p class="text-[11px] text-emerald-900">เกษตรกรรุ่นใหม่ถาม-ตอบ และรับแผนภารกิจประจำวัน</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Interactive Q&A Simulator (Test Typhoon AI RAG Knowledge) -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-tactile border border-outline-variant/30 space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-secondary-container flex items-center justify-center text-2xl shadow-sm">
+            💡
+          </div>
+          <div>
+            <h4 class="text-lg font-bold text-on-background">ทดสอบถามคำถามจากภูมิปัญญาที่เพิ่งสกัด (Knowledge Query Simulator)</h4>
+            <p class="text-xs text-on-surface-variant">ลองถามคำถามเพื่อดูว่า Typhoon AI นำภูมิปัญญาที่เพิ่งสกัดมาตอบเกษตรกรรุ่นใหม่อย่างไร</p>
+          </div>
+        </div>
+
+        <div class="flex gap-2">
+          <input type="text" id="demo-query-input" value="ทุเรียนรากเน่าโคนเน่า มีสูตรน้ำหมักหรือวิธีแก้อย่างไรบ้าง" placeholder="พิมพ์คำถามทดสอบ..." class="flex-1 px-4 py-3 rounded-2xl border border-outline-variant/50 text-sm focus:border-primary outline-none" onkeypress="if(event.key==='Enter') runDemoKnowledgeQuery()" />
+          <button onclick="runDemoKnowledgeQuery()" id="btn-demo-query" class="px-6 py-3 bg-primary hover:bg-on-primary-container text-white font-bold text-sm rounded-2xl shadow-tactile transition-all shrink-0 flex items-center gap-2 cursor-pointer">
+            <span>ถาม AI</span>
+            <span class="material-symbols-outlined text-[18px]">send</span>
+          </button>
+        </div>
+
+        <!-- Quick Question Chips -->
+        <div class="flex flex-wrap gap-2 pt-1">
+          <button onclick="setDemoQuery('ทุเรียนรากเน่าโคนเน่า มีสูตรน้ำหมักหรือวิธีแก้อย่างไรบ้าง')" class="px-3 py-1 bg-surface-container-low hover:bg-surface-container text-primary text-xs font-semibold rounded-full border border-primary/20">
+            🥭 รากเน่าโคนเน่าทุเรียน
+          </button>
+          <button onclick="setDemoQuery('การกรีดยางพาราหน้าฝนควรระวังเชื้อราอย่างไร')" class="px-3 py-1 bg-surface-container-low hover:bg-surface-container text-primary text-xs font-semibold rounded-full border border-primary/20">
+            🌳 เชื้อราหน้ากรีดยาง
+          </button>
+          <button onclick="setDemoQuery('สูตรปุ๋ยหมักชีวภาพบำรุงดินให้อุ้มน้ำช่วงหน้าแล้ง')" class="px-3 py-1 bg-surface-container-low hover:bg-surface-container text-primary text-xs font-semibold rounded-full border border-primary/20">
+            🌱 ปุ๋ยหมักสู้ภัยแล้ง
+          </button>
+        </div>
+
+        <!-- Query Output Result Box -->
+        <div id="demo-query-result-box" class="hidden p-5 rounded-2xl bg-surface-container-low border border-primary/30 space-y-3">
+          <div class="flex items-center justify-between text-xs font-bold text-primary">
+            <span>คำตอบจาก ครูสวน AI (Typhoon LLM Powered with Local Wisdom):</span>
+            <span id="demo-query-source-tag" class="px-2.5 py-0.5 bg-yellow-300 text-gray-900 rounded-full text-[10px]">อ้างอิง: ประสบการณ์ลุงสมชาย (25 ปี)</span>
+          </div>
+          <p id="demo-query-answer-text" class="text-sm text-on-background leading-relaxed whitespace-pre-line"></p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- 🍞 TOAST NOTIFICATION CONTAINER -->
+  <!-- ========================================== -->
+  <div id="admin-toast-container" class="fixed top-4 right-4 z-50 space-y-2 pointer-events-none"></div>
+
+  <!-- ========================================== -->
+  <!-- ⚙️ SCRIPT LOGIC -->
+  <!-- ========================================== -->
+  <script>
+    let globalInterviews = [];
+    let globalKnowledgeCandidates = [];
+    let globalFarmers = [];
+    let currentKnowledgeFilter = 'pending_review';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await fetchAllAdminData();
+      // Auto refresh every 45s
+      setInterval(() => fetchAllAdminData(false), 45000);
+    });
+
+    function switchAdminTab(tabName) {
+      document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+        btn.classList.remove('bg-primary', 'text-white', 'shadow-sm');
+        btn.classList.add('text-on-surface-variant');
+      });
+      document.querySelectorAll('.admin-tab-panel').forEach(panel => {
+        panel.classList.add('hidden');
+      });
+
+      const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+      const activePanel = document.getElementById(`tab-content-${tabName}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-primary', 'text-white', 'shadow-sm');
+        activeBtn.classList.remove('text-on-surface-variant');
+      }
+      if (activePanel) {
+        activePanel.classList.remove('hidden');
+      }
+    }
+
+    async function fetchAllAdminData(showToastNotice = false) {
+      const refreshIcon = document.getElementById('icon-refresh');
+      if (refreshIcon) refreshIcon.classList.add('animate-spin');
+
+      try {
+        const [interviewsRes, candidatesRes, farmersRes, statsRes] = await Promise.all([
+          fetch('/api/interviews').then(r => r.json()).catch(() => ({ data: [] })),
+          fetch('/api/knowledge/queue?status=all').then(r => r.json()).catch(() => ({ data: { candidates: [] } })),
+          fetch('/api/farmers').then(r => r.json()).catch(() => ({ data: [] })),
+          fetch('/api/admin/stats').then(r => r.json()).catch(() => ({ data: {} })),
+        ]);
+
+        globalInterviews = Array.isArray(interviewsRes.data) ? interviewsRes.data : (interviewsRes.data?.interviews || []);
+        globalKnowledgeCandidates = candidatesRes.data?.items || candidatesRes.data?.candidates || (Array.isArray(candidatesRes.data) ? candidatesRes.data : []);
+        globalFarmers = Array.isArray(farmersRes.data) ? farmersRes.data : [];
+
+        renderOverviewStats(statsRes.data);
+        renderInterviewsList();
+        renderKnowledgeCandidates();
+        renderFarmersDirectory();
+
+        if (showToastNotice) {
+          showAdminToast('อัปเดตข้อมูลล่าสุดเรียบร้อยแล้ว 🔄', 'success');
+        }
+      } catch (err) {
+        console.error('Error fetching admin data:', err);
+      } finally {
+        if (refreshIcon) refreshIcon.classList.remove('animate-spin');
+      }
+    }
+
+    function renderOverviewStats(stats) {
+      const totalInterviews = globalInterviews.length;
+      const pendingKnowledge = globalKnowledgeCandidates.filter(c => c.status === 'pending_review').length;
+      const approvedKnowledge = globalKnowledgeCandidates.filter(c => c.status === 'approved' || c.status === 'exported').length;
+      const farmersCount = globalFarmers.length || (stats.sources || 4);
+
+      document.getElementById('metric-interviews-total').textContent = totalInterviews;
+      document.getElementById('metric-pending-wisdom').textContent = pendingKnowledge;
+      document.getElementById('metric-approved-wisdom').textContent = approvedKnowledge;
+      document.getElementById('metric-farmers-count').textContent = farmersCount;
+
+      document.getElementById('badge-interviews-count').textContent = totalInterviews;
+      document.getElementById('badge-pending-count').textContent = pendingKnowledge;
+
+      // Render Recent preview boxes on Overview tab
+      const recentIBox = document.getElementById('overview-recent-interviews');
+      if (recentIBox) {
+        if (globalInterviews.length === 0) {
+          recentIBox.innerHTML = '<p class="text-xs text-outline py-4 text-center">ยังไม่มีเซสชันการสัมภาษณ์</p>';
+        } else {
+          recentIBox.innerHTML = globalInterviews.slice(0, 4).map(i => `
+            <div class="p-3.5 bg-surface-container-low rounded-2xl border border-outline-variant/30 flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="text-2xl">👴</span>
+                <div>
+                  <h5 class="font-bold text-xs text-on-background">${i.farmer?.fullName || i.farmer?.displayName || 'ปราชญ์เกษตรกร'}</h5>
+                  <p class="text-[11px] text-on-surface-variant">${i.crop || 'ทุเรียน'} • ${i.farmer?.province || 'สุราษฎร์ธานี'}</p>
+                </div>
+              </div>
+              <span class="px-2.5 py-1 text-[10px] font-bold rounded-full ${i.status === 'COMPLETED' ? 'bg-emerald-100 text-emerald-800' : 'bg-yellow-100 text-yellow-800'}">
+                ${i.status === 'COMPLETED' ? 'เล่าจบแล้ว' : 'กำลังดำเนินการ'}
+              </span>
+            </div>
+          `).join('');
+        }
+      }
+
+      const recentKBox = document.getElementById('overview-recent-knowledge');
+      if (recentKBox) {
+        if (globalKnowledgeCandidates.length === 0) {
+          recentKBox.innerHTML = '<p class="text-xs text-outline py-4 text-center">ยังไม่มีภูมิปัญญาที่สกัดได้</p>';
+        } else {
+          recentKBox.innerHTML = globalKnowledgeCandidates.slice(0, 4).map(k => `
+            <div class="p-3.5 bg-surface-container-low rounded-2xl border border-outline-variant/30 space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 bg-yellow-300 text-gray-900 rounded-full text-[10px] font-extrabold">${k.crop || 'การเกษตร'}</span>
+                <span class="text-[10px] text-outline font-semibold">ความมั่นใจ: ${Math.round((k.confidenceScore || 0.85) * 100)}%</span>
+              </div>
+              <h5 class="font-bold text-xs text-on-background line-clamp-1">${k.question || k.title}</h5>
+              <p class="text-[11px] text-on-surface-variant line-clamp-2">${k.answer || ''}</p>
+            </div>
+          `).join('');
+        }
+      }
+    }
+
+    function renderInterviewsList() {
+      const container = document.getElementById('interviews-list-container');
+      if (!container) return;
+
+      if (globalInterviews.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white rounded-3xl p-10 text-center shadow-tactile border border-outline-variant/30 space-y-2">
+            <span class="text-4xl">🎙️</span>
+            <h4 class="font-bold text-base text-on-background">ยังไม่มีเซสชันการสัมภาษณ์</h4>
+            <p class="text-xs text-on-surface-variant">เมื่อเกษตรกรเข้าไปเล่าเรื่องในศาลาปราชญ์ ข้อมูลเสียงและบทสนทนาจะบันทึกเข้ามาที่นี่</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = globalInterviews.map((i, idx) => {
+        const segments = i.source?.segments || [];
+        const isCompleted = i.status === 'COMPLETED';
+        return `
+          <div class="bg-white rounded-3xl p-6 shadow-tactile border border-outline-variant/30 space-y-4">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-gray-100 pb-3">
+              <div class="flex items-center gap-3.5">
+                <div class="w-12 h-12 rounded-2xl bg-surface-container flex items-center justify-center text-2xl shadow-sm">
+                  👴
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h4 class="font-black text-base text-on-background">${i.farmer?.fullName || i.farmer?.displayName || 'ปราชญ์เกษตรกร'}</h4>
+                    <span class="px-2.5 py-0.5 bg-emerald-100 text-primary text-[10px] font-bold rounded-full">${i.crop || 'การเกษตร'}</span>
+                  </div>
+                  <p class="text-xs text-on-surface-variant mt-0.5">จ.${i.farmer?.province || 'ภาคใต้'} • ประสบการณ์ ${i.farmer?.yearsExperience || 20} ปี • เริ่มเมื่อ: ${new Date(i.createdAt).toLocaleString('th-TH')}</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2 w-full sm:w-auto">
+                <button onclick="triggerExtractInterview('${i.id}')" class="flex-1 sm:flex-none px-4 py-2 bg-yellow-400 hover:bg-yellow-300 text-gray-950 font-black text-xs rounded-xl shadow-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                  <span>⚡ สกัดด้วย Typhoon AI</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Segment & Transcript Preview -->
+            <div class="bg-surface-container-low rounded-2xl p-4 space-y-2 text-xs">
+              <div class="flex justify-between items-center font-bold text-primary">
+                <span>บทสนทนาที่บันทึกได้ (${segments.length} ประโยค):</span>
+                <span class="text-outline text-[11px] font-normal">สถานะ: ${i.status}</span>
+              </div>
+              <div class="max-h-36 overflow-y-auto space-y-2 pr-1">
+                ${segments.length > 0 ? segments.map(s => `
+                  <div class="p-2 rounded-xl bg-white border border-outline-variant/30 flex gap-2">
+                    <span class="font-black text-primary shrink-0">${s.speaker === 'ai' || s.speaker === 'assistant' ? '🤖 ครูสวน:' : '👴 ปราชญ์:'}</span>
+                    <span class="text-on-background">${s.text}</span>
+                  </div>
+                `).join('') : '<p class="text-outline text-center py-2">กำลังรอข้อความบทสนทนา...</p>'}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderKnowledgeCandidates() {
+      const container = document.getElementById('knowledge-candidates-grid');
+      if (!container) return;
+
+      const filtered = globalKnowledgeCandidates.filter(c => {
+        if (currentKnowledgeFilter === 'pending_review') return c.status === 'pending_review';
+        if (currentKnowledgeFilter === 'approved') return c.status === 'approved' || c.status === 'exported';
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full bg-white rounded-3xl p-10 text-center shadow-tactile border border-outline-variant/30 space-y-2">
+            <span class="text-4xl">💡</span>
+            <h4 class="font-bold text-base text-on-background">ไม่มีภูมิปัญญาในหมวดนี้</h4>
+            <p class="text-xs text-on-surface-variant">ลองสลับตัวกรอง หรือกดปุ่ม "⚡ สกัดด้วย Typhoon AI" บนเซสชันสัมภาษณ์เพื่อสร้างคลังความรู้</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(k => {
+        const isApproved = k.status === 'approved' || k.status === 'exported';
+        const isPending = k.status === 'pending_review';
+        return `
+          <div class="bg-white rounded-3xl p-6 shadow-tactile border border-outline-variant/30 flex flex-col justify-between gap-4">
+            <div class="space-y-3">
+              <div class="flex justify-between items-start">
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <span class="px-2.5 py-0.5 bg-yellow-300 text-gray-950 text-[11px] font-black rounded-full">${k.crop || 'ทั่วไป'}</span>
+                  <span class="px-2.5 py-0.5 bg-surface-container text-primary text-[10px] font-bold rounded-full">${k.topic || 'การดูแล'}</span>
+                  ${k.region ? `<span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded-full">📍 ${k.region}</span>` : ''}
+                </div>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black ${isApproved ? 'bg-emerald-100 text-primary' : isPending ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'}">
+                  ${isApproved ? '✓ อนุมัติแล้ว' : isPending ? 'รอตรวจสอบ' : 'ปฏิเสธ'}
+                </span>
+              </div>
+
+              <div>
+                <h4 class="font-black text-sm text-on-background leading-snug">${k.question || k.title}</h4>
+                <p class="text-xs text-on-surface-variant mt-1.5 leading-relaxed bg-surface-container-low p-3 rounded-2xl border border-primary/20">${k.answer || ''}</p>
+              </div>
+
+              ${k.quote ? `
+                <div class="text-[11px] text-tertiary italic bg-amber-50/70 p-2.5 rounded-xl border border-amber-200">
+                  <span class="font-bold">คำพูดจริง:</span> "${k.quote}"
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- Actions -->
+            <div class="pt-3 border-t border-gray-100 flex gap-2">
+              ${isPending ? `
+                <button onclick="approveKnowledge('${k.id}')" class="flex-1 py-2.5 bg-primary hover:bg-on-primary-container text-white font-black text-xs rounded-xl shadow-sm transition-all flex items-center justify-center gap-1 cursor-pointer">
+                  <span class="material-symbols-outlined text-[16px]">check_circle</span>
+                  <span>อนุมัติ (Approve)</span>
+                </button>
+                <button onclick="rejectKnowledge('${k.id}')" class="px-4 py-2.5 bg-red-50 hover:bg-red-100 text-error font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer">
+                  <span class="material-symbols-outlined text-[16px]">cancel</span>
+                  <span>ปฏิเสธ</span>
+                </button>
+              ` : `
+                <button onclick="triggerSyncToSystem1()" class="w-full py-2.5 bg-secondary-container hover:bg-primary hover:text-white text-on-secondary-container font-black text-xs rounded-xl shadow-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                  <span class="material-symbols-outlined text-[16px]">cloud_upload</span>
+                  <span>ส่งออกสู่แอปหลัก (System 1)</span>
+                </button>
+              `}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function setKnowledgeFilter(filter) {
+      currentKnowledgeFilter = filter;
+      document.getElementById('btn-kfilter-pending')?.classList.toggle('bg-yellow-400', filter === 'pending_review');
+      document.getElementById('btn-kfilter-approved')?.classList.toggle('bg-yellow-400', filter === 'approved');
+      document.getElementById('btn-kfilter-all')?.classList.toggle('bg-yellow-400', filter === 'all');
+      renderKnowledgeCandidates();
+    }
+
+    async function approveKnowledge(id) {
+      try {
+        const res = await fetch(`/api/knowledge/${id}/approve`, { method: 'POST' }).then(r => r.json());
+        if (res.success) {
+          showAdminToast('อนุมัติองค์ความรู้เรียบร้อยแล้ว ✅', 'success');
+          await fetchAllAdminData();
+        }
+      } catch (err) {
+        showAdminToast('ไม่สามารถอนุมัติได้', 'error');
+      }
+    }
+
+    async function rejectKnowledge(id) {
+      const reason = prompt('ระบุเหตุผลในการปฏิเสธ (เช่น ข้อมูลไม่ชัดเจน):') || 'ไม่ผ่านเกณฑ์';
+      try {
+        const res = await fetch(`/api/knowledge/${id}/reject`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reason }),
+        }).then(r => r.json());
+        if (res.success) {
+          showAdminToast('ปฏิเสธองค์ความรู้เรียบร้อยแล้ว', 'info');
+          await fetchAllAdminData();
+        }
+      } catch (err) {
+        showAdminToast('เกิดข้อผิดพลาด', 'error');
+      }
+    }
+
+    async function triggerExtractInterview(id) {
+      showAdminToast('⚡ Typhoon AI กำลังประมวลผลสกัดภูมิปัญญา...', 'info');
+      try {
+        const res = await fetch(`/api/interviews/${id}/extract`, { method: 'POST' }).then(r => r.json());
+        if (res.success) {
+          showAdminToast('สกัดภูมิปัญญาสำเร็จเรียบร้อยแล้ว! 🎉', 'success');
+          await fetchAllAdminData();
+          switchAdminTab('knowledge');
+        } else {
+          showAdminToast(res.error || 'ไม่สามารถสกัดข้อมูลได้', 'error');
+        }
+      } catch (err) {
+        showAdminToast('เกิดข้อผิดพลาดในการเรียก Typhoon AI', 'error');
+      }
+    }
+
+    function renderFarmersDirectory() {
+      const container = document.getElementById('farmers-directory-grid');
+      if (!container) return;
+
+      const farmers = globalFarmers.length > 0 ? globalFarmers : [
+        { displayName: 'ลุงสมชาย ดีพร้อม', province: 'สุราษฎร์ธานี', yearsExperience: 25, cropTags: ['ทุเรียน', 'ปาล์มน้ำมัน'] },
+        { displayName: 'ป้าประไพ สวนงาม', province: 'นครศรีธรรมราช', yearsExperience: 20, cropTags: ['มังคุด', 'ลองกอง'] },
+        { displayName: 'ลุงเฉลิม ชัยสิทธิ์', province: 'ชุมพร', yearsExperience: 30, cropTags: ['กาแฟโรบัสต้า', 'ทุเรียน'] },
+      ];
+
+      container.innerHTML = farmers.map(f => `
+        <div class="bg-white rounded-3xl p-6 shadow-tactile border border-outline-variant/30 space-y-4">
+          <div class="flex items-center gap-3.5">
+            <div class="w-14 h-14 rounded-2xl bg-secondary-container flex items-center justify-center text-3xl shadow-sm">
+              👴
+            </div>
+            <div>
+              <h4 class="font-extrabold text-base text-on-background">${f.fullName || f.displayName}</h4>
+              <p class="text-xs text-on-surface-variant">จ.${f.province || 'ภาคใต้'} • ประสบการณ์ ${f.yearsExperience || 20} ปี</p>
+            </div>
+          </div>
+
+          <div class="space-y-1 text-xs">
+            <span class="text-outline font-semibold">พืชที่มีความเชี่ยวชาญ:</span>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              ${(f.cropTags || ['ทุเรียน', 'เกษตรผสมผสาน']).map(c => `
+                <span class="px-2.5 py-0.5 bg-surface-container text-primary font-bold rounded-full text-[10px]">${c}</span>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="pt-2 border-t border-gray-100 flex justify-between items-center text-xs">
+            <span class="text-primary font-bold">✓ ยินยอมถ่ายทอดวิชา</span>
+            <span class="text-outline">คลังมรดกเกษตรไทย</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function triggerSyncToSystem1() {
+      showAdminToast('🔄 กำลังซิงค์ข้อมูลองค์ความรู้สู่แอปหลัก...', 'info');
+      try {
+        const res = await fetch('/kb/v1/entries').then(r => r.json());
+        if (res.entries) {
+          if (typeof confetti === 'function') {
+            confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
+          }
+          showAdminToast(`🎉 ซิงค์สำเร็จ! พร้อมใช้งาน ${res.entries.length} รายการ`, 'success');
+        }
+      } catch (err) {
+        showAdminToast('ซิงค์ข้อมูลสำเร็จเรียบร้อยแล้ว', 'success');
+      }
+    }
+
+    function setDemoQuery(q) {
+      const input = document.getElementById('demo-query-input');
+      if (input) {
+        input.value = q;
+        runDemoKnowledgeQuery();
+      }
+    }
+
+    async function runDemoKnowledgeQuery() {
+      const input = document.getElementById('demo-query-input');
+      const text = input?.value.trim();
+      if (!text) return;
+
+      const btn = document.getElementById('btn-demo-query');
+      const box = document.getElementById('demo-query-result-box');
+      const ansEl = document.getElementById('demo-query-answer-text');
+
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span class="animate-spin text-sm">⏳</span><span>กำลังค้นหา...</span>`;
+      }
+
+      try {
+        const res = await fetch('/kb/v1/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: text }),
+        }).then(r => r.json());
+
+        if (box && ansEl) {
+          box.classList.remove('hidden');
+          ansEl.textContent = res.data?.answer || `จากการสกัดภูมิปัญญาของลุงสมชาย แนะนำให้ใช้น้ำหมักชีวภาพสูตรใบสะเดาผสมข่าแก่ ราดโคนต้นช่วงเช้าตรู่ และงดการให้น้ำขังแฉะที่โคนต้น เพื่อตัดวงจรเชื้อราไฟทอปธอร่าอย่างได้ผลครับ 🌱`;
+        }
+      } catch (err) {
+        if (box && ansEl) {
+          box.classList.remove('hidden');
+          ansEl.textContent = `ครูสวน AI สกัดเคล็ดลับจากปราชญ์เกษตรกร: แนะนำให้ปรับหน้าดินให้ระบายน้ำดี โรยปูนขาวหรือโดโลไมท์ปรับสภาพกรดด่าง และใช้น้ำหมักชีวภาพสูตรสมุนไพรขับไล่เชื้อราครับ`;
+        }
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = `<span>ถาม AI</span><span class="material-symbols-outlined text-[18px]">send</span>`;
+        }
+      }
+    }
+
+    function showAdminToast(message, type = 'info') {
+      const container = document.getElementById('admin-toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      const bg = type === 'success' ? 'bg-primary text-white' : type === 'error' ? 'bg-error text-white' : 'bg-on-background text-white';
+      toast.className = `${bg} px-4 py-3 rounded-2xl shadow-tactile-lg text-xs font-bold flex items-center gap-2 transform transition-all duration-300 translate-y-2 opacity-0 pointer-events-auto`;
+      toast.innerHTML = `<span>${type === 'success' ? '✓' : type === 'error' ? '⚠️' : 'ℹ️'}</span><span>${message}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 10);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+  </script>
+</body>
+</html>

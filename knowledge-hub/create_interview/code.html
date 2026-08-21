@@ -1,0 +1,593 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>สร้างการสัมภาษณ์ - ครูสวน AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-on-surface": "#e8f4e4",
+                      "surface-container-highest": "#d9e6d6",
+                      "outline-variant": "#becab9",
+                      "on-primary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "background": "#f0fded",
+                      "on-tertiary-fixed": "#2b160f",
+                      "on-error-container": "#93000a",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-container": "#452d25",
+                      "primary": "#006e1c",
+                      "inverse-primary": "#78dc77",
+                      "surface-container-high": "#dfecdc",
+                      "surface-tint": "#006e1c",
+                      "tertiary-container": "#b69488",
+                      "error-container": "#ffdad6",
+                      "secondary": "#286b33",
+                      "on-secondary-fixed": "#002107",
+                      "secondary-fixed-dim": "#90d792",
+                      "surface-dim": "#d1dece",
+                      "surface-container-low": "#ebf7e7",
+                      "secondary-fixed": "#abf4ac",
+                      "on-secondary-container": "#2e7238",
+                      "on-background": "#141e14",
+                      "primary-container": "#4caf50",
+                      "primary-fixed-dim": "#78dc77",
+                      "error": "#ba1a1a",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed": "#002204",
+                      "surface": "#f0fded",
+                      "on-secondary-fixed-variant": "#07521d",
+                      "on-primary-container": "#003c0b",
+                      "on-surface": "#141e14",
+                      "inverse-surface": "#283328",
+                      "secondary-container": "#abf4ac",
+                      "tertiary": "#75584d",
+                      "surface-bright": "#f0fded",
+                      "on-tertiary-fixed-variant": "#5b4137",
+                      "tertiary-fixed-dim": "#e4beb2",
+                      "primary-fixed": "#94f990",
+                      "surface-container": "#e5f1e1",
+                      "tertiary-fixed": "#ffdbce",
+                      "on-surface-variant": "#3f4a3c",
+                      "surface-variant": "#d9e6d6",
+                      "outline": "#6f7a6b",
+                      "on-primary-fixed-variant": "#005313",
+                      "on-error": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "lg": "40px",
+                      "margin-desktop": "48px",
+                      "xl": "64px",
+                      "gutter": "24px",
+                      "xs": "4px",
+                      "base": "8px",
+                      "sm": "12px",
+                      "margin-mobile": "16px",
+                      "md": "24px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Be Vietnam Pro"
+                      ],
+                      "headline-lg": [
+                              "Be Vietnam Pro"
+                      ],
+                      "headline-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "headline-sm": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-sm": [
+                              "Be Vietnam Pro"
+                      ],
+                      "headline-lg-mobile": [
+                              "Be Vietnam Pro"
+                      ],
+                      "body-md": [
+                              "Be Vietnam Pro"
+                      ],
+                      "label-md": [
+                              "Be Vietnam Pro"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "40px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "28px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-sm": [
+                              "22px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "30px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #f0fded;
+            color: #141e14;
+        }
+        .crop-tag {
+            background-color: #81C784 !important;
+            color: #002204 !important;
+            border-color: #4CAF50 !important;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col font-body-md text-body-md">
+<a href="/" title="กลับสู่แอปครูสวน AI (เกษตรกร)" style="position:fixed;left:12px;bottom:12px;z-index:9999;display:flex;align-items:center;gap:6px;background:#006e1c;color:#fff;padding:8px 14px;border-radius:999px;font-family:'Noto Sans Thai',sans-serif;font-size:12px;font-weight:700;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.25);">
+<span style="font-size:14px;">🌱</span><span>กลับสู่ครูสวน AI</span>
+</a>
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-base bg-surface/80 backdrop-blur-md shadow-sm md:w-[calc(100%-256px)] md:ml-[256px]">
+<span class="md:hidden text-headline-sm font-headline-sm font-bold text-primary cursor-pointer" onclick="window.location.href='/admin_dashboard/code.html'">ครูสวน AI</span>
+<span class="hidden md:block text-headline-sm font-headline-sm font-bold text-on-background">สร้างการสัมภาษณ์ใหม่</span>
+<div class="flex items-center gap-md">
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant" title="การแจ้งเตือน" type="button">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-label-md" title="Admin User">A</div>
+</div>
+</header>
+<!-- SideNavBar (Desktop) -->
+<nav class="hidden md:flex flex-col h-screen fixed left-0 top-0 p-md overflow-y-auto bg-surface-container-low border-r border-outline-variant/30 w-64 z-40">
+<div class="flex items-center gap-sm mb-lg mt-2 cursor-pointer" onclick="window.location.href='/admin_dashboard/code.html'">
+<div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+<div>
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary leading-none">ครูสวน AI</h1>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Admin Console</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-container-high rounded-xl px-md py-sm hover:translate-x-1 transition-transform duration-200" href="/admin_dashboard/code.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-container-high rounded-xl px-md py-sm hover:translate-x-1 transition-transform duration-200" href="/interviewer_dashboard/code.html">
+<span class="material-symbols-outlined">call</span>
+<span class="text-label-md font-label-md">Live Calls</span>
+</a>
+<a class="flex items-center gap-sm bg-primary-container text-on-primary-container rounded-xl px-md py-sm font-bold scale-[0.98] transition-all" href="/create_interview/code.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span class="text-label-md font-label-md">New Interview</span>
+</a>
+<a class="flex items-center gap-sm text-on-surface-variant hover:bg-surface-container-high rounded-xl px-md py-sm hover:translate-x-1 transition-transform duration-200" href="/knowledge_review/code.html">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-label-md font-label-md">Knowledge Review</span>
+</a>
+</div>
+<div class="mt-auto pt-lg border-t border-outline-variant/30 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-label-md">A</div>
+<div>
+<p class="text-label-md font-label-md text-on-surface">Admin User</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Reviewer</p>
+</div>
+</div>
+</nav>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-safe py-2 bg-surface shadow-[0_-4px_20px_rgba(20,30,20,0.06)] rounded-t-2xl border-t border-outline-variant/10">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high rounded-full transition-colors" href="/admin_dashboard/code.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-sm font-label-sm mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high rounded-full transition-colors" href="/interviewer_dashboard/code.html">
+<span class="material-symbols-outlined">call</span>
+<span class="text-label-sm font-label-sm mt-1">Live Calls</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 scale-95 transition-transform duration-200" href="/create_interview/code.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span class="text-label-sm font-label-sm mt-1">New</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high rounded-full transition-colors" href="/knowledge_review/code.html">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-label-sm font-label-sm mt-1">Review</span>
+</a>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 pt-[88px] pb-[88px] md:pb-lg md:pl-[256px] px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto w-full">
+<!-- Header Section -->
+<div class="mb-lg">
+<h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg-mobile md:font-headline-lg text-primary mb-2">สร้างการสัมภาษณ์</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant">เก็บภูมิปัญญาจากเกษตรกรรุ่นเก๋า</p>
+</div>
+<!-- Bento Layout Form -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Main Details Card -->
+<div class="bg-surface-container-lowest rounded-[24px] p-md shadow-[0_4px_20px_rgba(20,30,20,0.06)] lg:col-span-2">
+<div class="flex items-center justify-between mb-4">
+  <h2 class="text-headline-sm font-headline-sm text-on-surface flex items-center gap-2">
+    <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">person</span>
+    ข้อมูลเกษตรกร
+  </h2>
+  <span class="text-xs text-on-surface-variant bg-surface-container px-2.5 py-1 rounded-full flex items-center gap-1">
+    <span class="material-symbols-outlined text-[14px] text-primary">psychology</span> ระบบความจำเกษตรกร
+  </span>
+</div>
+
+<!-- Returning Farmer History Banner (Hidden by default) -->
+<div id="returning-farmer-card" class="hidden mb-6 bg-gradient-to-r from-emerald-50 to-green-50 border border-primary/40 rounded-2xl p-4 shadow-sm transition-all duration-300">
+  <div class="flex items-start gap-3">
+    <div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 shadow-sm">
+      <span class="material-symbols-outlined text-[20px]">history_edu</span>
+    </div>
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center gap-2 flex-wrap">
+        <h4 class="font-bold text-on-surface text-body-md flex items-center gap-1.5">
+          <span>👋 เคยสัมภาษณ์</span>
+          <span id="banner-farmer-name" class="text-primary font-bold">ลุงสมชาย ดีพร้อม</span>
+        </h4>
+        <span id="banner-interview-count" class="bg-primary/15 text-primary text-xs font-bold px-2.5 py-0.5 rounded-full">
+          ไปแล้ว 2 ครั้ง
+        </span>
+        <span id="banner-last-interview" class="text-xs text-on-surface-variant font-medium">
+          ล่าสุดเมื่อ 3 สัปดาห์ก่อน
+        </span>
+      </div>
+      <div class="text-xs text-on-surface-variant mt-2 flex items-start gap-1.5 flex-wrap">
+        <span class="font-semibold text-on-surface shrink-0">คุยไปแล้ว:</span>
+        <div id="banner-covered-topics" class="inline-flex gap-1.5 flex-wrap">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+      <div class="flex items-center gap-1.5 text-xs text-emerald-800 font-medium mt-2 bg-white/70 px-2.5 py-1 rounded-lg border border-emerald-200/60 w-fit">
+        <span class="material-symbols-outlined text-[15px] text-primary">auto_awesome</span>
+        <span>ระบบจะวางแผนคำถามใหม่และคุยต่อยอดให้อัตโนมัติ โดยไม่ถามซ้ำเรื่องเดิม</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Farmer Phone (with Lookup) -->
+<div class="flex flex-col gap-2 md:col-span-2">
+  <div class="flex justify-between items-center">
+    <label class="text-label-md font-label-md text-on-surface-variant" for="farmer_phone">
+      เบอร์โทรศัพท์ <span class="text-xs text-primary font-normal">(กรอกเพื่อดึงประวัติการคุยครั้งก่อน)</span>
+    </label>
+    <span id="phone-lookup-status" class="text-xs text-primary font-medium hidden flex items-center gap-1">
+      <span class="material-symbols-outlined text-[14px] animate-spin">sync</span> กำลังค้นหาประวัติ...
+    </span>
+  </div>
+  <div class="relative">
+    <input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-body-md font-body-md text-on-surface transition-all" id="farmer_phone" placeholder="เช่น 0812345678" type="tel" value="0812345678">
+    <span class="material-symbols-outlined absolute left-3 top-3.5 text-on-surface-variant text-[20px]">phone</span>
+  </div>
+</div>
+
+<!-- Farmer Name -->
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface-variant" for="farmer_name">ชื่อ-นามสกุล เกษตรกร</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-body-md font-body-md text-on-surface transition-all" id="farmer_name" placeholder="กรอกชื่อเกษตรกร (เช่น ลุงสมชาย ดีพร้อม)" type="text" value="ลุงสมชาย ดีพร้อม">
+</div>
+<!-- Area/Province -->
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface-variant" for="area">พื้นที่ / จังหวัด</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-body-md font-body-md text-on-surface transition-all" id="area" placeholder="เช่น สุราษฎร์ธานี, สงขลา, นครศรีธรรมราช" type="text" value="สุราษฎร์ธานี">
+</div>
+<!-- Experience -->
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface-variant" for="experience">ประสบการณ์ (ปี)</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-body-md font-body-md text-on-surface transition-all" id="experience" placeholder="จำนวนปี" type="number" value="25">
+</div>
+<!-- Expertise -->
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface-variant" for="expertise">ความเชี่ยวชาญหลัก</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-body-md font-body-md text-on-surface transition-all" id="expertise" placeholder="เช่น การกักน้ำเปิดตาดอกทุเรียน, การจัดการสวนยางพารา" type="text" value="การกักน้ำเปิดตาดอกทุเรียนและการยกโคก">
+</div>
+</div>
+</div>
+<!-- Tags & Topics Sidebar -->
+<div class="flex flex-col gap-gutter">
+<!-- Crop Tags Card -->
+<div class="bg-surface-container-lowest rounded-[24px] p-md shadow-[0_4px_20px_rgba(20,30,20,0.06)]">
+<h3 class="text-label-md font-label-md text-on-surface-variant mb-4 flex items-center gap-2 uppercase tracking-wider">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">eco</span>
+                        พืชที่เชี่ยวชาญ
+                    </h3>
+<div id="crop-tags-container" class="flex flex-wrap gap-2">
+<button type="button" data-crop="ทุเรียน" class="crop-btn crop-tag text-label-sm font-label-sm px-3 py-1.5 rounded-lg flex items-center gap-1 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[16px]">forest</span> ทุเรียน
+</button>
+<button type="button" data-crop="ยางพารา" class="crop-btn bg-surface-container border border-outline-variant text-on-surface-variant text-label-sm font-label-sm px-3 py-1.5 rounded-lg flex items-center gap-1 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px]">park</span> ยางพารา
+</button>
+<button type="button" data-crop="ปาล์มน้ำมัน" class="crop-btn bg-surface-container border border-outline-variant text-on-surface-variant text-label-sm font-label-sm px-3 py-1.5 rounded-lg flex items-center gap-1 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px]">nature</span> ปาล์มน้ำมัน
+</button>
+<button type="button" data-crop="มังคุด" class="crop-btn bg-surface-container border border-outline-variant text-on-surface-variant text-label-sm font-label-sm px-3 py-1.5 rounded-lg flex items-center gap-1 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px]">eco</span> มังคุด
+</button>
+<button type="button" data-crop="ลองกอง" class="crop-btn bg-surface-container border border-outline-variant text-on-surface-variant text-label-sm font-label-sm px-3 py-1.5 rounded-lg flex items-center gap-1 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px]">nature_people</span> ลองกอง
+</button>
+<button type="button" data-crop="สะตอ" class="crop-btn bg-surface-container border border-outline-variant text-on-surface-variant text-label-sm font-label-sm px-3 py-1.5 rounded-lg flex items-center gap-1 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px]">grass</span> สะตอ
+</button>
+</div>
+</div>
+<!-- Knowledge Topics Card -->
+<div class="bg-surface-container-lowest rounded-[24px] p-md shadow-[0_4px_20px_rgba(20,30,20,0.06)]">
+<h3 class="text-label-md font-label-md text-on-surface-variant mb-4 flex items-center gap-2 uppercase tracking-wider">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+                        หัวข้อความรู้ที่ต้องการเก็บ
+                    </h3>
+<div id="topics-container" class="flex flex-wrap gap-2">
+<label class="flex items-center gap-2 p-2 rounded-lg hover:bg-surface-container cursor-pointer transition-colors w-full">
+<input checked="" value="การปลูก" class="topic-checkbox text-primary rounded border-outline-variant focus:ring-primary w-4 h-4" type="checkbox">
+<span class="text-body-md font-body-md text-on-surface">การปลูก</span>
+</label>
+<label class="flex items-center gap-2 p-2 rounded-lg hover:bg-surface-container cursor-pointer transition-colors w-full">
+<input value="การดูแล" class="topic-checkbox text-primary rounded border-outline-variant focus:ring-primary w-4 h-4" type="checkbox">
+<span class="text-body-md font-body-md text-on-surface">การดูแล</span>
+</label>
+<label class="flex items-center gap-2 p-2 rounded-lg hover:bg-surface-container cursor-pointer transition-colors w-full">
+<input checked="" value="การให้น้ำ" class="topic-checkbox text-primary rounded border-outline-variant focus:ring-primary w-4 h-4" type="checkbox">
+<span class="text-body-md font-body-md text-on-surface">การให้น้ำ</span>
+</label>
+<label class="flex items-center gap-2 p-2 rounded-lg hover:bg-surface-container cursor-pointer transition-colors w-full">
+<input value="การใส่ปุ๋ย" class="topic-checkbox text-primary rounded border-outline-variant focus:ring-primary w-4 h-4" type="checkbox">
+<span class="text-body-md font-body-md text-on-surface">การใส่ปุ๋ย</span>
+</label>
+<label class="flex items-center gap-2 p-2 rounded-lg hover:bg-surface-container cursor-pointer transition-colors w-full">
+<input checked="" value="โรคและแมลง" class="topic-checkbox text-primary rounded border-outline-variant focus:ring-primary w-4 h-4" type="checkbox">
+<span class="text-body-md font-body-md text-on-surface">โรคและแมลง</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Area -->
+<div class="mt-lg flex justify-end">
+<button id="btn-submit-interview" onclick="handleCreateInterview()" class="bg-primary text-on-primary rounded-full px-8 py-4 text-headline-sm font-headline-sm flex items-center gap-2 hover:bg-on-primary-fixed-variant transition-all shadow-[0_4px_20px_rgba(20,30,20,0.06)] hover:translate-y-[-2px] cursor-pointer">
+    <span id="btn-text">เริ่มสัมภาษณ์</span> <span id="btn-icon" class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</main>
+
+<script>
+  let selectedCrop = 'ทุเรียน';
+  let lookupDebounceTimer = null;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Crop selection toggle
+    const cropButtons = document.querySelectorAll('.crop-btn');
+    cropButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        cropButtons.forEach(b => {
+          b.classList.remove('crop-tag');
+          b.classList.add('bg-surface-container', 'border', 'border-outline-variant', 'text-on-surface-variant');
+        });
+        btn.classList.remove('bg-surface-container', 'border', 'border-outline-variant', 'text-on-surface-variant');
+        btn.classList.add('crop-tag');
+        selectedCrop = btn.getAttribute('data-crop');
+      });
+    });
+
+    // Phone input lookup listeners
+    const phoneInput = document.getElementById('farmer_phone');
+    if (phoneInput) {
+      phoneInput.addEventListener('input', () => {
+        clearTimeout(lookupDebounceTimer);
+        lookupDebounceTimer = setTimeout(() => {
+          checkFarmerLookup(phoneInput.value.trim());
+        }, 500);
+      });
+
+      phoneInput.addEventListener('blur', () => {
+        checkFarmerLookup(phoneInput.value.trim());
+      });
+
+      // Initial check if prefilled
+      if (phoneInput.value.trim()) {
+        checkFarmerLookup(phoneInput.value.trim());
+      }
+    }
+  });
+
+  async function checkFarmerLookup(phone) {
+    if (!phone || phone.length < 9) {
+      document.getElementById('returning-farmer-card').classList.add('hidden');
+      return;
+    }
+
+    const statusEl = document.getElementById('phone-lookup-status');
+    if (statusEl) statusEl.classList.remove('hidden');
+
+    try {
+      const res = await fetch(`/api/farmers/lookup?phone=${encodeURIComponent(phone)}`);
+      const json = await res.json();
+
+      if (json.success && json.data?.exists && json.data?.isReturning) {
+        const farmer = json.data.farmer;
+        showReturningFarmerBanner(farmer);
+
+        // Autofill fields if not manually modified
+        const nameInput = document.getElementById('farmer_name');
+        const areaInput = document.getElementById('area');
+        const expInput = document.getElementById('experience');
+        const expNoteInput = document.getElementById('expertise');
+
+        if (farmer.fullName) nameInput.value = farmer.fullName;
+        if (farmer.province && farmer.province !== 'ไม่ระบุ') areaInput.value = farmer.province;
+        if (farmer.yearsExperience) expInput.value = farmer.yearsExperience;
+        if (farmer.expertiseNote) expNoteInput.value = farmer.expertiseNote;
+
+        // Auto select crop if matches
+        if (Array.isArray(farmer.cropTags) && farmer.cropTags.length > 0) {
+          const matchedBtn = document.querySelector(`.crop-btn[data-crop="${farmer.cropTags[0]}"]`);
+          if (matchedBtn) matchedBtn.click();
+        }
+      } else {
+        document.getElementById('returning-farmer-card').classList.add('hidden');
+      }
+    } catch (e) {
+      console.warn('Farmer lookup failed:', e);
+    } finally {
+      if (statusEl) statusEl.classList.add('hidden');
+    }
+  }
+
+  function showReturningFarmerBanner(farmer) {
+    const banner = document.getElementById('returning-farmer-card');
+    const nameEl = document.getElementById('banner-farmer-name');
+    const countEl = document.getElementById('banner-interview-count');
+    const lastEl = document.getElementById('banner-last-interview');
+    const topicsEl = document.getElementById('banner-covered-topics');
+
+    nameEl.textContent = farmer.displayName || farmer.fullName || 'เกษตรกร';
+    countEl.textContent = `สัมภาษณ์แล้ว ${farmer.totalInterviews} ครั้ง`;
+    lastEl.textContent = `ล่าสุดเมื่อ ${farmer.lastInterviewTimeAgo}`;
+
+    topicsEl.innerHTML = '';
+    const topicList = farmer.coveredTopics || [];
+    if (topicList.length === 0 && Array.isArray(farmer.coveredTopicNames)) {
+      farmer.coveredTopicNames.forEach(t => {
+        const span = document.createElement('span');
+        span.className = 'bg-white text-on-surface border border-outline-variant/60 text-xs px-2 py-0.5 rounded-md font-medium shadow-2xs';
+        span.textContent = `✓ ${t}`;
+        topicsEl.appendChild(span);
+      });
+    } else if (topicList.length > 0) {
+      topicList.slice(0, 6).forEach(t => {
+        const span = document.createElement('span');
+        span.className = 'bg-white text-on-surface border border-outline-variant/60 text-xs px-2 py-0.5 rounded-md font-medium shadow-2xs';
+        span.title = t.summary || t.topic;
+        span.textContent = `✓ ${t.topic} (${t.daysAgo} วันก่อน)`;
+        topicsEl.appendChild(span);
+      });
+    } else {
+      topicsEl.innerHTML = '<span class="text-xs text-on-surface-variant italic">ยังไม่มีหัวข้อที่บันทึกไว้</span>';
+    }
+
+    banner.classList.remove('hidden');
+  }
+
+  async function handleCreateInterview() {
+    const farmerPhone = document.getElementById('farmer_phone')?.value.trim() || '';
+    const farmerName = document.getElementById('farmer_name').value.trim();
+    const area = document.getElementById('area').value.trim();
+    const experience = document.getElementById('experience').value.trim();
+    const expertise = document.getElementById('expertise').value.trim();
+
+    const selectedTopics = [];
+    document.querySelectorAll('.topic-checkbox:checked').forEach(cb => {
+      selectedTopics.push(cb.value);
+    });
+
+    if (!farmerName) {
+      alert('กรุณากรอกชื่อเกษตรกร');
+      return;
+    }
+
+    const btn = document.getElementById('btn-submit-interview');
+    const btnText = document.getElementById('btn-text');
+    const btnIcon = document.getElementById('btn-icon');
+
+    btn.disabled = true;
+    btnText.textContent = 'กำลังเตรียมแผนสัมภาษณ์...';
+    btnIcon.textContent = 'sync';
+    btnIcon.classList.add('animate-spin');
+
+    try {
+      const response = await fetch('/api/interviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          phone: farmerPhone,
+          farmerName,
+          area,
+          experience: parseInt(experience, 10) || 5,
+          expertise,
+          crop: selectedCrop,
+          topics: selectedTopics.length > 0 ? selectedTopics : ['การปลูก', 'การให้น้ำ', 'โรคและแมลง']
+        })
+      });
+
+      const resJson = await response.json();
+      if (resJson.success && resJson.data?.id) {
+        window.location.href = `/live_call_with_gemini_visualizer/code.html?interviewId=${resJson.data.id}`;
+      } else {
+        alert(resJson.message || 'เกิดข้อผิดพลาดในการสร้างการสัมภาษณ์');
+        btn.disabled = false;
+        btnText.textContent = 'เริ่มสัมภาษณ์';
+        btnIcon.textContent = 'arrow_forward';
+        btnIcon.classList.remove('animate-spin');
+      }
+    } catch (err) {
+      console.error('Create interview error:', err);
+      alert('ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้: ' + err.message);
+      btn.disabled = false;
+      btnText.textContent = 'เริ่มสัมภาษณ์';
+      btnIcon.textContent = 'arrow_forward';
+      btnIcon.classList.remove('animate-spin');
+    }
+  }
+</script>
+</body></html>

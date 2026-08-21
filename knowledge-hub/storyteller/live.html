@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ห้องเล่าเรื่องปราชญ์เกษตรกร - ครูสวน AI</title>
+  <!-- Vapi Web SDK for Real-time Voice Call -->
+  <script src="https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js"></script>
+  <script type="module">
+    try {
+      const { default: Vapi } = await import('https://cdn.jsdelivr.net/npm/@vapi-ai/web@2.6.3/+esm');
+      if (Vapi) window.Vapi = Vapi;
+    } catch (e) {
+      console.warn('Vapi ESM fallback notice:', e.message);
+    }
+  </script>
+  <!-- Fonts -->
+  <link rel="icon" type="image/png" href="/images/logo.png" />
+  <link rel="apple-touch-icon" href="/images/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'cream-bg': '#FFF8E7',
+            'nature-surface': '#f0fded',
+            'primary-dark': '#005313',
+            'primary-green': '#006e1c',
+            'primary-light': '#4caf50',
+            'earth-brown': '#75584d',
+            'earth-light': '#8D6E63',
+            'dark-charcoal': '#141e14',
+            'warm-gray': '#3f4a3c',
+            'card-border': '#becab9',
+          },
+          fontFamily: {
+            thai: ['Noto Sans Thai', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Noto Sans Thai', sans-serif;
+      background-color: #FFF8E7;
+      color: #141e14;
+    }
+    .pulse-glow {
+      animation: pulseGlow 2.5s infinite ease-in-out;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.5); }
+      50% { transform: scale(1.05); box-shadow: 0 0 0 16px rgba(76, 175, 80, 0); }
+    }
+    .wisdom-badge-pop {
+      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes popIn {
+      from { transform: scale(0.8) translateY(10px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-primary-light selection:text-white">
+
+  <!-- Header Bar -->
+  <header class="w-full bg-white/90 backdrop-blur-md border-b border-card-border/40 px-4 py-3 sm:px-8 flex items-center justify-between sticky top-0 z-40">
+    <div class="flex items-center gap-3">
+      <button onclick="confirmExit()" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:bg-gray-200 transition-colors" title="ออก">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+      <div>
+        <h1 id="live-header-title" class="text-lg sm:text-xl font-bold text-primary-green">🌾 ศาลาเล่าเรื่องปราชญ์เกษตรกร</h1>
+        <p id="live-farmer-badge" class="text-xs sm:text-sm font-semibold text-earth-brown">กำลังเรียนรู้จาก: ลุงสมชาย (ทุเรียน)</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <!-- Live Indicator & Timer -->
+      <div class="flex items-center gap-2 bg-red-100 text-red-700 px-4 py-1.5 rounded-full font-bold text-sm">
+        <span class="w-3 h-3 rounded-full bg-red-600 animate-ping"></span>
+        <span id="call-timer">00:00</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Live Room -->
+  <main class="flex-1 max-w-4xl mx-auto w-full px-4 py-4 sm:py-6 flex flex-col gap-4">
+    
+    <!-- AI Avatar & Live Audio Wave Card -->
+    <div class="bg-gradient-to-b from-emerald-800 to-green-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col items-center justify-center text-center relative overflow-hidden">
+      <div class="relative mb-4">
+        <div id="avatar-glow-ring" class="w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-emerald-700/60 flex items-center justify-center pulse-glow border-4 border-emerald-400/40">
+          <img src="/images/logo.png" alt="ครูสวน AI" class="w-24 h-24 sm:w-30 sm:h-30 rounded-full object-cover shadow-2xl border-2 border-white/60" />
+        </div>
+        <div id="mic-status-badge" class="absolute -bottom-1 -right-1 bg-yellow-400 text-dark-charcoal p-2 rounded-full shadow-md flex items-center justify-center">
+          <span class="material-symbols-outlined text-lg">mic</span>
+        </div>
+      </div>
+
+      <h2 id="speaker-status" class="text-xl sm:text-2xl font-bold text-yellow-300">
+        ครูสวน AI กำลังตั้งใจฟังคุณลุง...
+      </h2>
+      <p id="current-theme-label" class="text-sm sm:text-base text-emerald-100 mt-1 font-medium">
+        หัวข้อ: เคล็ดลับดินดี & ปุ๋ยหมัก 30 ปี
+      </p>
+
+      <!-- Real-time Wisdom Highlights Container -->
+      <div id="wisdom-highlights-box" class="mt-4 w-full max-w-lg hidden">
+        <div class="bg-yellow-400/20 border border-yellow-300/40 backdrop-blur-md rounded-2xl p-3 text-yellow-200 text-sm sm:text-base font-bold flex items-center gap-2.5 wisdom-badge-pop shadow-md">
+          <span class="text-2xl">💡</span>
+          <div class="text-left">
+            <div class="text-xs text-yellow-300 uppercase tracking-wide">สกัดภูมิปัญญาเด่นแล้ว</div>
+            <div id="latest-wisdom-text" class="text-white font-medium line-clamp-1">สูตรน้ำหมักสะเดาไล่แมลง</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Transcript Box (Senior Large Typography) -->
+    <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-md border border-card-border/50 flex-1 flex flex-col min-h-[260px] max-h-[380px] overflow-hidden">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-3 mb-3">
+        <div class="flex items-center gap-2 text-sm font-bold text-earth-brown">
+          <span class="material-symbols-outlined text-primary-green">forum</span>
+          <span>บทสนทนาสด (ตัวหนังสือใหญ่ ชัดเจน)</span>
+        </div>
+        <span id="connection-status-text" class="text-xs font-semibold text-primary-green flex items-center gap-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>พร้อมสนทนาเสียง</span>
+        </span>
+      </div>
+
+      <div id="transcript-container" class="flex-1 overflow-y-auto space-y-4 pr-1 text-base sm:text-lg">
+        <!-- Initial AI greeting bubble -->
+        <div class="flex gap-3 items-start">
+          <div class="w-10 h-10 rounded-full bg-nature-surface text-primary-green font-bold flex items-center justify-center flex-shrink-0 text-xl">
+            🌱
+          </div>
+          <div class="bg-nature-surface rounded-2xl rounded-tl-none p-4 text-dark-charcoal font-medium border border-primary-green/20 max-w-[88%] leading-relaxed">
+            <span class="font-bold text-primary-green block text-sm mb-1">หลานครูสวน AI:</span>
+            สวัสดีครับคุณลุง วันนี้ดีใจมากเลยที่ได้มาฟังเรื่องเล่าและขอคำชี้แนะเคล็ดลับจากลุงครับ... สะดวกเล่าเรื่องดินและปุ๋ยให้ลูกหลานฟังไหมครับ
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fallback Text Input (if voice has permission issue) -->
+    <div id="text-fallback-bar" class="bg-white rounded-2xl p-2.5 shadow-sm border border-card-border/40 flex items-center gap-2 hidden">
+      <input type="text" id="farmer-text-input" placeholder="พิมพ์คำตอบ (สำรองกรณีไมโครโฟนไม่ติด)..." class="flex-1 px-4 py-2 text-base rounded-xl border border-gray-200 outline-none focus:border-primary-green" onkeydown="if(event.key==='Enter') sendFallbackText()">
+      <button onclick="sendFallbackText()" class="px-5 py-2 bg-primary-green text-white font-bold rounded-xl hover:bg-primary-dark transition-all">
+        ส่ง
+      </button>
+    </div>
+
+    <!-- Control Bar (Large Buttons for Seniors) -->
+    <div class="bg-white rounded-3xl p-4 sm:p-6 shadow-tactile border border-card-border/50 flex items-center justify-around gap-3">
+      
+      <!-- Pause / Resume -->
+      <button id="btn-pause" onclick="togglePauseCall()" class="flex flex-col items-center gap-1.5 p-3 rounded-2xl hover:bg-gray-100 transition-all text-warm-gray cursor-pointer" title="พักหายใจ / จิบน้ำ">
+        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gray-100 flex items-center justify-center text-dark-charcoal text-2xl sm:text-3xl shadow-sm">
+          <span id="pause-icon" class="material-symbols-outlined">pause</span>
+        </div>
+        <span id="pause-text" class="text-xs sm:text-sm font-bold">พักจิบน้ำ</span>
+      </button>
+
+      <!-- Big End Call & Save Button -->
+      <button id="btn-end-call" onclick="handleFinishStory()" class="flex-1 max-w-xs py-4 sm:py-5 px-6 bg-gradient-to-r from-red-600 via-rose-600 to-red-700 hover:from-red-700 hover:to-rose-800 text-white rounded-3xl font-extrabold text-lg sm:text-xl shadow-lg hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer">
+        <span class="material-symbols-outlined text-2xl sm:text-3xl">check_circle</span>
+        <span>เล่าจบแล้ว / บันทึก</span>
+      </button>
+
+      <!-- Mute Toggle -->
+      <button id="btn-mute" onclick="toggleMute()" class="flex flex-col items-center gap-1.5 p-3 rounded-2xl hover:bg-gray-100 transition-all text-warm-gray cursor-pointer" title="ปิด/เปิดไมค์">
+        <div id="mute-circle" class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-emerald-100 text-primary-green flex items-center justify-center text-2xl sm:text-3xl shadow-sm">
+          <span id="mute-icon" class="material-symbols-outlined">mic</span>
+        </div>
+        <span id="mute-text" class="text-xs sm:text-sm font-bold text-primary-green">เปิดไมค์</span>
+      </button>
+
+    </div>
+
+  </main>
+
+  <script>
+    let interviewId = null;
+    let vapiClient = null;
+    let sseSource = null;
+    let timerInterval = null;
+    let secondsElapsed = 0;
+    let isPaused = false;
+    let isMuted = false;
+    let sessionData = null;
+
+    function parseQueryParam(key) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(key);
+    }
+
+    async function initStorytellerLive() {
+      interviewId = parseQueryParam('interviewId');
+      
+      const stored = sessionStorage.getItem('storyteller_session');
+      if (stored) {
+        try {
+          sessionData = JSON.parse(stored);
+          if (!interviewId && sessionData.interviewId) {
+            interviewId = sessionData.interviewId;
+          }
+        } catch (e) {}
+      }
+
+      if (!interviewId) {
+        alert('ไม่พบรหัสห้องเล่าเรื่อง กรุณาเริ่มใหม่อีกครั้ง');
+        window.location.href = '/storyteller/index.html';
+        return;
+      }
+
+      // Populate UI with farmer details
+      if (sessionData && sessionData.farmer) {
+        document.getElementById('live-farmer-badge').textContent = `กำลังเรียนรู้จาก: ${sessionData.farmer.displayName || sessionData.farmer.fullName} (${sessionData.theme?.title || 'ภูมิปัญญาเกษตร'})`;
+        document.getElementById('current-theme-label').textContent = `หัวข้อ: ${sessionData.theme?.title || 'ภูมิปัญญาเกษตรกร'}`;
+      }
+
+      // Connect SSE for live transcript and insights
+      connectSSE(interviewId);
+
+      // Start call timer
+      startTimer();
+
+      // Connect Vapi WebRTC
+      if (sessionData && sessionData.assistantOverrides && sessionData.publicKey) {
+        await startVapiVoice(sessionData);
+      } else {
+        // Fetch session data from backend
+        try {
+          const res = await fetch(`/api/interviews/${interviewId}`);
+          const data = await res.json();
+          if (data.success && data.data) {
+            // Request start params
+            const startRes = await fetch(`/api/interviews/${interviewId}/start`, { method: 'POST' });
+            const startData = await startRes.json();
+            if (startData.success) {
+              await startVapiVoice(startData.data);
+            }
+          }
+        } catch (err) {
+          console.error('Failed to init call:', err);
+          showFallbackInput();
+        }
+      }
+    }
+
+    function startTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (!isPaused) {
+          secondsElapsed++;
+          const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+          const secs = String(secondsElapsed % 60).padStart(2, '0');
+          document.getElementById('call-timer').textContent = `${mins}:${secs}`;
+        }
+      }, 1000);
+    }
+
+    async function startVapiVoice(config) {
+      try {
+        const VapiConstructor = window.vapiSDK?.run ? window.vapiSDK : window.Vapi;
+        if (!VapiConstructor) {
+          console.warn('Vapi SDK not found, showing fallback input');
+          showFallbackInput();
+          return;
+        }
+
+        const client = window.vapiSDK?.run ? window.vapiSDK.run({
+          apiKey: config.publicKey,
+          assistant: config.assistantId,
+          assistantOverrides: config.assistantOverrides,
+        }) : new window.Vapi(config.publicKey);
+
+        vapiClient = client;
+
+        if (client.start && !window.vapiSDK?.run) {
+          await client.start(config.assistantId, config.assistantOverrides);
+        }
+
+        client.on('call-start', () => {
+          document.getElementById('connection-status-text').innerHTML = `
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+            <span>กำลังสนทนาเสียงสด</span>
+          `;
+          document.getElementById('speaker-status').textContent = 'ครูสวน AI กำลังตั้งใจฟังคุณลุง...';
+        });
+
+        client.on('speech-start', () => {
+          document.getElementById('speaker-status').textContent = 'ครูสวน AI กำลังพูดตอบรับ...';
+          document.getElementById('avatar-glow-ring').classList.add('pulse-glow');
+        });
+
+        client.on('speech-end', () => {
+          document.getElementById('speaker-status').textContent = 'ครูสวน AI กำลังตั้งใจฟังคุณลุงเล่า...';
+        });
+
+        client.on('call-end', () => {
+          handleCallEndedLocally();
+        });
+
+        client.on('error', (err) => {
+          console.error('Vapi voice error:', err);
+          showFallbackInput();
+        });
+
+      } catch (err) {
+        console.error('Error starting Vapi voice call:', err);
+        showFallbackInput();
+      }
+    }
+
+    function showFallbackInput() {
+      document.getElementById('text-fallback-bar').classList.remove('hidden');
+      document.getElementById('connection-status-text').innerHTML = `
+        <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+        <span>โหมดพิมพ์สำรอง</span>
+      `;
+    }
+
+    function connectSSE(id) {
+      if (sseSource) sseSource.close();
+      sseSource = new EventSource(`/api/interviews/${id}/events`);
+
+      sseSource.addEventListener('transcript', (e) => {
+        try {
+          const seg = JSON.parse(e.data);
+          appendTranscript(seg.speaker, seg.text);
+        } catch (err) {}
+      });
+
+      sseSource.addEventListener('insight', (e) => {
+        try {
+          const ins = JSON.parse(e.data);
+          showWisdomHighlight(ins.title || ins.statement);
+        } catch (err) {}
+      });
+
+      sseSource.addEventListener('status', (e) => {
+        try {
+          const st = JSON.parse(e.data);
+          if (st.status === 'completed') {
+            window.location.href = `/storyteller/summary.html?interviewId=${id}`;
+          }
+        } catch (err) {}
+      });
+    }
+
+    function cleanThaiTranscript(text) {
+      if (!text || typeof text !== 'string') return '';
+      let t = text.trim();
+
+      // 1. Initial phonetic & English filler corrections
+      t = t.replace(/^ON\s+/i, 'อ๋อ ');
+      t = t.replace(/\bON\b/gi, 'อ๋อ');
+      t = t.replace(/\bOK\b/gi, 'โอเค');
+      t = t.replace(/ประ\s*ภัสสร\s*ฟ\s*ล\s*า/g, 'ฟอสฟอรัส');
+      t = t.replace(/ประภัสสรฟลา/g, 'ฟอสฟอรัส');
+      t = t.replace(/ภัสสร\s*ฟ\s*ล\s*า/g, 'ฟอสฟอรัส');
+      t = t.replace(/ฟ\s*ล\s*า/g, 'ฟอสฟอรัส');
+      t = t.replace(/ร้อย\s*ห้องโถง/g, 'ลองกอง');
+      t = t.replace(/ร้อยห้องโถง/g, 'ลองกอง');
+      t = t.replace(/สุด\s*ผู้หญิง\s*สีดำ/g, 'สูตรปุ๋ยหมัก');
+      t = t.replace(/สุดผู้หญิงสีดำ/g, 'สูตรปุ๋ยหมัก');
+      t = t.replace(/สุด\s*ผู้หญิง/g, 'สูตรปุ๋ย');
+
+      // 2. Collapse artificial intra-word spaces between Thai characters
+      while (/([\u0E00-\u0E7F])\s+([\u0E00-\u0E7F])/.test(t)) {
+        t = t.replace(/([\u0E00-\u0E7F])\s+([\u0E00-\u0E7F])/g, '$1$2');
+      }
+
+      // 3. Post-clean common agricultural words & compound terms
+      t = t.replace(/ประภัสสรฟลา/g, 'ฟอสฟอรัส');
+      t = t.replace(/ร้อยห้องโถง/g, 'ลองกอง');
+      t = t.replace(/สุดผู้หญิง/g, 'สูตรปุ๋ย');
+      t = t.replace(/ปุยหมัก/g, 'ปุ๋ยหมัก');
+      t = t.replace(/ปุย/g, 'ปุ๋ย');
+      t = t.replace(/นำ้หมัก/g, 'น้ำหมัก');
+      t = t.replace(/นำ้/g, 'น้ำ');
+
+      // Clean spacing after greetings/particles
+      t = t.replace(/^(อ๋อ|โอ้โห|สวัสดีครับ|สวัสดีค่ะ)([ก-๙])/g, '$1 $2');
+
+      return t;
+    }
+
+    function appendTranscript(speaker, text) {
+      if (!text || !text.trim()) return;
+      const cleanText = cleanThaiTranscript(text);
+      if (!cleanText) return;
+
+      const box = document.getElementById('transcript-container');
+      const isAI = speaker === 'ai' || speaker === 'assistant';
+
+      const div = document.createElement('div');
+      div.className = `flex gap-3 items-start ${isAI ? '' : 'flex-row-reverse'}`;
+
+      const avatar = isAI ? '🌱' : '👴';
+      const name = isAI ? 'หลานครูสวน AI' : 'คุณลุง/คุณป้า';
+      const bgStyle = isAI 
+        ? 'bg-nature-surface text-dark-charcoal border border-primary-green/20 rounded-tl-none' 
+        : 'bg-emerald-800 text-white rounded-tr-none shadow-sm';
+      const nameColor = isAI ? 'text-primary-green' : 'text-yellow-300';
+
+      const avatarHtml = isAI 
+        ? `<img src="/images/logo.png" alt="AI" class="w-full h-full object-cover rounded-full" />` 
+        : `<span>👴</span>`;
+
+      div.innerHTML = `
+        <div class="w-10 h-10 rounded-full bg-nature-surface flex items-center justify-center text-xl flex-shrink-0 border border-card-border/40 overflow-hidden shadow-xs">
+          ${avatarHtml}
+        </div>
+        <div class="${bgStyle} rounded-2xl p-4 max-w-[85%] leading-relaxed font-medium">
+          <span class="font-bold block text-sm mb-1 ${nameColor}">${name}:</span>
+          ${cleanText}
+        </div>
+      `;
+
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function showWisdomHighlight(text) {
+      const box = document.getElementById('wisdom-highlights-box');
+      const label = document.getElementById('latest-wisdom-text');
+      if (box && label) {
+        label.textContent = text;
+        box.classList.remove('hidden');
+        box.classList.add('wisdom-badge-pop');
+      }
+    }
+
+    function togglePauseCall() {
+      isPaused = !isPaused;
+      const btnText = document.getElementById('pause-text');
+      const icon = document.getElementById('pause-icon');
+      if (isPaused) {
+        btnText.textContent = 'เล่าต่อ';
+        icon.textContent = 'play_arrow';
+        if (vapiClient?.setMuted) vapiClient.setMuted(true);
+      } else {
+        btnText.textContent = 'พักจิบน้ำ';
+        icon.textContent = 'pause';
+        if (vapiClient?.setMuted) vapiClient.setMuted(false);
+      }
+    }
+
+    function toggleMute() {
+      isMuted = !isMuted;
+      const circle = document.getElementById('mute-circle');
+      const text = document.getElementById('mute-text');
+      const icon = document.getElementById('mute-icon');
+
+      if (isMuted) {
+        circle.className = 'w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-2xl sm:text-3xl shadow-sm';
+        text.textContent = 'ไมค์ปิดอยู่';
+        text.className = 'text-xs sm:text-sm font-bold text-red-600';
+        icon.textContent = 'mic_off';
+        if (vapiClient?.setMuted) vapiClient.setMuted(true);
+      } else {
+        circle.className = 'w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-emerald-100 text-primary-green flex items-center justify-center text-2xl sm:text-3xl shadow-sm';
+        text.textContent = 'เปิดไมค์';
+        text.className = 'text-xs sm:text-sm font-bold text-primary-green';
+        icon.textContent = 'mic';
+        if (vapiClient?.setMuted) vapiClient.setMuted(false);
+      }
+    }
+
+    async function sendFallbackText() {
+      const input = document.getElementById('farmer-text-input');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+
+      appendTranscript('farmer', text);
+
+      try {
+        await fetch(`/api/interviews/${interviewId}/turn`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text })
+        });
+      } catch (err) {
+        console.error('Error sending fallback text:', err);
+      }
+    }
+
+    async function handleFinishStory() {
+      const confirmEnd = confirm('คุณลุง/คุณป้าเล่าเรื่องเรียบร้อยแล้วใช่ไหมครับ? \nระบบจะรวบรวมคัมภีร์ภูมิปัญญาให้ทันที');
+      if (!confirmEnd) return;
+
+      const btn = document.getElementById('btn-end-call');
+      btn.disabled = true;
+      btn.innerHTML = `<span class="animate-spin text-2xl">⏳</span><span>กำลังรวบรวมคัมภีร์...</span>`;
+
+      if (vapiClient?.stop) {
+        vapiClient.stop();
+      }
+
+      try {
+        await fetch(`/api/storyteller/${interviewId}/end`, { method: 'POST' });
+        setTimeout(() => {
+          window.location.href = `/storyteller/summary.html?interviewId=${interviewId}`;
+        }, 1200);
+      } catch (err) {
+        window.location.href = `/storyteller/summary.html?interviewId=${interviewId}`;
+      }
+    }
+
+    function handleCallEndedLocally() {
+      setTimeout(() => {
+        window.location.href = `/storyteller/summary.html?interviewId=${interviewId}`;
+      }, 1500);
+    }
+
+    function confirmExit() {
+      if (confirm('ต้องการออกจากห้องเล่าเรื่องใช่ไหมครับ?')) {
+        if (vapiClient?.stop) vapiClient.stop();
+        window.location.href = '/storyteller/index.html';
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', initStorytellerLive);
+  </script>
+</body>
+</html>

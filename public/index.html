@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="th" class="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ครูสวน AI — เพื่อนคู่คิดเกษตรกรรุ่นใหม่</title>
+  <meta name="description" content="ระบบจัดการแปลงเกษตรอัจฉริยะ พร้อม AI ครูสวน นำทางแบบจับมือทำ" />
+
+  <link rel="icon" type="image/png" href="/images/logo.png" />
+  <link rel="apple-touch-icon" href="/images/logo.png" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  
+  <!-- Canvas Confetti for Celebration -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Vapi Voice SDK (Official Web SDK & HTML Script Tag) -->
+  <script src="https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js"></script>
+  <script type="module">
+    try {
+      const { default: Vapi } = await import('https://cdn.jsdelivr.net/npm/@vapi-ai/web@2.6.3/+esm');
+      if (Vapi) window.Vapi = Vapi;
+    } catch (e) {
+      console.warn('Vapi ESM fallback notice:', e.message);
+    }
+  </script>
+
+  <!-- Tailwind Configuration matching DESIGN.md -->
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#006e1c",
+            "primary-container": "#4caf50",
+            "primary-fixed": "#94f990",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#003c0b",
+            "secondary": "#286b33",
+            "secondary-container": "#abf4ac",
+            "on-secondary-container": "#2e7238",
+            "tertiary": "#75584d",
+            "tertiary-container": "#b69488",
+            "background": "#FFF8E7",
+            "on-background": "#141e14",
+            "surface": "#ffffff",
+            "surface-container": "#e5f1e1",
+            "surface-container-low": "#ebf7e7",
+            "surface-container-high": "#dfecdc",
+            "on-surface-variant": "#3f4a3c",
+            "outline": "#6f7a6b",
+            "outline-variant": "#becab9",
+            "soil": "#8D6E63",
+            "warning": "#FFB74D",
+            "error": "#E57373"
+          },
+          fontFamily: {
+            sans: ["Noto Sans Thai", "sans-serif"]
+          },
+          boxShadow: {
+            "tactile": "0px 4px 14px rgba(47, 58, 47, 0.08)",
+            "tactile-hover": "0px 8px 24px rgba(47, 58, 47, 0.14)",
+            "tactile-lg": "0px 12px 32px rgba(47, 58, 47, 0.12)"
+          },
+          borderRadius: {
+            "2xl": "1rem",
+            "3xl": "1.5rem",
+            "4xl": "2rem"
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Hide rogue injected Vapi button completely from UI view */
+    #vapi-support-btn, .vapi-btn, .vapi-btn-round, #vapi-icon-container {
+      position: fixed !important;
+      bottom: -9999px !important;
+      right: -9999px !important;
+      opacity: 0 !important;
+      width: 1px !important;
+      height: 1px !important;
+      pointer-events: none !important;
+      z-index: -999 !important;
+      visibility: hidden !important;
+    }
+    body {
+      background-color: #FFF8E7;
+      font-family: 'Noto Sans Thai', sans-serif;
+      color: #141e14;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+    .material-symbols-outlined.fill {
+      font-variation-settings: 'FILL' 1;
+    }
+
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FFF8E7;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #becab9;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #6f7a6b;
+    }
+
+    /* Timeline Styling */
+    .timeline-line {
+      position: absolute;
+      left: 23px;
+      top: 48px;
+      bottom: 0;
+      width: 2px;
+      background-image: linear-gradient(to bottom, #8D6E63 50%, transparent 50%);
+      background-size: 2px 8px;
+      background-repeat: repeat-y;
+      z-index: 0;
+    }
+    .timeline-item:last-child .timeline-line {
+      display: none;
+    }
+
+    /* Animations */
+    @keyframes pulse-subtle {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+    .animate-pulse-subtle {
+      animation: pulse-subtle 2.5s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    .animate-float {
+      animation: float 3s infinite ease-in-out;
+    }
+
+    /* Hide scrollbars for chips */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-primary-container selection:text-white">
+
+  <!-- ========================================== -->
+  <!-- 🖥️ DESKTOP SIDEBAR NAVIGATION -->
+  <!-- ========================================== -->
+  <aside class="hidden md:flex flex-col fixed left-0 top-0 h-full w-[280px] bg-surface-container-low border-r border-outline-variant/40 p-4 gap-2 z-40">
+    <!-- Brand Header -->
+    <div class="flex items-center gap-3 px-2 py-3 mb-2 w-full overflow-hidden">
+      <img src="/images/logo.png" alt="ครูสวน AI Logo" class="w-12 h-12 rounded-2xl object-cover shadow-tactile animate-float shrink-0 border border-primary/20" style="width: 48px; height: 48px; min-width: 48px; max-width: 48px;" />
+      <div class="flex-1 min-w-0">
+        <h1 class="text-xl font-extrabold text-primary tracking-tight truncate leading-tight">ครูสวน AI</h1>
+        <p class="text-xs font-semibold text-on-surface-variant truncate">เพื่อนคู่คิดเกษตรกรรุ่นใหม่</p>
+      </div>
+    </div>
+
+    <!-- Quick Add Plot CTA -->
+    <button onclick="openModal('modal-create-plot')" class="w-full py-3 mb-4 bg-primary text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-on-primary-container transition-all duration-200 shadow-tactile hover:scale-[1.02] active:scale-95">
+      <span class="material-symbols-outlined text-[20px]">add_circle</span>
+      <span>เพิ่มแปลงใหม่</span>
+    </button>
+
+    <!-- Nav Items -->
+    <nav class="flex-1 space-y-1.5" id="desktop-nav">
+      <a href="#home" onclick="navigate('home')" data-nav="home" class="nav-btn flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-2xl transition-all duration-200 hover:scale-[1.01]">
+        <span class="material-symbols-outlined">home</span>
+        <span class="font-medium text-base">หน้าหลัก</span>
+      </a>
+      <a href="#farms" onclick="navigate('farms')" data-nav="farms" class="nav-btn flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-2xl transition-all duration-200 hover:scale-[1.01]">
+        <span class="material-symbols-outlined">potted_plant</span>
+        <span class="font-medium text-base">สวนของฉัน</span>
+      </a>
+      <a href="#tasks" onclick="navigate('tasks')" data-nav="tasks" class="nav-btn flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-2xl transition-all duration-200 hover:scale-[1.01]">
+        <span class="material-symbols-outlined">assignment</span>
+        <span class="font-medium text-base">ภารกิจวันนี้</span>
+        <span id="badge-task-count" class="ml-auto px-2 py-0.5 bg-primary text-white text-xs font-bold rounded-full">0</span>
+      </a>
+      <a href="#chat" onclick="navigate('chat')" data-nav="chat" class="nav-btn flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-2xl transition-all duration-200 hover:scale-[1.01]">
+        <span class="material-symbols-outlined">smart_toy</span>
+        <span class="font-medium text-base">คุยกับครูสวน</span>
+        <span class="ml-auto px-2 py-0.5 bg-secondary-container text-on-secondary-container text-[11px] font-bold rounded-full">Typhoon</span>
+      </a>
+      <a href="#market" onclick="navigate('market')" data-nav="market" class="nav-btn flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-2xl transition-all duration-200 hover:scale-[1.01]">
+        <span class="material-symbols-outlined">storefront</span>
+        <span class="font-medium text-base">ตลาดผลผลิต</span>
+      </a>
+      <a href="#storyteller" onclick="navigate('storyteller')" data-nav="storyteller" class="nav-btn flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-2xl transition-all duration-200 hover:scale-[1.01] bg-gradient-to-r from-emerald-50 to-amber-50 border border-emerald-200/70">
+        <span class="text-xl">🌾</span>
+        <div class="flex-1 min-w-0">
+          <span class="font-bold text-sm text-primary block truncate">ศาลาปราชญ์เกษตรกร</span>
+          <span class="text-[10px] text-tertiary font-medium block truncate">เล่าเรื่อง/แบ่งปันภูมิปัญญา</span>
+        </div>
+        <span class="px-2 py-0.5 bg-yellow-400 text-gray-900 text-[10px] font-extrabold rounded-full">เก๋า</span>
+      </a>
+    </nav>
+
+    <!-- User Profile & System info -->
+    <div class="mt-auto pt-4 border-t border-outline-variant/30 flex flex-col gap-2">
+      <div id="desktop-user-card" onclick="openUserProfileModal()" class="p-3 bg-white rounded-2xl shadow-tactile flex items-center gap-3 cursor-pointer hover:bg-surface-container-low transition-all border border-outline-variant/30 group">
+        <div id="desktop-user-avatar" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-xl text-primary font-bold shadow-inner group-hover:scale-105 transition-transform">
+          🧑‍🌾
+        </div>
+        <div class="flex-1 min-w-0">
+          <p id="desktop-user-name" class="text-sm font-bold text-on-background truncate">กำลังโหลด...</p>
+          <p id="desktop-user-location" class="text-xs text-on-surface-variant truncate">อ.พุนพิน จ.สุราษฎร์ธานี</p>
+        </div>
+        <button onclick="event.stopPropagation(); openUserProfileModal()" title="จัดการโปรไฟล์" class="text-outline hover:text-primary transition-colors p-1">
+          <span class="material-symbols-outlined text-[20px]">manage_accounts</span>
+        </button>
+      </div>
+      <div class="flex items-center justify-between text-[11px] text-outline px-2">
+        <span>⚡ Thai LLM: Typhoon v2.5</span>
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+      </div>
+      <a href="/interviewer_dashboard/code.html" target="_blank" rel="noopener" title="สำหรับทีมงาน: คลังภูมิปัญญาและสัมภาษณ์เกษตรกร" class="flex items-center justify-center gap-1.5 mt-1 py-2 text-[11px] font-semibold text-outline hover:text-primary transition-colors rounded-xl hover:bg-surface-container-high">
+        <span class="material-symbols-outlined text-[15px]">school</span>
+        <span>คลังภูมิปัญญา (ทีมงาน)</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ========================================== -->
+  <!-- 📱 MOBILE TOP APP BAR -->
+  <!-- ========================================== -->
+  <header class="md:hidden flex justify-between items-center px-4 py-3 bg-surface-container-low/95 backdrop-blur-md sticky top-0 z-40 border-b border-outline-variant/30">
+    <div class="flex items-center gap-2.5 min-w-0">
+      <img src="/images/logo.png" alt="ครูสวน AI Logo" class="w-9 h-9 rounded-xl object-cover shadow-sm shrink-0 border border-primary/20" style="width: 36px; height: 36px; min-width: 36px; max-width: 36px;" />
+      <div class="min-w-0">
+        <h1 class="text-base font-extrabold text-primary leading-tight truncate">ครูสวน AI</h1>
+        <p class="text-[10px] text-on-surface-variant font-medium truncate">เพื่อนคู่คิดเกษตรกร</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-1.5">
+      <button onclick="navigate('storyteller')" title="ศาลาปราชญ์เกษตรกร" class="px-2.5 py-1 bg-yellow-400 text-gray-900 text-xs font-bold rounded-full flex items-center gap-1 shadow-sm cursor-pointer">
+        <span>🌾</span><span>เล่าเรื่อง</span>
+      </button>
+      <a href="/interviewer_dashboard/code.html" target="_blank" rel="noopener" title="สำหรับทีมงาน: คลังภูมิปัญญา" class="p-2 rounded-full hover:bg-surface-container text-on-surface-variant">
+        <span class="material-symbols-outlined text-[20px]">school</span>
+      </a>
+      <button onclick="toggleNotificationDrawer()" class="p-2 rounded-full hover:bg-surface-container text-on-surface-variant relative">
+        <span class="material-symbols-outlined text-[22px]">notifications</span>
+        <span id="badge-notif-dot" class="hidden absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-error rounded-full ring-2 ring-white"></span>
+      </button>
+      <button onclick="openUserProfileModal()" id="mobile-user-avatar-btn" class="p-1 rounded-full text-xl hover:scale-105 transition-transform" title="โปรไฟล์ผู้ใช้งาน">
+        🧑‍🌾
+      </button>
+    </div>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- 🎯 MAIN CONTENT WRAPPER -->
+  <!-- ========================================== -->
+  <main class="flex-1 md:ml-[280px] w-full max-w-5xl mx-auto px-4 md:px-8 py-4 md:py-8 pb-28 md:pb-12">
+
+    <!-- ========================================== -->
+    <!-- 🏠 VIEW 1: HOME PAGE -->
+    <!-- ========================================== -->
+    <section id="view-home" class="view-section space-y-6">
+      <!-- Welcome Header -->
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-extrabold text-on-background">
+            สวัสดีครับ <span id="home-greeting-name">เกษตรกร</span> 👋
+          </h2>
+          <p class="text-sm md:text-base text-on-surface-variant mt-0.5">วันนี้เรามาดูแลสวนให้เติบโตแข็งแรงกันครับ</p>
+        </div>
+        <div class="hidden md:flex items-center gap-3">
+          <button onclick="toggleNotificationDrawer()" class="px-4 py-2 bg-white rounded-full text-sm font-semibold text-on-surface-variant hover:bg-surface-container-high transition-colors shadow-tactile flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">notifications</span>
+            <span>การแจ้งเตือน</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Hero Today Task Banner -->
+      <div class="bg-gradient-to-r from-primary via-secondary to-[#1b5e20] text-white rounded-3xl p-6 md:p-8 shadow-tactile-lg relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          <div class="flex items-center gap-4">
+            <div class="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-3xl shadow-inner border border-white/30 shrink-0 animate-pulse-subtle">
+              ☀️
+            </div>
+            <div>
+              <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-bold mb-1.5 border border-white/20">
+                <span>🗓️ วันนี้</span>
+              </div>
+              <h3 id="home-task-banner-title" class="text-xl md:text-2xl font-bold">มี 2 ภารกิจที่ต้องทำ</h3>
+              <p class="text-sm text-white/90 mt-0.5">ทำภารกิจเพื่อช่วยให้พืชเติบโตตามเป้าหมายอย่างมีประสิทธิภาพ</p>
+            </div>
+          </div>
+          <button onclick="navigate('tasks')" class="w-full md:w-auto px-6 py-3.5 bg-white text-primary rounded-full font-bold text-sm md:text-base hover:bg-surface-container-low transition-all duration-200 shadow-md hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shrink-0">
+            <span>เริ่มทำภารกิจ</span>
+            <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 🌾 Senior Farmer Storytelling Feature Banner -->
+      <div class="bg-gradient-to-r from-emerald-900 via-emerald-800 to-green-900 text-white rounded-3xl p-5 md:p-6 shadow-tactile relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-4 border border-emerald-700/60">
+        <div class="flex items-center gap-4 w-full sm:w-auto">
+          <div class="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-3xl shrink-0 border border-white/20 shadow-inner">
+            🌾
+          </div>
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-yellow-400 text-gray-900 rounded-full text-xs font-extrabold mb-1">
+              <span>🏅 ศาลาปราชญ์เกษตรกร</span>
+            </div>
+            <h4 class="font-extrabold text-base md:text-lg text-white">เล่าเรื่องสวน ถ่ายทอดวิชาเป็นคัมภีร์ภูมิปัญญา</h4>
+            <p class="text-xs text-emerald-100 mt-0.5 leading-relaxed">พูดคุยด้วยเสียงกับครูสวน AI สบาย ๆ เหมือนคุยกับลูกหลาน ไม่ต้องพิมพ์</p>
+          </div>
+        </div>
+        <button onclick="navigate('storyteller')" class="w-full sm:w-auto px-5 py-3 bg-yellow-400 hover:bg-yellow-300 text-gray-950 font-extrabold text-sm rounded-full shadow-md transition-all flex items-center justify-center gap-2 shrink-0 hover:scale-105 active:scale-95 cursor-pointer">
+          <span>🎙️ เข้าศาลาเล่าเรื่อง</span>
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </button>
+      </div>
+
+      <!-- AI Kru Suan Quick Prompt Card -->
+      <div class="bg-surface rounded-3xl p-5 md:p-6 shadow-tactile border border-outline-variant/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3.5 w-full sm:w-auto">
+          <img src="/images/logo.png" alt="ครูสวน AI" class="w-12 h-12 rounded-2xl object-cover shadow-sm shrink-0 border border-primary/20" style="width: 48px; height: 48px; min-width: 48px; max-width: 48px;" />
+          <div class="min-w-0">
+            <h4 class="font-bold text-base text-on-background">สงสัยเรื่องการปลูกพืช?</h4>
+            <p class="text-xs text-on-surface-variant">ถามครูสวน AI ได้ทันที พร้อมตอบภาษาไทยเข้าใจง่าย</p>
+          </div>
+        </div>
+        <div class="flex gap-2 w-full sm:w-auto">
+          <button onclick="quickAskAI('ช่วงนี้ควรรดน้ำอย่างไรดี?')" class="flex-1 sm:flex-none px-3.5 py-2 bg-surface-container-low hover:bg-surface-container text-xs font-semibold text-primary rounded-full transition-colors truncate">
+            💧 ควรรดน้ำเท่าไหร่?
+          </button>
+          <button onclick="quickAskAI('ใบพืชเริ่มเหลืองเกิดจากอะไร?')" class="flex-1 sm:flex-none px-3.5 py-2 bg-surface-container-low hover:bg-surface-container text-xs font-semibold text-primary rounded-full transition-colors truncate">
+            🌿 ใบเริ่มเหลืองทำไง?
+          </button>
+        </div>
+      </div>
+
+      <!-- My Farms Section -->
+      <div>
+        <div class="flex justify-between items-center mb-4">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🌱</span>
+            <h3 class="text-xl font-bold text-on-background">สวนของฉัน</h3>
+          </div>
+          <button onclick="navigate('farms')" class="text-sm font-bold text-primary hover:text-on-primary-container flex items-center gap-1 transition-colors">
+            <span>ดูทั้งหมด</span>
+            <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+          </button>
+        </div>
+
+        <div id="home-plots-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Populated by JS -->
+          <div class="bg-white rounded-3xl p-6 shadow-tactile text-center text-on-surface-variant animate-pulse">
+            กำลังโหลดข้อมูลแปลง...
+          </div>
+        </div>
+
+        <!-- Add plot shortcut -->
+        <button onclick="openModal('modal-create-plot')" class="w-full mt-4 py-4 border-2 border-dashed border-primary/40 hover:border-primary bg-white/60 hover:bg-white rounded-3xl font-bold text-primary flex items-center justify-center gap-2 transition-all duration-200">
+          <span class="material-symbols-outlined">add_circle</span>
+          <span>＋ เพิ่มแปลงใหม่</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 🌱 VIEW 2: MY FARMS PAGE -->
+    <!-- ========================================== -->
+    <section id="view-farms" class="view-section hidden space-y-6">
+      <!-- Title & Actions Bar -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-extrabold text-on-background">สวนของฉัน 🌱</h2>
+          <p class="text-sm text-on-surface-variant mt-0.5">รวมแปลงเกษตรที่คุณกำลังดูแลทั้งหมด</p>
+        </div>
+        <button onclick="openModal('modal-create-plot')" class="w-full sm:w-auto px-5 py-3 bg-primary text-white rounded-2xl font-bold text-sm hover:bg-on-primary-container transition-all shadow-tactile flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">add</span>
+          <span>เพิ่มแปลงใหม่</span>
+        </button>
+      </div>
+
+      <!-- Search & Filter Controls -->
+      <div class="space-y-3">
+        <!-- Search bar -->
+        <div class="relative w-full">
+          <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+          <input id="farm-search-input" oninput="filterFarms()" type="text" placeholder="ค้นหาแปลง เช่น ทุเรียน, ยางพารา, ปาล์มน้ำมัน..." class="w-full pl-12 pr-4 py-3.5 bg-white rounded-2xl border-none shadow-tactile text-sm text-on-background placeholder:text-outline focus:ring-2 focus:ring-primary" />
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+          <button onclick="setFarmFilter('ALL')" data-filter="ALL" class="farm-filter-btn px-4 py-2 bg-primary text-white rounded-full text-xs font-bold transition-all shadow-sm shrink-0">
+            ทั้งหมด
+          </button>
+          <button onclick="setFarmFilter('ACTIVE')" data-filter="ACTIVE" class="farm-filter-btn px-4 py-2 bg-white text-on-surface-variant hover:bg-surface-container rounded-full text-xs font-bold transition-all border border-outline-variant/50 shrink-0">
+            กำลังปลูก
+          </button>
+          <button onclick="setFarmFilter('NEAR_HARVEST')" data-filter="NEAR_HARVEST" class="farm-filter-btn px-4 py-2 bg-white text-on-surface-variant hover:bg-surface-container rounded-full text-xs font-bold transition-all border border-outline-variant/50 shrink-0">
+            ใกล้เก็บเกี่ยว
+          </button>
+          <button onclick="setFarmFilter('HARVESTED')" data-filter="HARVESTED" class="farm-filter-btn px-4 py-2 bg-white text-on-surface-variant hover:bg-surface-container rounded-full text-xs font-bold transition-all border border-outline-variant/50 shrink-0">
+            เก็บเกี่ยวแล้ว
+          </button>
+        </div>
+      </div>
+
+      <!-- Farms Grid -->
+      <div id="all-plots-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 🌳 VIEW 3: FARM DETAIL PAGE -->
+    <!-- ========================================== -->
+    <section id="view-farm-detail" class="view-section hidden space-y-6">
+      <!-- Top Navigation back -->
+      <div class="flex items-center justify-between">
+        <button onclick="navigate('farms')" class="px-3.5 py-2 bg-white hover:bg-surface-container text-on-surface-variant rounded-full text-sm font-bold flex items-center gap-1.5 shadow-tactile transition-colors">
+          <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+          <span>กลับไปหน้าสวน</span>
+        </button>
+        <div class="flex items-center gap-2 flex-wrap justify-end">
+          <button id="btn-farm-harvest" onclick="openHarvestModal()" class="px-3.5 py-2 bg-warning text-[#5d4037] hover:bg-[#ffa726] rounded-full text-xs font-extrabold flex items-center gap-1.5 shadow-tactile transition-all animate-pulse-subtle">
+            <span>🍅</span>
+            <span>บันทึกการเก็บเกี่ยว</span>
+          </button>
+          <button onclick="openModal('modal-add-journal')" class="px-3.5 py-2 bg-white hover:bg-surface-container text-primary rounded-full text-xs font-bold flex items-center gap-1 shadow-tactile transition-colors">
+            <span class="material-symbols-outlined text-[16px]">add_notes</span>
+            <span>จดบันทึก</span>
+          </button>
+          <button onclick="handleDeleteCurrentPlot()" class="px-3 py-2 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-full text-xs font-bold flex items-center gap-1 shadow-tactile transition-all cursor-pointer hover:scale-105 active:scale-95" title="ลบแปลงเกษตรนี้">
+            <span class="material-symbols-outlined text-[16px]">delete</span>
+            <span>ลบแปลง</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Hero Card with Plant Header -->
+      <div class="bg-white rounded-3xl shadow-tactile overflow-hidden border border-outline-variant/20">
+        <!-- Crop Banner Image & Info -->
+        <div id="farm-detail-hero" class="relative h-56 md:h-64 w-full bg-gradient-to-br from-primary-container to-secondary flex items-end p-6 text-white overflow-hidden">
+          <div class="absolute -right-6 -top-6 text-[140px] opacity-30 select-none pointer-events-none" id="farm-detail-bg-emoji">
+            🍅
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+
+          <div class="relative z-10 w-full flex flex-col md:flex-row justify-between items-start md:items-end gap-3">
+            <div>
+              <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/80 backdrop-blur-md text-white rounded-full text-xs font-bold mb-2 shadow-sm">
+                <span id="farm-detail-stage-badge">🌱 ระยะเจริญเติบโต</span>
+              </div>
+              <h2 id="farm-detail-title" class="text-2xl md:text-3xl font-extrabold drop-shadow">ทุเรียนหมอนทอง #01</h2>
+              <p id="farm-detail-subtitle" class="text-xs md:text-sm text-white/90 mt-0.5">ปลูกเมื่อ 165 วันที่แล้ว • พื้นที่ 3,200 ตร.ม.</p>
+            </div>
+            <div class="bg-white/20 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20 text-center">
+              <p class="text-[11px] text-white/80">ความคืบหน้า</p>
+              <p id="farm-detail-progress-text" class="text-xl md:text-2xl font-black text-white">72%</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Progress Bar Strip -->
+        <div class="p-5 md:p-6 bg-white border-b border-outline-variant/30">
+          <div class="flex justify-between items-center text-xs font-bold text-on-surface-variant mb-2">
+            <span>ความสมบูรณ์ตลอดรอบการปลูก</span>
+            <span id="farm-detail-day-count" class="text-primary">วันที่ 42 จาก 105 วัน</span>
+          </div>
+          <div class="w-full h-3.5 bg-surface-container rounded-full overflow-hidden p-0.5 shadow-inner">
+            <div id="farm-detail-progress-bar" class="h-full bg-gradient-to-r from-primary-container to-primary rounded-full transition-all duration-700" style="width: 72%;"></div>
+          </div>
+        </div>
+
+        <!-- Plot Metadata Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-5 bg-surface-container-low text-xs text-on-surface-variant">
+          <div class="bg-white p-3 rounded-2xl shadow-sm">
+            <p class="text-outline">📍 ตำแหน่ง</p>
+            <p id="farm-detail-loc" class="font-bold text-on-background mt-0.5">-</p>
+          </div>
+          <div class="bg-white p-3 rounded-2xl shadow-sm">
+            <p class="text-outline">🪨 ดิน</p>
+            <p id="farm-detail-soil" class="font-bold text-on-background mt-0.5">-</p>
+          </div>
+          <div class="bg-white p-3 rounded-2xl shadow-sm">
+            <p class="text-outline">💧 แหล่งน้ำ</p>
+            <p id="farm-detail-water" class="font-bold text-on-background mt-0.5">-</p>
+          </div>
+          <div class="bg-white p-3 rounded-2xl shadow-sm">
+            <p class="text-outline">🧺 เก็บเกี่ยวคาดการณ์</p>
+            <p id="farm-detail-harvest-date" class="font-bold text-primary mt-0.5">-</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline & Tasks Section (2 Columns on Desktop) -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Column 1 & 2: Vertical Crop Journey Timeline -->
+        <div class="lg:col-span-2 space-y-4">
+          <div class="flex justify-between items-center">
+            <h3 class="text-xl font-bold text-on-background flex items-center gap-2">
+              <span>🌳</span>
+              <span>เส้นทางการเติบโต (Crop Journey)</span>
+            </h3>
+          </div>
+
+          <div class="bg-white rounded-3xl p-6 md:p-8 shadow-tactile border border-outline-variant/20">
+            <div id="farm-detail-timeline" class="space-y-6 relative">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3: Farm Journal Logs -->
+        <div class="space-y-4">
+          <div class="flex justify-between items-center">
+            <h3 class="text-xl font-bold text-on-background flex items-center gap-2">
+              <span>📓</span>
+              <span>ประวัติแปลง (Journal)</span>
+            </h3>
+          </div>
+
+          <div class="bg-white rounded-3xl p-5 shadow-tactile border border-outline-variant/20 space-y-3" id="farm-detail-journal-list">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 📋 VIEW 4: TODAY'S TASKS PAGE -->
+    <!-- ========================================== -->
+    <section id="view-tasks" class="view-section hidden space-y-6">
+      <div class="flex justify-between items-end">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-extrabold text-on-background">ภารกิจวันนี้ 🌱</h2>
+          <p id="tasks-summary-text" class="text-sm text-on-surface-variant mt-0.5">วันนี้มี 2 ภารกิจที่คุณต้องทำ</p>
+        </div>
+        <div class="hidden sm:block">
+          <span class="px-3.5 py-1.5 bg-secondary-container text-on-secondary-container rounded-full text-xs font-bold">
+            🎯 จับมือทำทีละขั้นตอน
+          </span>
+        </div>
+      </div>
+
+      <!-- Task Cards Stack -->
+      <div id="tasks-container" class="space-y-4">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 💬 VIEW 5: AI KRU SUAN CHAT PAGE -->
+    <!-- ========================================== -->
+    <section id="view-chat" class="view-section hidden relative flex flex-col h-[calc(100vh-140px)] md:h-[calc(100vh-100px)]">
+
+      <!-- Chat Header -->
+      <div class="bg-white rounded-3xl p-4 shadow-tactile border border-outline-variant/20 flex items-center justify-between gap-3 mb-3 shrink-0">
+        <div class="flex items-center gap-3 min-w-0">
+          <img src="/images/logo.png" alt="ครูสวน AI" class="w-12 h-12 rounded-2xl object-cover shadow-sm shrink-0 border border-primary/20" style="width: 48px; height: 48px; min-width: 48px; max-width: 48px;" />
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <h3 class="font-extrabold text-base text-on-background truncate">ครูสวน AI</h3>
+              <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded-full shrink-0">Thai LLM</span>
+            </div>
+            <p class="text-xs text-on-surface-variant truncate">ขับเคลื่อนด้วยโมเดล Typhoon จาก SCB 10X</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <select id="chat-plot-selector" onchange="changeChatPlotContext()" class="text-xs font-semibold bg-surface-container-low text-primary rounded-xl border-none py-1.5 pl-3 pr-8 focus:ring-1 focus:ring-primary shadow-sm">
+            <option value="">🌱 บริบททั่วไป</option>
+            <!-- Populated with user plots -->
+          </select>
+          <button onclick="clearChatMessages()" title="ล้างข้อความ" class="p-2 text-outline hover:text-error hover:bg-surface-container rounded-xl transition-colors">
+            <span class="material-symbols-outlined text-[18px]">refresh</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Chat Messages Scroll Container -->
+      <div id="chat-messages-box" class="flex-1 bg-white/70 backdrop-blur-sm rounded-3xl p-4 md:p-6 shadow-tactile border border-outline-variant/20 overflow-y-auto space-y-4 mb-3">
+        <!-- Messages rendered by JS -->
+      </div>
+
+      <!-- Quick Action Pills -->
+      <div id="chat-quick-actions" class="flex gap-2 overflow-x-auto no-scrollbar pb-2 shrink-0">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Chat Input Bar -->
+      <div class="bg-white rounded-3xl p-2 md:p-3 shadow-tactile border border-outline-variant/30 flex items-center gap-2 shrink-0">
+        <button onclick="triggerVoiceInput()" title="พูดกับครูสวน (Speech to text)" class="p-2.5 bg-surface-container-low hover:bg-surface-container text-primary rounded-2xl transition-colors shrink-0">
+          <span class="material-symbols-outlined text-[22px]">mic</span>
+        </button>
+        
+        <input id="chat-input-text" type="text" placeholder="พิมพ์คำถาม เช่น ทุเรียนรากเน่าโคนเน่าแก้ยังไง, กรีดยางช่วงไหนดี..." class="flex-1 border-none focus:ring-0 text-sm text-on-background placeholder:text-outline py-2 px-1" onkeypress="if(event.key === 'Enter') sendChatMessage()" />
+
+        <button onclick="sendChatMessage()" class="p-3 bg-primary hover:bg-on-primary-container text-white rounded-2xl transition-transform active:scale-95 shadow-tactile shrink-0 flex items-center justify-center">
+          <span class="material-symbols-outlined text-[20px]">send</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 🛒 VIEW 6: MARKET PAGE -->
+    <!-- ========================================== -->
+    <section id="view-market" class="view-section hidden space-y-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-extrabold text-on-background">ตลาดผลผลิต 🛒</h2>
+          <p class="text-sm text-on-surface-variant mt-0.5">ผลผลิตพร้อมส่งตรงสู่ผู้ซื้อและประเมินราคากลาง</p>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="market-products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 🌾 VIEW 6: SENIOR STORYTELLER (ศาลาปราชญ์เกษตรกร) -->
+    <!-- ========================================== -->
+    <section id="view-storyteller" class="view-section hidden space-y-6">
+
+      <!-- Sub-panel 1: Lobby (เลือกหัวข้อและข้อมูลปราชญ์) -->
+      <div id="inapp-story-lobby" class="space-y-6">
+        <!-- Hero Header -->
+        <div class="bg-gradient-to-r from-emerald-900 via-green-900 to-emerald-950 text-white rounded-3xl p-6 sm:p-10 shadow-tactile relative overflow-hidden">
+          <div class="absolute -right-8 -bottom-8 opacity-15 pointer-events-none text-9xl">🌿</div>
+          <div class="relative z-10 space-y-3">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-sm text-yellow-300 text-xs sm:text-sm font-extrabold">
+              <span>🏅</span><span>ศาลาปราชญ์เกษตรกร • คลังภูมิปัญญา</span>
+            </div>
+            <h2 class="text-2xl sm:text-4xl font-extrabold leading-snug">
+              เล่าเรื่องสวน ถ่ายทอดวิชา<br>
+              <span class="text-yellow-300">เป็นมรดกภูมิปัญญาให้ลูกหลาน</span>
+            </h2>
+            <p class="text-emerald-100 text-sm sm:text-base font-medium max-w-2xl leading-relaxed">
+              ไม่ต้องพิมพ์ เพียงกดปุ่มแล้วนั่งคุยด้วยเสียงกับครูสวน AI สบาย ๆ เหมือนคุยกับลูกหลาน ทุกเคล็ดลับของท่านจะถูกรวบรวมเป็นคัมภีร์ความรู้เพื่อช่วยเหลือเกษตรกรรุ่นใหม่
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 1: Farmer Profile Selector -->
+        <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-tactile border border-outline-variant/30 space-y-5">
+          <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full bg-primary text-white font-extrabold flex items-center justify-center text-base">1</span>
+              <h3 class="text-xl font-bold text-on-background">ข้อมูลปราชญ์ผู้เล่าเรื่อง</h3>
+            </div>
+            <span class="text-xs font-semibold text-primary bg-surface-container px-3 py-1 rounded-full">บันทึกประวัติเพื่อยกย่อง</span>
+          </div>
+
+          <!-- Quick Selector for Returning Veterans -->
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant block mb-2">💡 เลือกลุง/ป้าที่เคยมาเล่า (กดเลือกได้ทันที):</label>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <button type="button" onclick="selectInAppFarmerQuick('นายสมชาย ดีพร้อม', 'ลุงสมชาย', '0891234567', 'สุราษฎร์ธานี', 'ทุเรียน', 25)" class="p-3 rounded-2xl border-2 border-outline-variant/40 hover:border-primary text-left flex items-center gap-3 transition-all hover:bg-surface-container-low group cursor-pointer">
+                <span class="text-3xl group-hover:scale-110 transition-transform">👴</span>
+                <div class="min-w-0">
+                  <div class="font-bold text-sm text-on-background truncate">ลุงสมชาย</div>
+                  <div class="text-xs text-on-surface-variant truncate">สุราษฎร์ธานี (25 ปี)</div>
+                </div>
+              </button>
+              <button type="button" onclick="selectInAppFarmerQuick('นางประไพ สวนงาม', 'ป้าศรี', '0876543210', 'นครศรีธรรมราช', 'มังคุด', 20)" class="p-3 rounded-2xl border-2 border-outline-variant/40 hover:border-primary text-left flex items-center gap-3 transition-all hover:bg-surface-container-low group cursor-pointer">
+                <span class="text-3xl group-hover:scale-110 transition-transform">👵</span>
+                <div class="min-w-0">
+                  <div class="font-bold text-sm text-on-background truncate">ป้าศรี</div>
+                  <div class="text-xs text-on-surface-variant truncate">นครศรีฯ (20 ปี)</div>
+                </div>
+              </button>
+              <button type="button" onclick="resetInAppFarmerForm()" class="p-3 rounded-2xl border-2 border-dashed border-outline-variant/60 hover:border-primary text-center flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all hover:bg-surface-container-low cursor-pointer">
+                <span class="material-symbols-outlined text-2xl">person_add</span>
+                <span class="text-xs font-bold mt-0.5">กรอกชื่อใหม่</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Farmer Form Inputs -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <div>
+              <label class="block text-xs font-bold text-on-background mb-1">ชื่อที่ให้เรียก (เช่น ลุงสมชาย / ป้าศรี) *</label>
+              <input type="text" id="inapp-farmer-name" value="ลุงสมชาย" placeholder="เช่น ลุงสมชาย" class="w-full text-base px-4 py-3 rounded-2xl border-2 border-outline-variant/40 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none font-medium bg-gray-50/50">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-on-background mb-1">เบอร์โทรศัพท์ (สำหรับจำประวัติ)</label>
+              <input type="tel" id="inapp-farmer-phone" value="0891234567" placeholder="เช่น 0891234567" class="w-full text-base px-4 py-3 rounded-2xl border-2 border-outline-variant/40 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none font-medium bg-gray-50/50">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-on-background mb-1">จังหวัดที่ทำสวน</label>
+              <select id="inapp-farmer-province" class="w-full text-base px-4 py-3 rounded-2xl border-2 border-outline-variant/40 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none font-medium bg-gray-50/50">
+                <option value="สุราษฎร์ธานี" selected>สุราษฎร์ธานี</option>
+                <option value="ชุมพร">ชุมพร</option>
+                <option value="นครศรีธรรมราช">นครศรีธรรมราช</option>
+                <option value="ระนอง">ระนอง</option>
+                <option value="พังงา">พังงา</option>
+                <option value="กระบี่">กระบี่</option>
+                <option value="ตรัง">ตรัง</option>
+                <option value="สงขลา">สงขลา</option>
+                <option value="เชียงใหม่">เชียงใหม่</option>
+                <option value="จันทบุรี">จันทบุรี</option>
+                <option value="อื่นๆ">จังหวัดอื่นๆ</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-on-background mb-1">พืชหลักที่อยากเล่า</label>
+              <select id="inapp-farmer-crop" class="w-full text-base px-4 py-3 rounded-2xl border-2 border-outline-variant/40 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none font-medium bg-gray-50/50">
+                <option value="ทุเรียน" selected>ทุเรียน (หมอนทอง, ชะนี, ก้านยาว)</option>
+                <option value="ปาล์มน้ำมัน">ปาล์มน้ำมัน</option>
+                <option value="ยางพารา">ยางพารา</option>
+                <option value="มังคุด">มังคุด</option>
+                <option value="เงาะ">เงาะ</option>
+                <option value="ลองกอง">ลองกอง</option>
+                <option value="ส้มโอ">ส้มโอทับทิมสยาม</option>
+                <option value="พืชผักสวนครัว">พืชผักสวนครัว / เกษตรผสมผสาน</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Story Topic Cards -->
+        <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-tactile border border-outline-variant/30 space-y-5">
+          <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full bg-primary text-white font-extrabold flex items-center justify-center text-base">2</span>
+              <h3 class="text-xl font-bold text-on-background">เลือกหัวข้อที่อยากแชร์วันนี้</h3>
+            </div>
+            <span class="text-xs font-semibold text-primary">แตะเลือก 1 หัวข้อ</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="inapp-topics-container">
+            <div onclick="selectInAppTheme('fertilizer_soil')" id="inapp-theme-fertilizer_soil" class="inapp-theme-card border-2 border-primary bg-primary-container/10 p-4 rounded-2xl cursor-pointer transition-all flex items-start gap-3.5 shadow-sm">
+              <div class="text-2xl p-2.5 bg-white rounded-xl shadow-xs">🌱</div>
+              <div class="flex-1">
+                <h4 class="font-bold text-on-background text-base">เคล็ดลับดินดี & ปุ๋ยหมัก 30 ปี</h4>
+                <p class="text-xs text-on-surface-variant mt-0.5 leading-relaxed">สูตรผสมปุ๋ยอินทรีย์ ปรับดินให้ร่วนซุย บำรุงรากพืชให้แข็งแรง</p>
+              </div>
+            </div>
+
+            <div onclick="selectInAppTheme('pest_natural')" id="inapp-theme-pest_natural" class="inapp-theme-card border-2 border-outline-variant/40 bg-white p-4 rounded-2xl cursor-pointer transition-all flex items-start gap-3.5 hover:border-primary">
+              <div class="text-2xl p-2.5 bg-surface-container-low rounded-xl shadow-xs">🐛</div>
+              <div class="flex-1">
+                <h4 class="font-bold text-on-background text-base">ปราบโรคพืช & แมลงฉบับโบราณ</h4>
+                <p class="text-xs text-on-surface-variant mt-0.5 leading-relaxed">ภูมิปัญญาใช้น้ำหมักสมุนไพรไล่แมลง และเทคนิคตรวจโรคก่อนลุกลาม</p>
+              </div>
+            </div>
+
+            <div onclick="selectInAppTheme('water_drought')" id="inapp-theme-water_drought" class="inapp-theme-card border-2 border-outline-variant/40 bg-white p-4 rounded-2xl cursor-pointer transition-all flex items-start gap-3.5 hover:border-primary">
+              <div class="text-2xl p-2.5 bg-surface-container-low rounded-xl shadow-xs">💧</div>
+              <div class="flex-1">
+                <h4 class="font-bold text-on-background text-base">การจัดการน้ำ & สู้ภัยแล้ง</h4>
+                <p class="text-xs text-on-surface-variant mt-0.5 leading-relaxed">การวางระบบน้ำ เทคนิคกักเก็บความชื้น และรับมือฝนทิ้งช่วง</p>
+              </div>
+            </div>
+
+            <div onclick="selectInAppTheme('pruning_yield')" id="inapp-theme-pruning_yield" class="inapp-theme-card border-2 border-outline-variant/40 bg-white p-4 rounded-2xl cursor-pointer transition-all flex items-start gap-3.5 hover:border-primary">
+              <div class="text-2xl p-2.5 bg-surface-container-low rounded-xl shadow-xs">✂️</div>
+              <div class="flex-1">
+                <h4 class="font-bold text-on-background text-base">เทคนิคตัดแต่งกิ่ง & เร่งผลดก</h4>
+                <p class="text-xs text-on-surface-variant mt-0.5 leading-relaxed">การแต่งพุ่มรับแดด การไว้ผลให้ลูกโตสวย ได้ราคาดี</p>
+              </div>
+            </div>
+
+            <div onclick="selectInAppTheme('freestyle')" id="inapp-theme-freestyle" class="inapp-theme-card border-2 border-outline-variant/40 bg-white p-4 rounded-2xl cursor-pointer transition-all flex items-start gap-3.5 hover:border-primary sm:col-span-2">
+              <div class="text-2xl p-2.5 bg-surface-container-low rounded-xl shadow-xs">📖</div>
+              <div class="flex-1">
+                <h4 class="font-bold text-on-background text-base">เล่าประสบการณ์อิสระ (เรื่องที่ภูมิใจที่สุด)</h4>
+                <p class="text-xs text-on-surface-variant mt-0.5 leading-relaxed">เล่าวิถีชาวสวน เคล็ดลับเฉพาะตัว หรือบทเรียนชีวิตที่อยากบอกคนรุ่นหลัง</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Big Start Button -->
+        <div class="flex flex-col items-center gap-3 py-2">
+          <button id="btn-inapp-start-story" onclick="startInAppStorytelling()" class="w-full max-w-md py-5 px-8 bg-gradient-to-r from-primary via-emerald-600 to-primary-dark hover:from-primary-dark hover:to-emerald-900 text-white rounded-3xl text-xl font-extrabold shadow-tactile-lg hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 cursor-pointer">
+            <span class="text-3xl">🎙️</span>
+            <span>เริ่มเล่าเรื่องกับครูสวนเลย</span>
+            <span class="material-symbols-outlined text-2xl">arrow_forward</span>
+          </button>
+          <p class="text-xs font-semibold text-on-surface-variant flex items-center gap-1">
+            <span class="material-symbols-outlined text-primary text-base">mic</span>
+            <span>ใช้เสียงพูดคุยได้ทันที ไม่ต้องพิมพ์ตัวหนังสือ</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Sub-panel 2: Live Room (ห้องสนทนาสด In-App) -->
+      <div id="inapp-story-live" class="space-y-6 hidden">
+        <!-- Live Call Bar -->
+        <div class="bg-gradient-to-b from-emerald-900 via-emerald-800 to-green-900 rounded-3xl p-6 sm:p-8 text-white shadow-tactile-lg flex flex-col items-center justify-center text-center relative overflow-hidden">
+          <div class="flex items-center justify-between w-full mb-4">
+            <div class="flex items-center gap-2 bg-red-500/20 text-yellow-300 px-3.5 py-1 rounded-full text-xs font-bold border border-yellow-300/30">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+              <span id="inapp-live-timer">00:00</span>
+            </div>
+            <span id="inapp-live-theme-tag" class="text-xs font-bold text-emerald-200 bg-white/10 px-3 py-1 rounded-full">
+              🌱 ดินดี & ปุ๋ยหมัก
+            </span>
+          </div>
+
+          <!-- Avatar with pulse -->
+          <div class="relative my-2">
+            <div id="inapp-avatar-glow" class="w-28 h-28 rounded-full bg-emerald-700/60 flex items-center justify-center pulse-glow border-4 border-emerald-400/40 animate-pulse-subtle">
+              <img src="/images/logo.png" alt="ครูสวน AI" class="w-24 h-24 rounded-full object-cover shadow-2xl border-2 border-white/60" style="width: 96px; height: 96px; min-width: 96px;" />
+            </div>
+          </div>
+
+          <h3 id="inapp-speaker-status" class="text-xl sm:text-2xl font-bold text-yellow-300 mt-2">
+            ครูสวน AI กำลังตั้งใจฟังคุณลุง...
+          </h3>
+          <p id="inapp-live-farmer-tag" class="text-xs sm:text-sm text-emerald-100 mt-0.5">
+            กำลังเรียนรู้จาก: ลุงสมชาย
+          </p>
+
+          <!-- Wisdom Highlight Badge -->
+          <div id="inapp-wisdom-highlight-box" class="mt-4 w-full max-w-md hidden">
+            <div class="bg-yellow-400/20 border border-yellow-300/40 backdrop-blur-md rounded-2xl p-3 text-yellow-200 text-sm font-bold flex items-center gap-2.5 shadow-md text-left">
+              <span class="text-2xl">💡</span>
+              <div>
+                <div class="text-[10px] text-yellow-300 uppercase tracking-wide">สกัดภูมิปัญญาเด่นแล้ว</div>
+                <div id="inapp-wisdom-highlight-text" class="text-white font-medium text-xs sm:text-sm line-clamp-1">สูตรปุ๋ยหมักชีวภาพ</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transcript Box -->
+        <div class="bg-white rounded-3xl p-5 shadow-tactile border border-outline-variant/30 flex flex-col min-h-[260px] max-h-[360px] overflow-hidden">
+          <div class="flex items-center justify-between border-b border-gray-100 pb-2.5 mb-3">
+            <span class="text-xs font-bold text-primary flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-base">forum</span>
+              <span>บทสนทนาสด (ตัวหนังสือใหญ่ อ่านสบายตา)</span>
+            </span>
+            <span id="inapp-connection-status" class="text-[11px] font-bold text-primary flex items-center gap-1">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+              <span>กำลังสนทนาเสียงสด</span>
+            </span>
+          </div>
+
+          <div id="inapp-transcript-container" class="flex-1 overflow-y-auto space-y-3 pr-1 text-base sm:text-lg">
+            <!-- Dynamic transcript items -->
+          </div>
+        </div>
+
+        <!-- In-App Big Controls -->
+        <div class="bg-white rounded-3xl p-4 sm:p-5 shadow-tactile border border-outline-variant/30 flex items-center justify-around gap-3">
+          <button onclick="toggleInAppPauseCall()" class="flex flex-col items-center gap-1 p-2 rounded-2xl hover:bg-gray-100 transition-all cursor-pointer">
+            <div class="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center text-on-background text-2xl shadow-sm">
+              <span id="inapp-pause-icon" class="material-symbols-outlined">pause</span>
+            </div>
+            <span id="inapp-pause-label" class="text-xs font-bold text-on-surface-variant">พักจิบน้ำ</span>
+          </button>
+
+          <button onclick="finishInAppStory()" id="btn-inapp-end-story" class="flex-1 max-w-xs py-4 px-6 bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-700 hover:to-rose-800 text-white rounded-3xl font-extrabold text-base sm:text-lg shadow-md hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <span class="material-symbols-outlined text-2xl">check_circle</span>
+            <span>เล่าจบแล้ว / บันทึก</span>
+          </button>
+
+          <button onclick="toggleInAppMute()" class="flex flex-col items-center gap-1 p-2 rounded-2xl hover:bg-gray-100 transition-all cursor-pointer">
+            <div id="inapp-mute-circle" class="w-14 h-14 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center text-2xl shadow-sm">
+              <span id="inapp-mute-icon" class="material-symbols-outlined">mic</span>
+            </div>
+            <span id="inapp-mute-label" class="text-xs font-bold text-primary">เปิดไมค์</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Sub-panel 3: Summary & Wisdom Certificate -->
+      <div id="inapp-story-summary" class="space-y-6 hidden">
+        <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-tactile border-4 border-primary/80 relative text-center space-y-5">
+          <div class="flex justify-center">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-yellow-400 via-amber-500 to-yellow-600 flex items-center justify-center text-4xl shadow-lg border-4 border-white">
+              🌾
+            </div>
+          </div>
+          <div>
+            <div class="inline-block px-3.5 py-1 rounded-full bg-surface-container text-primary font-bold text-xs border border-primary/30 mb-2">
+              มรดกทางปัญญาการเกษตรไทย
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-on-background">
+              ใบประกาศเกียรติคุณปราชญ์เกษตรกร
+            </h3>
+            <p class="text-xs sm:text-sm text-tertiary font-semibold">
+              ขอขอบพระคุณและยกย่องการถ่ายทอดภูมิปัญญาอันทรงคุณค่า
+            </p>
+          </div>
+
+          <div class="bg-surface-container-low rounded-2xl p-5 border border-primary/20 max-w-lg mx-auto space-y-1">
+            <div class="text-xs font-bold text-primary uppercase">ปราชญ์ผู้ถ่ายทอดวิชา</div>
+            <h4 id="inapp-sum-farmer-name" class="text-2xl font-extrabold text-on-background">ลุงสมชาย ดีพร้อม</h4>
+            <p id="inapp-sum-farmer-meta" class="text-xs text-on-surface-variant">ปราชญ์ชาวสวนทุเรียน จ.สุราษฎร์ธานี • ประสบการณ์ 25 ปี</p>
+          </div>
+
+          <div class="max-w-xl mx-auto space-y-2 text-left">
+            <div class="text-xs font-bold text-on-background flex items-center gap-1">
+              <span class="material-symbols-outlined text-primary text-base">menu_book</span>
+              <span>สาระสำคัญที่ถ่ายทอดในครั้งนี้:</span>
+            </div>
+            <div id="inapp-sum-topics-list" class="space-y-2">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
+            <button onclick="resetInAppStoryteller()" class="w-full sm:w-auto px-6 py-3 bg-primary text-white font-bold text-sm rounded-full shadow-md hover:bg-primary-dark transition-all flex items-center justify-center gap-2">
+              <span class="material-symbols-outlined text-base">auto_stories</span>
+              <span>เล่าเรื่องหัวข้ออื่นต่อ</span>
+            </button>
+            <button onclick="navigate('home')" class="w-full sm:w-auto px-6 py-3 bg-surface-container-high hover:bg-surface-container text-on-surface font-bold text-sm rounded-full transition-all flex items-center justify-center gap-2">
+              <span class="material-symbols-outlined text-base">home</span>
+              <span>กลับหน้าหลัก</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- 📱 MOBILE BOTTOM NAVIGATION -->
+  <!-- ========================================== -->
+  <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-2.5 bg-surface/95 backdrop-blur-lg border-t border-outline-variant/40 shadow-[0px_-4px_16px_rgba(47,58,47,0.08)]">
+    <button onclick="navigate('home')" data-mobilenav="home" class="mobile-nav-btn flex flex-col items-center justify-center text-primary px-3 py-1 rounded-xl transition-colors">
+      <span class="material-symbols-outlined text-[22px] fill">home</span>
+      <span class="text-[11px] font-bold mt-0.5">หน้าหลัก</span>
+    </button>
+    <button onclick="navigate('farms')" data-mobilenav="farms" class="mobile-nav-btn flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 rounded-xl transition-colors">
+      <span class="material-symbols-outlined text-[22px]">potted_plant</span>
+      <span class="text-[11px] font-medium mt-0.5">สวนของฉัน</span>
+    </button>
+    <button onclick="navigate('tasks')" data-mobilenav="tasks" class="mobile-nav-btn flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 rounded-xl transition-colors relative">
+      <span class="material-symbols-outlined text-[22px]">assignment</span>
+      <span class="text-[11px] font-medium mt-0.5">ภารกิจ</span>
+      <span id="mobile-badge-task-count" class="absolute top-0 right-1 w-4 h-4 bg-primary text-white text-[10px] font-bold rounded-full flex items-center justify-center">0</span>
+    </button>
+    <button onclick="navigate('chat')" data-mobilenav="chat" class="mobile-nav-btn flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 rounded-xl transition-colors">
+      <span class="material-symbols-outlined text-[22px]">smart_toy</span>
+      <span class="text-[11px] font-medium mt-0.5">ครูสวน AI</span>
+    </button>
+    <button onclick="navigate('market')" data-mobilenav="market" class="mobile-nav-btn flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 rounded-xl transition-colors">
+      <span class="material-symbols-outlined text-[22px]">storefront</span>
+      <span class="text-[11px] font-medium mt-0.5">ตลาด</span>
+    </button>
+  </nav>
+
+  <!-- ========================================== -->
+  <!-- 🧩 MODAL: ADD NEW PLOT (เพิ่มแปลงเกษตร) -->
+  <!-- ========================================== -->
+  <div id="modal-create-plot" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white w-full max-w-lg rounded-3xl shadow-tactile-lg overflow-hidden border border-outline-variant/30 flex flex-col max-h-[92vh]">
+      <div class="px-6 py-4 bg-surface-container-low border-b border-outline-variant/30 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🌱</span>
+          <div>
+            <h3 class="font-extrabold text-base sm:text-lg text-on-background">เพิ่มแปลงเกษตรใหม่</h3>
+            <p class="text-[11px] text-on-surface-variant">พร้อมระบบ AI ครูสวน นำทางจับมือทำ</p>
+          </div>
+        </div>
+        <button onclick="closeModal('modal-create-plot')" class="p-1.5 text-outline hover:text-on-background hover:bg-surface-container rounded-full transition-colors">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <form id="form-create-plot" onsubmit="handleCreatePlot(event)" class="p-5 sm:p-6 space-y-4 overflow-y-auto flex-1">
+        <!-- Choose Crop -->
+        <div>
+          <div class="flex justify-between items-center mb-1.5">
+            <label class="block text-xs font-bold text-on-surface-variant">เลือกพืชที่จะปลูก *</label>
+            <span class="text-[10px] text-primary font-semibold">รองรับพืชเศรษฐกิจไทย 20+ ชนิด</span>
+          </div>
+
+          <div class="grid grid-cols-3 sm:grid-cols-4 gap-2 max-h-48 overflow-y-auto p-1 border border-outline-variant/30 rounded-2xl bg-gray-50/50" id="crop-radio-group">
+            <label class="crop-option border-2 border-primary bg-primary-container/10 p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="ทุเรียน" checked class="hidden" />
+              <span class="text-2xl mb-0.5">🥭</span>
+              <span class="text-[11px] font-bold text-on-background">ทุเรียน</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="ยางพารา" class="hidden" />
+              <span class="text-2xl mb-0.5">🌳</span>
+              <span class="text-[11px] font-bold text-on-background">ยางพารา</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="ปาล์มน้ำมัน" class="hidden" />
+              <span class="text-2xl mb-0.5">🌴</span>
+              <span class="text-[11px] font-bold text-on-background">ปาล์มน้ำมัน</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="มังคุด" class="hidden" />
+              <span class="text-2xl mb-0.5">🟣</span>
+              <span class="text-[11px] font-bold text-on-background">มังคุด</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="ลองกอง" class="hidden" />
+              <span class="text-2xl mb-0.5">🍇</span>
+              <span class="text-[11px] font-bold text-on-background">ลองกอง</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="เงาะ" class="hidden" />
+              <span class="text-2xl mb-0.5">🔴</span>
+              <span class="text-[11px] font-bold text-on-background">เงาะ</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="สะตอ" class="hidden" />
+              <span class="text-2xl mb-0.5">🫘</span>
+              <span class="text-[11px] font-bold text-on-background">สะตอ</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="ขมิ้น" class="hidden" />
+              <span class="text-2xl mb-0.5">🟡</span>
+              <span class="text-[11px] font-bold text-on-background">ขมิ้น</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="กาแฟ (โรบัสต้า)" class="hidden" />
+              <span class="text-2xl mb-0.5">☕</span>
+              <span class="text-[11px] font-bold text-on-background">กาแฟโรบัสต้า</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="มะพร้าว" class="hidden" />
+              <span class="text-2xl mb-0.5">🥥</span>
+              <span class="text-[11px] font-bold text-on-background">มะพร้าว</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="ข้าว" class="hidden" />
+              <span class="text-2xl mb-0.5">🌾</span>
+              <span class="text-[11px] font-bold text-on-background">ข้าว</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="ข้าวโพด" class="hidden" />
+              <span class="text-2xl mb-0.5">🌽</span>
+              <span class="text-[11px] font-bold text-on-background">ข้าวโพด</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="กล้วย" class="hidden" />
+              <span class="text-2xl mb-0.5">🍌</span>
+              <span class="text-[11px] font-bold text-on-background">กล้วย</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="ส้มโอ" class="hidden" />
+              <span class="text-2xl mb-0.5">🍈</span>
+              <span class="text-[11px] font-bold text-on-background">ส้มโอ</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="มะม่วง" class="hidden" />
+              <span class="text-2xl mb-0.5">🥭</span>
+              <span class="text-[11px] font-bold text-on-background">มะม่วง</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="พริก" class="hidden" />
+              <span class="text-2xl mb-0.5">🌶️</span>
+              <span class="text-[11px] font-bold text-on-background">พริก</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="มะเขือเทศ" class="hidden" />
+              <span class="text-2xl mb-0.5">🍅</span>
+              <span class="text-[11px] font-bold text-on-background">มะเขือเทศ</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="ผักบุ้ง" class="hidden" />
+              <span class="text-2xl mb-0.5">🥬</span>
+              <span class="text-[11px] font-bold text-on-background">ผักบุ้ง</span>
+            </label>
+            <label class="crop-option border-2 border-outline-variant/40 bg-white p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform">
+              <input type="radio" name="cropName" value="กะเพรา" class="hidden" />
+              <span class="text-2xl mb-0.5">🌿</span>
+              <span class="text-[11px] font-bold text-on-background">กะเพรา</span>
+            </label>
+            <label class="crop-option border-2 border-dashed border-primary/60 bg-emerald-50/70 p-2 rounded-xl flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform" id="crop-opt-custom">
+              <input type="radio" name="cropName" value="CUSTOM" class="hidden" />
+              <span class="text-2xl mb-0.5">✨</span>
+              <span class="text-[11px] font-extrabold text-primary">พืชอื่นๆ (AI)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Custom Crop Input (Visible when "พืชอื่นๆ" selected) -->
+        <div id="custom-crop-field" class="hidden p-3.5 bg-emerald-50/80 border border-emerald-300 rounded-2xl space-y-2">
+          <div class="flex items-center gap-1.5 text-primary text-xs font-bold">
+            <span class="material-symbols-outlined text-sm">auto_awesome</span>
+            <span>ระบุพืชที่ต้องการ (Typhoon AI จะวิเคราะห์ข้อมูลและวางแผนให้)</span>
+          </div>
+          <input type="text" id="input-custom-crop-name" placeholder="เช่น ลำไย, โกโก้, สละ, แก้วมังกร, มะนาว, แตงโม..." class="w-full px-4 py-2.5 text-sm rounded-xl border border-emerald-300 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-white outline-none" />
+          <p class="text-[11px] text-emerald-800 leading-tight">💡 ระบบจะคำนวณวงจรชีวิต ระยะเวลาเติบโต และสร้างภารกิจแนะนำอัตโนมัติ</p>
+        </div>
+
+        <!-- Plot Name -->
+        <div>
+          <label class="block text-xs font-bold text-on-surface-variant mb-1">ชื่อแปลง *</label>
+          <input type="text" name="name" required placeholder="เช่น แปลงทุเรียนเนินเขา #01" class="w-full px-4 py-3 rounded-2xl border border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm outline-none" />
+        </div>
+
+        <!-- Thai Land Area (ไร่ / งาน / ตารางวา) -->
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="block text-xs font-bold text-on-surface-variant">ขนาดพื้นที่แปลง (มาตรฐานไทย) *</label>
+            <span id="calculated-sqm-badge" class="text-[11px] font-bold text-primary bg-surface-container px-2.5 py-0.5 rounded-full">
+              รวม: 0 ตร.ม.
+            </span>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+            <div>
+              <div class="relative">
+                <input type="number" min="0" step="1" name="rai" id="input-rai" placeholder="0" oninput="updateCalculatedArea()" class="w-full pl-3 pr-8 py-2.5 text-center font-bold text-sm rounded-2xl border border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none" />
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-outline pointer-events-none">ไร่</span>
+              </div>
+            </div>
+            <div>
+              <div class="relative">
+                <input type="number" min="0" max="3" step="1" name="ngan" id="input-ngan" placeholder="0" oninput="updateCalculatedArea()" class="w-full pl-3 pr-8 py-2.5 text-center font-bold text-sm rounded-2xl border border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none" />
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-outline pointer-events-none">งาน</span>
+              </div>
+            </div>
+            <div>
+              <div class="relative">
+                <input type="number" min="0" max="99" step="1" name="sqWa" id="input-sqwa" placeholder="0" oninput="updateCalculatedArea()" class="w-full pl-3 pr-10 py-2.5 text-center font-bold text-sm rounded-2xl border border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none" />
+                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-bold text-outline pointer-events-none">ตร.วา</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-[10px] text-outline mt-1">* 1 ไร่ = 4 งาน = 400 ตร.วา (1,600 ตารางเมตร)</p>
+        </div>
+
+        <!-- Tree Status & Farm Current State Selector -->
+        <div class="p-3.5 bg-surface-container-low rounded-2xl border border-primary/20 space-y-2">
+          <label class="block text-xs font-bold text-on-surface-variant">สถานะปัจจุบันของแปลง / อายุพืช *</label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <label class="border-2 border-primary bg-primary-container/10 p-2.5 rounded-xl flex flex-col items-center text-center cursor-pointer tree-status-opt hover:scale-105 transition-transform shadow-xs">
+              <input type="radio" name="treeStatus" value="MATURE" checked class="hidden" />
+              <span class="text-xl">🌳</span>
+              <span class="text-xs font-black text-primary mt-0.5">ต้นโตเต็มวัย/ให้ผล</span>
+              <span class="text-[10px] text-outline font-semibold">อายุ 4-10+ ปี (สวนเดิม)</span>
+            </label>
+            <label class="border-2 border-outline-variant/40 bg-white p-2.5 rounded-xl flex flex-col items-center text-center cursor-pointer tree-status-opt hover:scale-105 transition-transform">
+              <input type="radio" name="treeStatus" value="GROWING" class="hidden" />
+              <span class="text-xl">🌿</span>
+              <span class="text-xs font-bold text-on-background mt-0.5">ต้นกำลังโต</span>
+              <span class="text-[10px] text-outline">อายุ 1-3 ปี (เลี้ยงพุ่ม)</span>
+            </label>
+            <label class="border-2 border-outline-variant/40 bg-white p-2.5 rounded-xl flex flex-col items-center text-center cursor-pointer tree-status-opt hover:scale-105 transition-transform">
+              <input type="radio" name="treeStatus" value="NEW" class="hidden" />
+              <span class="text-xl">🌱</span>
+              <span class="text-xs font-bold text-on-background mt-0.5">เพิ่งเริ่มปลูกใหม่</span>
+              <span class="text-[10px] text-outline">0-1 ปี (เตรียมหลุม/ปลูก)</span>
+            </label>
+          </div>
+          <p class="text-[10px] text-primary/80 leading-tight">💡 สำหรับสวนที่ปลูกมาแล้ว ระบบจะจัดเข้าสู่วงจรดูแลประจำฤดูกาล (ทำดอก/บำรุงผล/เก็บเกี่ยว) ให้โดยอัตโนมัติ</p>
+        </div>
+
+        <!-- Location & Planting Date -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-on-surface-variant mb-1">ตำแหน่ง / ที่ตั้งแปลง</label>
+            <input type="text" name="location" placeholder="เช่น สวนริมคลอง อ.พุนพิน" class="w-full px-4 py-2.5 rounded-2xl border border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 text-xs outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-on-surface-variant mb-1">วันที่เริ่มปลูก / อายุแปลง</label>
+            <input type="date" name="plantingDate" id="input-planting-date" class="w-full px-4 py-2.5 rounded-2xl border border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 text-xs outline-none" />
+          </div>
+        </div>
+
+        <!-- Soil & Water -->
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-on-surface-variant mb-1">สภาพดิน</label>
+            <select name="soilType" class="w-full px-3 py-2.5 rounded-2xl border border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 text-xs outline-none bg-white">
+              <option value="ดินร่วนปนทราย">ดินร่วนปนทราย (ระบายน้ำดี)</option>
+              <option value="ดินร่วน">ดินร่วนอุดมสมบูรณ์</option>
+              <option value="ดินเหนียว">ดินเหนียว</option>
+              <option value="ดินลูกรัง">ดินลูกรัง / ดินเขา</option>
+              <option value="ดินทราย">ดินทราย</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-on-surface-variant mb-1">แหล่งน้ำ</label>
+            <select name="waterSource" class="w-full px-3 py-2.5 rounded-2xl border border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 text-xs outline-none bg-white">
+              <option value="มินิสปริงเกอร์/น้ำสระ">มินิสปริงเกอร์ / สระน้ำ</option>
+              <option value="น้ำบาดาล">น้ำบาดาล</option>
+              <option value="น้ำคลองธรรมชาติ">น้ำคลอง / ห้วยธรรมชาติ</option>
+              <option value="น้ำฝนธรรมชาติ">น้ำฝนธรรมชาติ</option>
+              <option value="น้ำประปา">น้ำประปาเกษตร</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" id="btn-submit-create-plot" class="w-full py-4 bg-primary hover:bg-on-primary-container text-white font-extrabold rounded-2xl shadow-tactile transition-all mt-3 flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01] active:scale-95">
+          <span>สร้างแปลงและเริ่มระบบนำทาง</span>
+          <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 🧩 MODAL: TASK EXECUTION FLOW (จับมือทำ) -->
+  <!-- ========================================== -->
+  <div id="modal-task-exec" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-lg rounded-3xl shadow-tactile-lg overflow-hidden border border-outline-variant/30 flex flex-col max-h-[90vh]">
+      <!-- Step Header -->
+      <div class="px-6 py-4 bg-surface-container-low border-b border-outline-variant/30 flex justify-between items-center">
+        <div>
+          <span id="task-exec-step-badge" class="px-2.5 py-0.5 bg-primary text-white text-[11px] font-extrabold rounded-full">ภารกิจ 1/2</span>
+          <h3 id="task-exec-title" class="font-extrabold text-base text-on-background mt-1">💧 ให้น้ำรอบทรงพุ่มแปลงทุเรียน</h3>
+        </div>
+        <button onclick="closeModal('modal-task-exec')" class="p-1 text-outline hover:text-on-background rounded-full">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <!-- Step Content Area -->
+      <div class="p-6 space-y-5 overflow-y-auto flex-1 text-center">
+        <!-- Visual Illustration -->
+        <div class="w-24 h-24 mx-auto rounded-3xl bg-secondary-container flex items-center justify-center text-5xl shadow-tactile">
+          <span id="task-exec-emoji">💧</span>
+        </div>
+
+        <div>
+          <h4 id="task-exec-heading" class="text-xl font-bold text-on-background">วันนี้เรามารดน้ำกันครับ 🌱</h4>
+          <p id="task-exec-desc" class="text-sm text-on-surface-variant mt-1">รดน้ำช่วงเช้าบริเวณโคนต้นอย่างพอเหมาะ</p>
+        </div>
+
+        <!-- AI Advice Box -->
+        <div class="bg-surface-container-low rounded-2xl p-4 text-left border border-outline-variant/40">
+          <div class="flex items-center gap-2 text-primary font-bold text-xs mb-1">
+            <span>💡</span>
+            <span>ครูสวนแนะนำ</span>
+          </div>
+          <p id="task-exec-tip" class="text-xs text-on-surface-variant leading-relaxed">
+            รดบริเวณโคนต้น และหลีกเลี่ยงการรดโดนใบ เพื่อลดความชื้นสะสมและป้องกันการเกิดโรคราน้ำค้าง
+          </p>
+        </div>
+
+        <!-- Evidence Attachment (Photo / Note) -->
+        <div class="space-y-3 pt-2 text-left">
+          <label class="block text-xs font-bold text-on-surface-variant">📸 ถ่ายรูปหรือบันทึกผลงาน (ถ้ามี)</label>
+          <div class="flex gap-2">
+            <label class="flex-1 py-3 px-4 border border-dashed border-primary bg-surface-container-low hover:bg-surface-container text-primary font-bold text-xs rounded-2xl flex items-center justify-center gap-2 cursor-pointer transition-colors">
+              <span class="material-symbols-outlined text-[18px]">photo_camera</span>
+              <span id="task-file-label">เลือกรูปภาพ / ถ่ายภาพ</span>
+              <input type="file" id="task-exec-file" accept="image/*" class="hidden" onchange="previewTaskFile(this)" />
+            </label>
+          </div>
+          <input type="text" id="task-exec-note" placeholder="บันทึกข้อความสั้นๆ เช่น ดินชุ่มดี ต้นแข็งแรง" class="w-full px-4 py-2.5 text-xs rounded-2xl border-outline-variant/60 focus:border-primary focus:ring-primary" />
+        </div>
+
+        <!-- Action Button -->
+        <button id="btn-complete-task" onclick="submitTaskCompletion()" class="w-full py-4 bg-primary hover:bg-on-primary-container text-white font-bold rounded-2xl shadow-tactile transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2 text-base">
+          <span class="material-symbols-outlined">check_circle</span>
+          <span>✓ ทำภารกิจนี้เสร็จแล้ว</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 🍅 MODAL: RECORD HARVEST (บันทึกการเก็บเกี่ยว) -->
+  <!-- ========================================== -->
+  <div id="modal-harvest" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl shadow-tactile-lg overflow-hidden border border-outline-variant/30 flex flex-col max-h-[90vh]">
+      <div class="px-6 py-4 bg-warning/20 border-b border-warning/30 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl" id="harvest-modal-top-emoji">🎉</span>
+          <h3 class="font-extrabold text-base text-[#5d4037]" id="harvest-modal-top-title">บันทึกการเก็บเกี่ยวผลผลิต</h3>
+        </div>
+        <button onclick="closeModal('modal-harvest')" class="p-1 text-outline hover:text-on-background rounded-full">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form id="form-harvest" onsubmit="handleHarvestSubmit(event)" class="p-6 space-y-4 text-center">
+        <div class="w-20 h-20 mx-auto rounded-3xl bg-warning/20 flex items-center justify-center text-4xl shadow-sm">
+          <span id="harvest-modal-emoji">🥭</span>
+        </div>
+
+        <div>
+          <h4 id="harvest-modal-title" class="text-xl font-bold text-on-background">แปลงทุเรียนหมอนทอง #01</h4>
+          <p class="text-xs text-on-surface-variant mt-0.5" id="harvest-modal-produce-desc">ยินดีด้วยครับ ผลผลิตพร้อมนำเข้าสู่ตลาดแล้ว!</p>
+        </div>
+
+        <!-- Quantity Input -->
+        <div class="text-left">
+          <label class="block text-xs font-bold text-on-surface-variant mb-1" id="harvest-modal-qty-label">ปริมาณที่เก็บได้ (กก.) *</label>
+          <input type="number" step="0.1" name="quantity" required placeholder="เช่น 125" class="w-full px-4 py-3 text-center text-xl font-black text-primary rounded-2xl border-outline-variant/60 focus:border-primary focus:ring-primary" />
+        </div>
+
+        <!-- Quality Grade -->
+        <div class="text-left">
+          <label class="block text-xs font-bold text-on-surface-variant mb-1.5">เกรดคุณภาพผลผลิต</label>
+          <div class="grid grid-cols-3 gap-2">
+            <label class="border-2 border-primary bg-primary-container/10 p-2.5 rounded-2xl text-center cursor-pointer font-bold text-xs text-primary">
+              <input type="radio" name="qualityGrade" value="A" checked class="hidden" />
+              ⭐ เกรด A
+            </label>
+            <label class="border-2 border-outline-variant/40 p-2.5 rounded-2xl text-center cursor-pointer font-bold text-xs text-on-surface-variant">
+              <input type="radio" name="qualityGrade" value="B" class="hidden" />
+              ⭐ เกรด B
+            </label>
+            <label class="border-2 border-outline-variant/40 p-2.5 rounded-2xl text-center cursor-pointer font-bold text-xs text-on-surface-variant">
+              <input type="radio" name="qualityGrade" value="C" class="hidden" />
+              ⭐ เกรด C
+            </label>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="text-left">
+          <label class="block text-xs font-bold text-on-surface-variant mb-1">บันทึกเพิ่มเติม</label>
+          <input type="text" name="notes" placeholder="เช่น ผลสุกแก่จัด เนื้อสีเหลืองทอง ไร้ตำหนิ" class="w-full px-4 py-2.5 text-xs rounded-2xl border-outline-variant/60 focus:border-primary focus:ring-primary" />
+        </div>
+
+        <button type="submit" class="w-full py-4 bg-primary hover:bg-on-primary-container text-white font-bold rounded-2xl shadow-tactile transition-all">
+          บันทึกและนำเข้าสู่ตลาด 🛒
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 🧩 MODAL: ADD JOURNAL ENTRY -->
+  <!-- ========================================== -->
+  <div id="modal-add-journal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl shadow-tactile-lg overflow-hidden border border-outline-variant/30">
+      <div class="px-6 py-4 bg-surface-container-low border-b border-outline-variant/30 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">📓</span>
+          <h3 class="font-extrabold text-base text-on-background">จดบันทึกไดอารี่แปลง</h3>
+        </div>
+        <button onclick="closeModal('modal-add-journal')" class="p-1 text-outline hover:text-on-background rounded-full">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form id="form-add-journal" onsubmit="handleAddJournalSubmit(event)" class="p-6 space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-on-surface-variant mb-1">หัวข้อบันทึก *</label>
+          <input type="text" name="title" required placeholder="เช่น วันนี้พบแมลงเล็กน้อย / ใบแตกยอดใหม่" class="w-full px-4 py-2.5 text-sm rounded-2xl border-outline-variant/60 focus:border-primary focus:ring-primary" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-on-surface-variant mb-1">รายละเอียด</label>
+          <textarea name="content" rows="3" placeholder="ระบุสิ่งที่สังเกตเห็น การให้น้ำ หรือการใส่ปุ๋ย..." class="w-full px-4 py-2.5 text-xs rounded-2xl border-outline-variant/60 focus:border-primary focus:ring-primary"></textarea>
+        </div>
+        <button type="submit" class="w-full py-3 bg-primary text-white font-bold rounded-2xl shadow-tactile hover:bg-on-primary-container transition-colors">
+          บันทึกลงไดอารี่
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 🔔 NOTIFICATION DRAWER -->
+  <!-- ========================================== -->
+  <div id="drawer-notif" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex justify-end">
+    <div class="bg-white w-full max-w-sm h-full shadow-2xl flex flex-col p-6 space-y-4 animate-slide-left">
+      <div class="flex justify-between items-center border-b border-outline-variant/30 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary">notifications</span>
+          <h3 class="font-extrabold text-lg text-on-background">การแจ้งเตือน</h3>
+        </div>
+        <button onclick="toggleNotificationDrawer()" class="p-1 text-outline hover:text-on-background rounded-full">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div id="drawer-notif-list" class="flex-1 overflow-y-auto space-y-3">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 👤 MODAL: USER PROFILE & ACCOUNT MANAGEMENT -->
+  <!-- ========================================== -->
+  <div id="modal-user-profile" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl shadow-tactile-lg overflow-hidden border border-outline-variant/30 flex flex-col max-h-[90vh]">
+      <!-- Header -->
+      <div class="px-6 py-4 bg-surface-container-low border-b border-outline-variant/30 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🧑‍🌾</span>
+          <h3 class="font-extrabold text-base text-on-background">จัดการข้อมูลเกษตรกร</h3>
+        </div>
+        <button onclick="closeModal('modal-user-profile')" class="p-1 text-outline hover:text-on-background rounded-full">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-5 overflow-y-auto flex-1">
+        <!-- Farmer Avatar & Identity Badge -->
+        <div class="text-center space-y-2">
+          <div id="profile-avatar-display" class="w-20 h-20 mx-auto rounded-3xl bg-secondary-container flex items-center justify-center text-4xl shadow-tactile">
+            🧑‍🌾
+          </div>
+          <div>
+            <h4 id="profile-display-name" class="text-xl font-extrabold text-on-background">สมชาย เกษตรกรรุ่นใหม่</h4>
+            <p id="profile-display-phone" class="text-xs text-outline font-medium">เบอร์โทร: 0812345678</p>
+          </div>
+        </div>
+
+        <!-- Personal Farmer Stats Card -->
+        <div class="grid grid-cols-2 gap-2.5 p-3.5 bg-surface-container-low rounded-2xl border border-outline-variant/30 text-center">
+          <div class="bg-white p-2.5 rounded-xl shadow-sm">
+            <span class="text-xs text-outline block">🌾 จำนวนแปลง</span>
+            <span id="profile-stat-plots" class="text-lg font-black text-primary">0</span>
+          </div>
+          <div class="bg-white p-2.5 rounded-xl shadow-sm">
+            <span class="text-xs text-outline block">✅ ภารกิจสำเร็จ</span>
+            <span id="profile-stat-tasks" class="text-lg font-black text-secondary">0</span>
+          </div>
+          <div class="bg-white p-2.5 rounded-xl shadow-sm">
+            <span class="text-xs text-outline block">🧺 เก็บเกี่ยว</span>
+            <span id="profile-stat-harvests" class="text-lg font-black text-warning">0</span>
+          </div>
+          <div class="bg-white p-2.5 rounded-xl shadow-sm">
+            <span class="text-xs text-outline block">🗓️ สมาชิกวันที่</span>
+            <span id="profile-stat-days" class="text-lg font-black text-on-background">1</span>
+          </div>
+        </div>
+
+        <!-- Edit Profile Form -->
+        <form id="form-edit-profile" onsubmit="handleUpdateProfile(event)" class="space-y-3.5">
+          <div>
+            <label class="block text-xs font-bold text-on-surface-variant mb-1.5">เลือกอีโมจิประจำตัว</label>
+            <div class="flex justify-between gap-1.5" id="profile-avatar-selector">
+              <button type="button" onclick="selectProfileAvatar('🧑‍🌾')" class="avatar-opt-btn flex-1 py-2 rounded-xl text-xl bg-surface-container-high border-2 border-primary">🧑‍🌾</button>
+              <button type="button" onclick="selectProfileAvatar('👩‍🌾')" class="avatar-opt-btn flex-1 py-2 rounded-xl text-xl bg-surface-container-low border-2 border-transparent">👩‍🌾</button>
+              <button type="button" onclick="selectProfileAvatar('👨‍🌾')" class="avatar-opt-btn flex-1 py-2 rounded-xl text-xl bg-surface-container-low border-2 border-transparent">👨‍🌾</button>
+              <button type="button" onclick="selectProfileAvatar('🌻')" class="avatar-opt-btn flex-1 py-2 rounded-xl text-xl bg-surface-container-low border-2 border-transparent">🌻</button>
+              <button type="button" onclick="selectProfileAvatar('🚜')" class="avatar-opt-btn flex-1 py-2 rounded-xl text-xl bg-surface-container-low border-2 border-transparent">🚜</button>
+              <button type="button" onclick="selectProfileAvatar('🥭')" class="avatar-opt-btn flex-1 py-2 rounded-xl text-xl bg-surface-container-low border-2 border-transparent">🥭</button>
+            </div>
+            <input type="hidden" id="profile-input-avatar" name="profileImage" value="🧑‍🌾" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-on-surface-variant mb-1">ชื่อ-นามสกุล / ชื่อเกษตรกร *</label>
+            <input type="text" id="profile-input-name" name="name" required class="w-full px-4 py-2.5 text-sm rounded-2xl border border-outline-variant/60 focus:border-primary focus:ring-primary" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-on-surface-variant mb-1">พื้นที่ / ตำแหน่งแปลงเกษตร</label>
+            <input type="text" id="profile-input-location" name="location" placeholder="เช่น อ.พุนพิน จ.สุราษฎร์ธานี" class="w-full px-4 py-2.5 text-sm rounded-2xl border border-outline-variant/60 focus:border-primary focus:ring-primary" />
+          </div>
+
+          <button type="submit" class="w-full py-3 bg-primary hover:bg-on-primary-container text-white font-bold rounded-2xl shadow-tactile transition-all">
+            บันทึกการแก้ไขโปรไฟล์
+          </button>
+        </form>
+
+        <!-- Account Switch / Logout Section -->
+        <div class="pt-3 border-t border-outline-variant/30 flex gap-2">
+          <button type="button" onclick="openModal('modal-auth')" class="flex-1 py-2.5 bg-surface-container-low hover:bg-surface-container text-primary font-bold rounded-2xl text-xs transition-colors flex items-center justify-center gap-1.5">
+            <span class="material-symbols-outlined text-[18px]">switch_account</span>
+            <span>สลับบัญชี</span>
+          </button>
+          <button type="button" onclick="logout()" class="px-4 py-2.5 bg-red-50 hover:bg-red-100 text-error font-bold rounded-2xl text-xs transition-colors flex items-center justify-center gap-1">
+            <span class="material-symbols-outlined text-[18px]">logout</span>
+            <span>ออกจากระบบ</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 🔐 MODAL: LOGIN / REGISTER (ระบบล็อกอิน / สมัครสมาชิก) -->
+  <!-- ========================================== -->
+  <div id="modal-auth" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl shadow-tactile-lg overflow-hidden border border-outline-variant/30 flex flex-col max-h-[92vh]">
+      <!-- Tabs Switcher -->
+      <div class="p-2 bg-surface-container-low border-b border-outline-variant/30 flex gap-2">
+        <button id="auth-tab-register" onclick="switchAuthTab('register')" class="flex-1 py-2.5 bg-white text-primary font-black rounded-2xl text-sm shadow-sm transition-all">
+          สมัครสมาชิกใหม่ 🌱
+        </button>
+        <button id="auth-tab-login" onclick="switchAuthTab('login')" class="flex-1 py-2.5 text-on-surface-variant font-bold rounded-2xl text-sm hover:bg-white/60 transition-all">
+          เข้าสู่ระบบ 🔐
+        </button>
+      </div>
+
+      <!-- Form Body -->
+      <div class="p-6 space-y-4 overflow-y-auto flex-1">
+        <!-- Brand Logo inside modal -->
+        <div class="text-center pb-1">
+          <img src="/images/logo.png" alt="ครูสวน AI Logo" class="w-16 h-16 mx-auto rounded-3xl object-cover shadow-tactile mb-2 animate-float border border-primary/20" style="width: 64px; height: 64px;" />
+          <h4 id="auth-modal-title" class="text-xl font-extrabold text-on-background">เริ่มต้นใช้งาน ครูสวน AI</h4>
+          <p id="auth-modal-subtitle" class="text-xs text-on-surface-variant mt-0.5">สมัครสมาชิกเพื่อสร้างแปลงเกษตรและปรึกษา AI</p>
+        </div>
+
+        <!-- 1. REGISTER FORM (Default) -->
+        <form id="form-auth-register" onsubmit="handleRegisterSubmit(event)" class="space-y-3.5">
+          <div>
+            <label class="block text-xs font-bold text-on-surface-variant mb-1">ชื่อ-นามสกุล / ชื่อเกษตรกร *</label>
+            <input type="text" name="name" required placeholder="เช่น สมชาย ใจดี หรือ สวนปราชญ์พุนพิน" class="w-full px-4 py-2.5 text-sm rounded-2xl border border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-on-surface-variant mb-1">เบอร์โทรศัพท์ (ใช้เป็นชื่อผู้ใช้) *</label>
+            <input type="tel" name="phone" required placeholder="เช่น 0812345678" class="w-full px-4 py-2.5 text-sm rounded-2xl border border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none font-semibold" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-on-surface-variant mb-1">รหัสผ่าน (อย่างน้อย 6 ตัวอักษร) *</label>
+            <input type="password" name="password" required minlength="6" placeholder="ตั้งรหัสผ่านสำหรับเข้าใช้งาน" class="w-full px-4 py-2.5 text-sm rounded-2xl border border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-on-surface-variant mb-1">จังหวัด / อำเภอที่ตั้งแปลง</label>
+            <input type="text" name="location" placeholder="เช่น อ.พุนพิน จ.สุราษฎร์ธานี" class="w-full px-4 py-2.5 text-sm rounded-2xl border border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none" />
+          </div>
+
+          <button type="submit" id="btn-register-submit" class="w-full py-3.5 bg-primary hover:bg-on-primary-container text-white font-extrabold rounded-2xl shadow-tactile transition-all mt-2 cursor-pointer hover:scale-[1.01] active:scale-95">
+            สมัครสมาชิกและเริ่มใช้งาน 🎉
+          </button>
+        </form>
+
+        <!-- 2. LOGIN FORM -->
+        <form id="form-auth-login" onsubmit="handleLoginSubmit(event)" class="space-y-3.5 hidden">
+          <div>
+            <label class="block text-xs font-bold text-on-surface-variant mb-1">เบอร์โทรศัพท์ที่ลงทะเบียน *</label>
+            <input type="tel" name="phone" required placeholder="08XXXXXXXX" class="w-full px-4 py-3 text-sm rounded-2xl border border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none font-semibold" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-on-surface-variant mb-1">รหัสผ่าน *</label>
+            <input type="password" name="password" required placeholder="กรอกรหัสผ่านของคุณ" class="w-full px-4 py-3 text-sm rounded-2xl border border-outline-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none" />
+          </div>
+
+          <button type="submit" id="btn-login-submit" class="w-full py-3.5 bg-primary hover:bg-on-primary-container text-white font-extrabold rounded-2xl shadow-tactile transition-all mt-2 cursor-pointer hover:scale-[1.01] active:scale-95">
+            เข้าสู่ระบบ 🚀
+          </button>
+        </form>
+
+        <!-- Demo 1-Click Login Shortcut -->
+        <div class="pt-3 border-t border-outline-variant/30 text-center">
+          <button type="button" onclick="quickDemoLogin()" class="w-full py-2.5 bg-secondary-container hover:bg-[#90d792] text-on-secondary-container font-extrabold text-xs rounded-2xl transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer">
+            <span>🧪 เข้าทดลองใช้งาน (1-Click Demo Account)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 🗑️ MODAL: CONFIRM DELETE PLOT -->
+  <!-- ========================================== -->
+  <div id="modal-delete-plot" class="modal-backdrop hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-outline-variant/30 text-center space-y-4">
+      <div class="w-16 h-16 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center text-3xl mx-auto shadow-sm">
+        🗑️
+      </div>
+      <div>
+        <h3 class="font-extrabold text-lg text-on-background">ยืนยันการลบแปลงเกษตร?</h3>
+        <p id="delete-plot-modal-msg" class="text-xs text-on-surface-variant mt-1.5 leading-relaxed">
+          คุณต้องการลบแปลงนี้ใช่หรือไม่? ภารกิจและบันทึกทั้งหมดของแปลงจะถูกลบอย่างถาวร
+        </p>
+      </div>
+      <div class="flex gap-2 pt-2">
+        <button type="button" onclick="closeModal('modal-delete-plot')" class="flex-1 py-3 bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-bold text-xs rounded-2xl transition-all cursor-pointer">
+          ยกเลิก
+        </button>
+        <button type="button" id="btn-confirm-delete-plot" onclick="executeDeletePlot()" class="flex-1 py-3 bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs rounded-2xl shadow-tactile transition-all cursor-pointer hover:scale-102 active:scale-95 flex items-center justify-center gap-1">
+          <span class="material-symbols-outlined text-[16px]">delete_forever</span>
+          <span>ยืนยันลบ</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 🍞 TOAST CONTAINER -->
+  <!-- ========================================== -->
+  <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2 pointer-events-none"></div>
+
+  <!-- JavaScript App Logic -->
+  <script src="/app.js?v=2.6"></script>
+</body>
+</html>

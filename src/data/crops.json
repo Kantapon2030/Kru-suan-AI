@@ -1,0 +1,730 @@
+[
+  {
+    "name": "มะเขือเทศ",
+    "emoji": "🍅",
+    "totalDays": 105,
+    "stages": [
+      {
+        "name": "SEED",
+        "label": "เตรียมดินและเมล็ด",
+        "emoji": "🌰",
+        "days": 7,
+        "progress": 10
+      },
+      {
+        "name": "SEEDLING",
+        "label": "เพาะกล้า",
+        "emoji": "🌱",
+        "days": 20,
+        "progress": 25
+      },
+      {
+        "name": "PLANTING",
+        "label": "ลงปลูก",
+        "emoji": "🌿",
+        "days": 7,
+        "progress": 35
+      },
+      {
+        "name": "VEGETATIVE",
+        "label": "เจริญเติบโต",
+        "emoji": "🌳",
+        "days": 28,
+        "progress": 60
+      },
+      {
+        "name": "FLOWERING",
+        "label": "ออกดอก",
+        "emoji": "🌼",
+        "days": 14,
+        "progress": 75
+      },
+      {
+        "name": "FRUIT",
+        "label": "ติดผล",
+        "emoji": "🍅",
+        "days": 21,
+        "progress": 90
+      },
+      {
+        "name": "HARVEST",
+        "label": "เก็บเกี่ยว",
+        "emoji": "🧺",
+        "days": 8,
+        "progress": 100
+      }
+    ]
+  },
+  {
+    "name": "ผักบุ้ง",
+    "emoji": "🥬",
+    "totalDays": 30,
+    "stages": [
+      {
+        "name": "SEED",
+        "label": "เตรียมดินและเมล็ด",
+        "emoji": "🌰",
+        "days": 3,
+        "progress": 15
+      },
+      {
+        "name": "SEEDLING",
+        "label": "งอกต้นกล้า",
+        "emoji": "🌱",
+        "days": 7,
+        "progress": 40
+      },
+      {
+        "name": "VEGETATIVE",
+        "label": "เจริญเติบโต",
+        "emoji": "🌿",
+        "days": 15,
+        "progress": 80
+      },
+      {
+        "name": "HARVEST",
+        "label": "เก็บเกี่ยว",
+        "emoji": "🧺",
+        "days": 5,
+        "progress": 100
+      }
+    ]
+  },
+  {
+    "name": "พริก",
+    "emoji": "🌶️",
+    "totalDays": 130,
+    "stages": [
+      {
+        "name": "SEED",
+        "label": "เตรียมดินและเมล็ด",
+        "emoji": "🌰",
+        "days": 7,
+        "progress": 10
+      },
+      {
+        "name": "SEEDLING",
+        "label": "เพาะกล้า",
+        "emoji": "🌱",
+        "days": 30,
+        "progress": 30
+      },
+      {
+        "name": "PLANTING",
+        "label": "ย้ายกล้าลงแปลง",
+        "emoji": "🌿",
+        "days": 7,
+        "progress": 40
+      },
+      {
+        "name": "VEGETATIVE",
+        "label": "เจริญเติบโต",
+        "emoji": "🌳",
+        "days": 35,
+        "progress": 65
+      },
+      {
+        "name": "FLOWERING",
+        "label": "ออกดอก",
+        "emoji": "🌼",
+        "days": 21,
+        "progress": 80
+      },
+      {
+        "name": "FRUIT",
+        "label": "ติดผลพริก",
+        "emoji": "🌶️",
+        "days": 20,
+        "progress": 95
+      },
+      {
+        "name": "HARVEST",
+        "label": "เก็บเกี่ยว",
+        "emoji": "🧺",
+        "days": 10,
+        "progress": 100
+      }
+    ]
+  },
+  {
+    "name": "ข้าว",
+    "emoji": "🌾",
+    "totalDays": 120,
+    "stages": [
+      {
+        "name": "SEED",
+        "label": "เตรียมแปลงและเมล็ด",
+        "emoji": "🌰",
+        "days": 10,
+        "progress": 10
+      },
+      {
+        "name": "SEEDLING",
+        "label": "เพาะตกกล้า",
+        "emoji": "🌱",
+        "days": 20,
+        "progress": 25
+      },
+      {
+        "name": "PLANTING",
+        "label": "ดำนา/หว่าน",
+        "emoji": "🌿",
+        "days": 10,
+        "progress": 35
+      },
+      {
+        "name": "VEGETATIVE",
+        "label": "แตกกอ",
+        "emoji": "🌾",
+        "days": 35,
+        "progress": 60
+      },
+      {
+        "name": "FLOWERING",
+        "label": "ตั้งท้องและออกรวง",
+        "emoji": "🌼",
+        "days": 25,
+        "progress": 80
+      },
+      {
+        "name": "FRUIT",
+        "label": "สุกแก่/รวงเหลือง",
+        "emoji": "🌾",
+        "days": 15,
+        "progress": 95
+      },
+      {
+        "name": "HARVEST",
+        "label": "เกี่ยวข้าว",
+        "emoji": "🧺",
+        "days": 5,
+        "progress": 100
+      }
+    ]
+  },
+  {
+    "name": "กะเพรา",
+    "emoji": "🌿",
+    "totalDays": 50,
+    "stages": [
+      {
+        "name": "SEED",
+        "label": "เตรียมดินและเมล็ด",
+        "emoji": "🌰",
+        "days": 5,
+        "progress": 15
+      },
+      {
+        "name": "SEEDLING",
+        "label": "เพาะกล้า",
+        "emoji": "🌱",
+        "days": 15,
+        "progress": 40
+      },
+      {
+        "name": "PLANTING",
+        "label": "ลงแปลง",
+        "emoji": "🌿",
+        "days": 5,
+        "progress": 50
+      },
+      {
+        "name": "VEGETATIVE",
+        "label": "เจริญเติบโต",
+        "emoji": "🌳",
+        "days": 20,
+        "progress": 85
+      },
+      {
+        "name": "HARVEST",
+        "label": "เก็บยอดกะเพรา",
+        "emoji": "🧺",
+        "days": 5,
+        "progress": 100
+      }
+    ]
+  },
+  {
+    "name": "ทุเรียน",
+    "emoji": "🥭",
+    "totalDays": 365,
+    "stages": [
+      {
+        "name": "SEED",
+        "label": "เตรียมหลุมและปรับดิน",
+        "emoji": "🕳️",
+        "days": 15,
+        "progress": 10
+      },
+      {
+        "name": "SEEDLING",
+        "label": "ลงปลูกต้นพันธุ์เสียบยอด",
+        "emoji": "🌱",
+        "days": 30,
+        "progress": 25
+      },
+      {
+        "name": "VEGETATIVE",
+        "label": "ฟื้นฟูต้นและแตกใบอ่อน",
+        "emoji": "🌿",
+        "days": 120,
+        "progress": 45
+      },
+      {
+        "name": "FLOWERING",
+        "label": "ทำสาร/เปิดตาดอก (เหยียดตีนหนู-หัวกำไล)",
+        "emoji": "🌼",
+        "days": 60,
+        "progress": 65
+      },
+      {
+        "name": "FRUIT",
+        "label": "ติดผลและบำรุงพู (ระยะไข่ไก่-กระป๋อง)",
+        "emoji": "🥭",
+        "days": 110,
+        "progress": 85
+      },
+      {
+        "name": "HARVEST",
+        "label": "ตัดเก็บเกี่ยวผลแก่",
+        "emoji": "🧺",
+        "days": 30,
+        "progress": 100
+      }
+    ]
+  },
+  {
+    "name": "ยางพารา",
+    "emoji": "🌳",
+    "totalDays": 365,
+    "stages": [
+      {
+        "name": "SEED",
+        "label": "เตรียมแปลงและวางแนวปลูก",
+        "emoji": "🪵",
+        "days": 30,
+        "progress": 10
+      },
+      {
+        "name": "SEEDLING",
+        "label": "ลงปลูกยางชำถุง",
+        "emoji": "🌱",
+        "days": 45,
+        "progress": 25
+      },
+      {
+        "name": "VEGETATIVE",
+        "label": "ดูแลบำรุงต้นอ่อนและใส่ปุ๋ย",
+        "emoji": "🌿",
+        "days": 180,
+        "progress": 50
+      },
+      {
+        "name": "FLOWERING",
+        "label": "ช่วงยางผลัดใบและพักหน้ายาง",
+        "emoji": "🍂",
+        "days": 50,
+        "progress": 70
+      },
+      {
+        "name": "FRUIT",
+        "label": "เตรียมเปิดกรีดหน้ายาง",
+        "emoji": "🔪",
+        "days": 30,
+        "progress": 85
+      },
+      {
+        "name": "HARVEST",
+        "label": "กรีดยางและเก็บน้ำยางดิบ/ขี้ยาง",
+        "emoji": "🪣",
+        "days": 30,
+        "progress": 100
+      }
+    ]
+  },
+  {
+    "name": "ปาล์มน้ำมัน",
+    "emoji": "🌴",
+    "totalDays": 365,
+    "stages": [
+      {
+        "name": "SEED",
+        "label": "เตรียมพื้นที่และขุดหลุมรองก้น",
+        "emoji": "🕳️",
+        "days": 20,
+        "progress": 10
+      },
+      {
+        "name": "SEEDLING",
+        "label": "ลงปลูกต้นกล้าปาล์ม",
+        "emoji": "🌱",
+        "days": 30,
+        "progress": 25
+      },
+      {
+        "name": "VEGETATIVE",
+        "label": "ตัดแต่งทางใบและใส่ปุ๋ยบำรุง",
+        "emoji": "🌴",
+        "days": 150,
+        "progress": 50
+      },
+      {
+        "name": "FLOWERING",
+        "label": "แทงช่อดอกและผสมเกสร",
+        "emoji": "🌼",
+        "days": 60,
+        "progress": 75
+      },
+      {
+        "name": "FRUIT",
+        "label": "ทะลายปาล์มสร้างเนื้อและน้ำมัน",
+        "emoji": "🥥",
+        "days": 75,
+        "progress": 90
+      },
+      {
+        "name": "HARVEST",
+        "label": "ตัดแทงทะลายปาล์มสุก",
+        "emoji": "🚜",
+        "days": 30,
+        "progress": 100
+      }
+    ]
+  },
+  {
+    "name": "มังคุด",
+    "emoji": "🟣",
+    "totalDays": 365,
+    "stages": [
+      {
+        "name": "SEED",
+        "label": "เตรียมหลุมปลูกและระบบน้ำ",
+        "emoji": "🕳️",
+        "days": 20,
+        "progress": 10
+      },
+      {
+        "name": "SEEDLING",
+        "label": "ย้ายปลูกต้นกล้ามังคุด",
+        "emoji": "🌱",
+        "days": 30,
+        "progress": 25
+      },
+      {
+        "name": "VEGETATIVE",
+        "label": "แตกใบเพสลาดและคุมทรงพุ่ม",
+        "emoji": "🌿",
+        "days": 150,
+        "progress": 50
+      },
+      {
+        "name": "FLOWERING",
+        "label": "กระตุ้นตาดอกและบานดอก",
+        "emoji": "🌸",
+        "days": 45,
+        "progress": 70
+      },
+      {
+        "name": "FRUIT",
+        "label": "ผลขยายขนาดและป้องกันเนื้อแก้ว",
+        "emoji": "🟣",
+        "days": 90,
+        "progress": 90
+      },
+      {
+        "name": "HARVEST",
+        "label": "เก็บเกี่ยวมังคุดผิวดาวเลือดนก",
+        "emoji": "🧺",
+        "days": 30,
+        "progress": 100
+      }
+    ]
+  },
+  {
+    "name": "ลองกอง",
+    "emoji": "🍇",
+    "totalDays": 365,
+    "stages": [
+      {
+        "name": "SEED",
+        "label": "เตรียมพื้นที่และระบบพรางแสง",
+        "emoji": "🕳️",
+        "days": 20,
+        "progress": 10
+      },
+      {
+        "name": "SEEDLING",
+        "label": "ลงปลูกต้นกล้าลองกอง",
+        "emoji": "🌱",
+        "days": 30,
+        "progress": 25
+      },
+      {
+        "name": "VEGETATIVE",
+        "label": "บำรุงกิ่งก้านและระบบราก",
+        "emoji": "🌿",
+        "days": 150,
+        "progress": 50
+      },
+      {
+        "name": "FLOWERING",
+        "label": "แทงช่อดอกใต้กิ่งใหญ่",
+        "emoji": "🌼",
+        "days": 45,
+        "progress": 70
+      },
+      {
+        "name": "FRUIT",
+        "label": "ตัดแต่งช่อผลให้โปร่งผลโต",
+        "emoji": "🍇",
+        "days": 90,
+        "progress": 90
+      },
+      {
+        "name": "HARVEST",
+        "label": "ตัดช่อลองกองสุกเหลือง",
+        "emoji": "🧺",
+        "days": 30,
+        "progress": 100
+      }
+    ]
+  },
+  {
+    "name": "เงาะ",
+    "emoji": "🔴",
+    "totalDays": 365,
+    "stages": [
+      {
+        "name": "SEED",
+        "label": "เตรียมหลุมและดินปลูก",
+        "emoji": "🕳️",
+        "days": 15,
+        "progress": 10
+      },
+      {
+        "name": "SEEDLING",
+        "label": "ลงปลูกกิ่งตอน/ต้นทาบกิ่ง",
+        "emoji": "🌱",
+        "days": 30,
+        "progress": 25
+      },
+      {
+        "name": "VEGETATIVE",
+        "label": "ตัดแต่งกิ่งแขนงและใส่ปุ๋ย",
+        "emoji": "🌿",
+        "days": 150,
+        "progress": 50
+      },
+      {
+        "name": "FLOWERING",
+        "label": "แทงช่อดอกปลายกิ่ง",
+        "emoji": "🌼",
+        "days": 45,
+        "progress": 70
+      },
+      {
+        "name": "FRUIT",
+        "label": "พัฒนาการของขนและเนื้อเงาะ",
+        "emoji": "🔴",
+        "days": 95,
+        "progress": 90
+      },
+      {
+        "name": "HARVEST",
+        "label": "เก็บเกี่ยวเงาะโรงเรียนสุกแดง",
+        "emoji": "🧺",
+        "days": 30,
+        "progress": 100
+      }
+    ]
+  },
+  {
+    "name": "สะตอ",
+    "emoji": "🫘",
+    "totalDays": 365,
+    "stages": [
+      {
+        "name": "SEED",
+        "label": "เตรียมหลุมและวางระยะปลูก",
+        "emoji": "🕳️",
+        "days": 15,
+        "progress": 10
+      },
+      {
+        "name": "SEEDLING",
+        "label": "ลงปลูกสะตอติดตา",
+        "emoji": "🌱",
+        "days": 30,
+        "progress": 25
+      },
+      {
+        "name": "VEGETATIVE",
+        "label": "บำรุงยอดและกิ่งก้าน",
+        "emoji": "🌿",
+        "days": 160,
+        "progress": 50
+      },
+      {
+        "name": "FLOWERING",
+        "label": "ออกดอกเป็นพู่หัวไม้ขีด",
+        "emoji": "🌼",
+        "days": 40,
+        "progress": 70
+      },
+      {
+        "name": "FRUIT",
+        "label": "ฝักสะตอยืดยาวและเรียงเมล็ด",
+        "emoji": "🫘",
+        "days": 90,
+        "progress": 90
+      },
+      {
+        "name": "HARVEST",
+        "label": "เก็บเกี่ยวฝักสะตอข้าว/สะตอดาน",
+        "emoji": "🧺",
+        "days": 30,
+        "progress": 100
+      }
+    ]
+  },
+  {
+    "name": "ขมิ้น",
+    "emoji": "🟡",
+    "totalDays": 270,
+    "stages": [
+      {
+        "name": "SEED",
+        "label": "เตรียมแง่งพันธุ์และยกร่องดิน",
+        "emoji": "🌰",
+        "days": 15,
+        "progress": 15
+      },
+      {
+        "name": "SEEDLING",
+        "label": "งอกหน่ออ่อนแทงพ้นดิน",
+        "emoji": "🌱",
+        "days": 30,
+        "progress": 30
+      },
+      {
+        "name": "VEGETATIVE",
+        "label": "แตกกอใบเขียวชะอุ่ม",
+        "emoji": "🌿",
+        "days": 120,
+        "progress": 60
+      },
+      {
+        "name": "FRUIT",
+        "label": "สะสมสารเคอร์คูมินและลงหัว",
+        "emoji": "🟡",
+        "days": 80,
+        "progress": 85
+      },
+      {
+        "name": "HARVEST",
+        "label": "ขุดเก็บเกี่ยวหัวขมิ้นชัน",
+        "emoji": "🧺",
+        "days": 25,
+        "progress": 100
+      }
+    ]
+  },
+  {
+    "name": "กาแฟ (โรบัสต้า)",
+    "emoji": "☕",
+    "totalDays": 365,
+    "stages": [
+      {
+        "name": "SEED",
+        "label": "เตรียมพื้นที่ใต้ร่มเงาและหลุม",
+        "emoji": "🕳️",
+        "days": 20,
+        "progress": 10
+      },
+      {
+        "name": "SEEDLING",
+        "label": "ลงปลูกต้นกล้ากาแฟโรบัสต้า",
+        "emoji": "🌱",
+        "days": 30,
+        "progress": 25
+      },
+      {
+        "name": "VEGETATIVE",
+        "label": "ตัดแต่งทรงพุ่มและกิ่งกระโดง",
+        "emoji": "🌿",
+        "days": 150,
+        "progress": 50
+      },
+      {
+        "name": "FLOWERING",
+        "label": "ดอกกาแฟสีขาวบานส่งกลิ่นหอม",
+        "emoji": "🌸",
+        "days": 35,
+        "progress": 70
+      },
+      {
+        "name": "FRUIT",
+        "label": "ผลเชอรี่กาแฟพัฒนาและเริ่มสุก",
+        "emoji": "🍒",
+        "days": 100,
+        "progress": 90
+      },
+      {
+        "name": "HARVEST",
+        "label": "เก็บเมล็ดเชอรี่สุกแดงคัดมือ",
+        "emoji": "🧺",
+        "days": 30,
+        "progress": 100
+      }
+    ]
+  },
+  {
+    "name": "มะพร้าว",
+    "emoji": "🥥",
+    "totalDays": 365,
+    "stages": [
+      {
+        "name": "SEED",
+        "label": "เตรียมหลุมและวางแนวร่องสวน",
+        "emoji": "🕳️",
+        "days": 20,
+        "progress": 10
+      },
+      {
+        "name": "SEEDLING",
+        "label": "วางผลพันธุ์เพาะงอกหน่อ",
+        "emoji": "🌱",
+        "days": 40,
+        "progress": 25
+      },
+      {
+        "name": "VEGETATIVE",
+        "label": "บำรุงทางใบและโคนต้น",
+        "emoji": "🌴",
+        "days": 160,
+        "progress": 50
+      },
+      {
+        "name": "FLOWERING",
+        "label": "แทงจั่นเปิดดอกมะพร้าว",
+        "emoji": "🌼",
+        "days": 45,
+        "progress": 75
+      },
+      {
+        "name": "FRUIT",
+        "label": "ลูกมะพร้าวติดจั่นขยายทะลาย",
+        "emoji": "🥥",
+        "days": 70,
+        "progress": 90
+      },
+      {
+        "name": "HARVEST",
+        "label": "เก็บผลมะพร้าวน้ำหอม/มะพร้าวแกง",
+        "emoji": "🧺",
+        "days": 30,
+        "progress": 100
+      }
+    ]
+  }
+]
